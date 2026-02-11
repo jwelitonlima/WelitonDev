@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send } from "lucide-react";
+import { Send, Instagram } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 
@@ -135,7 +135,11 @@ const ContactPage = () => {
             <div>
               <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Detalhes Comerciais</p>
               <p className="text-sm text-dark-fg/80 mb-1">Weliton Dev</p>
-              <p className="text-sm text-dark-fg/80">Brasil</p>
+              <p className="text-sm text-dark-fg/80 mb-1">Brasil</p>
+              <a href="https://www.instagram.com/welitondev" target="_blank" rel="noopener noreferrer" className="text-sm text-dark-fg/80 link-underline inline-flex items-center gap-1.5 w-fit">
+                <Instagram className="w-3.5 h-3.5" />
+                @welitondev
+              </a>
             </div>
             <div>
               <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Redes Sociais</p>
