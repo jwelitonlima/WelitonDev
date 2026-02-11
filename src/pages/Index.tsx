@@ -32,7 +32,7 @@ const Home = () => {
     const interval = setInterval(() => {
       setGreetingIndex((prev) => (prev + 1) % greetings.length);
       setPortraitIndex((prev) => (prev + 1) % heroPortraits.length);
-    }, 3500);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
