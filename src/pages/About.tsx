@@ -37,7 +37,7 @@ const AboutPage = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setPhotoIndex((prev) => (prev + 1) % aboutPhotos.length);
-    }, 3500);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
