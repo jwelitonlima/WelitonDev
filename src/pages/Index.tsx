@@ -83,12 +83,6 @@ const Home = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            {/* Sidebar label */}
-            <div className="absolute -right-6 top-1/2 -translate-y-1/2 rotate-90 origin-center">
-              <span className="text-xs tracking-[0.3em] uppercase text-muted-foreground whitespace-nowrap">
-                Localizado no Brasil
-              </span>
-            </div>
           </motion.div>
         </div>
 
