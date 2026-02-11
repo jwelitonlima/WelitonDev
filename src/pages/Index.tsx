@@ -81,7 +81,7 @@ const Home = () => {
               Front-end Developer Data Analyst & AI/LLM Engineer
             </p>
             <p className="text-sm sm:text-base text-muted-foreground max-w-md mb-8 lg:mb-10 leading-relaxed">
-              Desenvolvo experiências web modernas com JavaScript/frameworks, 
+              Desenvolvo experiências web modernas com JavaScript e frameworks, 
               análise de dados e IA generativa. Transformando dados complexos 
               em interfaces inteligentes e intuitivas.
             </p>
