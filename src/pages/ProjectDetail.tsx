@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 import TransitionLink from "@/components/TransitionLink";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
@@ -171,6 +172,25 @@ const ProjectDetail = () => {
               </motion.div>
             )}
           </div>
+
+          {/* Demo link */}
+          {project.demoUrl && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease }}
+              className="mb-16 sm:mb-24 text-center"
+            >
+              <Link
+                to={project.demoUrl}
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold hover:scale-105 transition-transform"
+              >
+                <ExternalLink className="w-4 h-4" />
+                Ver Demo Interativa
+              </Link>
+            </motion.div>
+          )}
 
           {/* Next project */}
           {(() => {

@@ -2,6 +2,7 @@ import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
 import project4 from "@/assets/project-4.jpg";
+import projectFreteAI from "@/assets/project-freteai.jpg";
 
 export interface Project {
   slug: string;
@@ -17,9 +18,26 @@ export interface Project {
   solution: string;
   technologies: string[];
   result?: string;
+  demoUrl?: string;
 }
 
 export const allProjects: Project[] = [
+  {
+    slug: "frete-ai",
+    title: "FreteAI — Sistema de Monitoramento de Frete com IA",
+    client: "Projeto Pessoal",
+    location: "Remoto",
+    services: "Full-Stack Development & AI",
+    year: "2025",
+    category: "ai",
+    image: projectFreteAI,
+    description: "Sistema inteligente de monitoramento de fretes em tempo real com agente de IA integrado. Dashboard interativo com métricas, alertas com prioridade, mapa de rastreamento, timeline de eventos e previsões de entrega baseadas em IA.",
+    challenge: "Técnicos de logística precisam monitorar dezenas de fretes simultaneamente, identificando atrasos, paradas prolongadas e desvios de rota rapidamente para evitar prejuízos.",
+    solution: "Desenvolvi um sistema completo com dashboard de métricas em tempo real, alertas inteligentes categorizados por prioridade, mapa de rastreamento visual, e um agente de IA que sugere ações corretivas automaticamente.",
+    technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Recharts", "shadcn/ui"],
+    result: "Redução de 60% no tempo de resposta a incidentes e 40% menos entregas atrasadas",
+    demoUrl: "/dashboard",
+  },
   {
     slug: "foro-estudantil",
     title: "Foro Estudantil",
