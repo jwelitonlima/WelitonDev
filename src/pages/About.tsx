@@ -47,26 +47,30 @@ const AboutPage = () => {
         <div className="container-wide">
           {/* Title row */}
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start mb-12 sm:mb-20">
-            <motion.h1
+            <motion.div
               initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight"
             >
-              Ajudando marcas a prosperar no mundo digital
-            </motion.h1>
+              <p className="text-xs sm:text-sm uppercase tracking-widest text-muted-foreground mb-4">Sobre mim</p>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
+                Sou Weliton
+              </h1>
+            </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-start gap-4"
+              className="space-y-4"
             >
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                <Globe className="w-5 h-5 text-primary-foreground" />
-              </div>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                Combino criatividade com expertise técnico para criar produtos digitais que não apenas
-                funcionam bem, mas também encantam os usuários com experiências memoráveis.
+                Desenvolvedor frontend especializado em criar interfaces modernas e responsivas. Trabalho com React, Vite, JavaScript/TypeScript e CSS avançado para construir aplicações web de alta performance.
+              </p>
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                Complemento minha expertise em desenvolvimento com experiência em análise de dados (SQL, Python, Power BI, Looker Studio) e experiência em integração de modelos de linguagem (LLMs), desenvolvendo soluções que combinam interfaces inteligentes com IA.
+              </p>
+              <p className="text-sm sm:text-base text-foreground font-medium leading-relaxed">
+                Sou um desenvolvedor versátil que transforma ideias em produtos digitais funcionais e inteligentes.
               </p>
             </motion.div>
           </div>
