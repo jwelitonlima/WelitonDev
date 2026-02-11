@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import TransitionLink from "./TransitionLink";
 
@@ -75,55 +76,79 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Premium hamburger button */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className={`md:hidden w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 relative z-50 ${
-              menuOpen
-                ? "bg-primary text-primary-foreground scale-90"
-                : isDarkPage
-                  ? "bg-dark-fg text-dark-bg hover:scale-105"
-                  : "bg-foreground text-background hover:scale-105"
-            }`}
-            aria-label="Menu"
-          >
-            <div className="w-5 h-4 flex flex-col justify-between items-center relative">
-              {/* Top line */}
-              <motion.span
-                animate={{
-                  rotate: menuOpen ? 45 : 0,
-                  y: menuOpen ? 6 : 0,
-                  width: menuOpen ? 18 : 18,
-                }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="block h-[1.5px] rounded-full origin-center"
-                style={{ backgroundColor: "currentColor", width: 18 }}
-              />
-              {/* Middle line */}
-              <motion.span
-                animate={{
-                  opacity: menuOpen ? 0 : 1,
-                  scaleX: menuOpen ? 0 : 1,
-                }}
-                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="block h-[1.5px] w-3 rounded-full origin-center"
-                style={{ backgroundColor: "currentColor" }}
-              />
-              {/* Bottom line */}
-              <motion.span
-                animate={{
-                  rotate: menuOpen ? -45 : 0,
-                  y: menuOpen ? -6 : 0,
-                  width: menuOpen ? 18 : 12,
-                }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="block h-[1.5px] rounded-full origin-center self-end"
-                style={{ backgroundColor: "currentColor", width: 12 }}
-              />
-            </div>
-          </button>
+          {/* Mobile hamburger - inline in header (visible before scroll) */}
+          {!scrolled && (
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className={`md:hidden w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 relative z-50 ${
+                menuOpen
+                  ? "bg-primary text-primary-foreground"
+                  : isDarkPage
+                    ? "bg-dark-fg text-dark-bg"
+                    : "bg-foreground text-background"
+              }`}
+              aria-label="Menu"
+            >
+              <AnimatePresence mode="wait">
+                {menuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                    exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <X className="w-[18px] h-[18px]" strokeWidth={2.5} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                    exit={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <Menu className="w-[18px] h-[18px]" strokeWidth={2.5} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
+          )}
         </div>
       </header>
+
+      {/* Floating hamburger button - appears on scroll */}
+      <AnimatePresence>
+        {scrolled && !menuOpen && (
+          <motion.button
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            onClick={() => setMenuOpen(true)}
+            className={`md:hidden fixed bottom-6 right-5 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-2xl ${
+              isDarkPage
+                ? "bg-dark-fg text-dark-bg"
+                : "bg-foreground text-background"
+            }`}
+            style={{ boxShadow: "0 8px 30px rgba(0,0,0,0.25)" }}
+            aria-label="Menu"
+          >
+            <Menu className="w-5 h-5" strokeWidth={2} />
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* Floating close button when menu is open and scrolled */}
+      {menuOpen && scrolled && (
+        <button
+          onClick={() => setMenuOpen(false)}
+          className="md:hidden fixed top-4 right-5 z-50 w-11 h-11 rounded-full flex items-center justify-center bg-primary text-primary-foreground"
+          aria-label="Fechar menu"
+        >
+          <X className="w-[18px] h-[18px]" strokeWidth={2.5} />
+        </button>
+      )}
 
       {/* Mobile menu overlay - premium circular reveal */}
       <AnimatePresence>
