@@ -41,6 +41,12 @@ const FreightHeader = ({ alertCount = 0 }: FreightHeaderProps) => {
               {link.label}
             </Link>
           ))}
+          <Link
+            to="/project/frete-ai"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors border-l border-border pl-6 ml-2"
+          >
+            ← Portfólio
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3">
