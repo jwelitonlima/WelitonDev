@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, MapPin, User, Calendar, DollarSign, Truck, Copy, Sparkles } from "lucide-react";
+import FreightLayout from "@/components/freight/FreightLayout";
 import FreightHeader from "@/components/freight/FreightHeader";
 import StatusBadge from "@/components/freight/StatusBadge";
 import TimelineItem from "@/components/freight/TimelineItem";
@@ -17,13 +18,14 @@ const FreightDetail = () => {
 
   if (!freight) {
     return (
-      <div className="min-h-screen bg-background">
+      <FreightLayout>
+        <FreightHeader alertCount={0} />
         <FreightHeader alertCount={0} />
         <div className="max-w-4xl mx-auto px-4 py-20 text-center">
           <p className="text-muted-foreground">Frete não encontrado.</p>
           <Link to="/dashboard" className="text-freight-primary hover:underline text-sm mt-2 inline-block">Voltar ao Dashboard</Link>
         </div>
-      </div>
+      </FreightLayout>
     );
   }
 
@@ -36,7 +38,7 @@ const FreightDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <FreightLayout>
       <FreightHeader alertCount={pendingAlerts} />
 
       <main className="max-w-4xl mx-auto px-4 md:px-8 py-6 space-y-6">
@@ -172,7 +174,7 @@ const FreightDetail = () => {
           </motion.div>
         )}
       </main>
-    </div>
+    </FreightLayout>
   );
 };
 
