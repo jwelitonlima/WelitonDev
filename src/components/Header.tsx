@@ -76,79 +76,44 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Mobile hamburger - inline in header (visible before scroll) */}
-          {!scrolled && (
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className={`md:hidden w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 relative z-50 ${
-                menuOpen
-                  ? "bg-primary text-primary-foreground"
-                  : isDarkPage
-                    ? "bg-dark-fg text-dark-bg"
-                    : "bg-foreground text-background"
-              }`}
-              aria-label="Menu"
-            >
-              <AnimatePresence mode="wait">
-                {menuOpen ? (
-                  <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
-                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                    exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
-                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <X className="w-[18px] h-[18px]" strokeWidth={2.5} />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ rotate: 90, opacity: 0, scale: 0.5 }}
-                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                    exit={{ rotate: -90, opacity: 0, scale: 0.5 }}
-                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <Menu className="w-[18px] h-[18px]" strokeWidth={2.5} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </button>
-          )}
-        </div>
-      </header>
-
-      {/* Floating hamburger button - appears on scroll */}
-      <AnimatePresence>
-        {scrolled && !menuOpen && (
-          <motion.button
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            onClick={() => setMenuOpen(true)}
-            className={`md:hidden fixed bottom-6 right-5 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-2xl ${
-              isDarkPage
-                ? "bg-dark-fg text-dark-bg"
-                : "bg-foreground text-background"
+          {/* Mobile hamburger - always in header */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className={`md:hidden w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 relative z-50 ${
+              menuOpen
+                ? "bg-primary text-primary-foreground"
+                : isDarkPage
+                  ? "bg-dark-fg text-dark-bg"
+                  : "bg-foreground text-background"
             }`}
-            style={{ boxShadow: "0 8px 30px rgba(0,0,0,0.25)" }}
             aria-label="Menu"
           >
-            <Menu className="w-5 h-5" strokeWidth={2} />
-          </motion.button>
-        )}
-      </AnimatePresence>
-
-      {/* Floating close button when menu is open and scrolled */}
-      {menuOpen && scrolled && (
-        <button
-          onClick={() => setMenuOpen(false)}
-          className="md:hidden fixed top-4 right-5 z-50 w-11 h-11 rounded-full flex items-center justify-center bg-primary text-primary-foreground"
-          aria-label="Fechar menu"
-        >
-          <X className="w-[18px] h-[18px]" strokeWidth={2.5} />
-        </button>
-      )}
+            <AnimatePresence mode="wait">
+              {menuOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                  animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                  exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <X className="w-[18px] h-[18px]" strokeWidth={2.5} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                  animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                  exit={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Menu className="w-[18px] h-[18px]" strokeWidth={2.5} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </button>
+        </div>
+      </header>
 
       {/* Mobile menu overlay - premium circular reveal */}
       <AnimatePresence>
