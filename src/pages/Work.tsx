@@ -6,15 +6,16 @@ import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
 import { allProjects } from "@/data/projects";
 
-type Filter = "all" | "design" | "development";
+type Filter = "all" | "development" | "data" | "ai";
 
 const WorkPage = () => {
   const [filter, setFilter] = useState<Filter>("all");
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
 
   const filtered = filter === "all" ? allProjects : allProjects.filter((p) => p.category === filter);
-  const designCount = allProjects.filter((p) => p.category === "design").length;
   const devCount = allProjects.filter((p) => p.category === "development").length;
+  const dataCount = allProjects.filter((p) => p.category === "data").length;
+  const aiCount = allProjects.filter((p) => p.category === "ai").length;
 
   return (
     <main>
@@ -26,13 +27,13 @@ const WorkPage = () => {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-3xl sm:text-4xl md:text-6xl font-bold max-w-3xl mb-10 sm:mb-16 text-foreground"
           >
-            Criando produtos digitais de outro nível
+            Projetos que combinam código, dados e IA
           </motion.h1>
 
           {/* Filters */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 sm:mb-10 border-b border-border pb-4">
             <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-1 -mb-1 scrollbar-none">
-              {([["all", `Todos`], ["design", `Design (${designCount})`], ["development", `Dev (${devCount})`]] as const).map(
+              {([["all", `Todos`], ["development", `Dev (${devCount})`], ["data", `Data (${dataCount})`], ["ai", `AI (${aiCount})`]] as const).map(
                 ([key, label]) => (
                   <button
                     key={key}
