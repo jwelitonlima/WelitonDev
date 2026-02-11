@@ -128,7 +128,7 @@ const ProjectDetail = () => {
             </motion.div>
           </div>
 
-          {/* Challenge & Solution */}
+          {/* Challenge, Solution & Result */}
           <div className="grid lg:grid-cols-2 gap-px bg-border rounded-xl overflow-hidden mb-16 sm:mb-24">
             <motion.div
               initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
@@ -155,6 +155,21 @@ const ProjectDetail = () => {
                 {project.solution}
               </p>
             </motion.div>
+
+            {project.result && (
+              <motion.div
+                initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.2, ease }}
+                className="bg-background p-8 sm:p-12 lg:col-span-2"
+              >
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Resultado</p>
+                <p className="text-base sm:text-lg text-primary font-semibold leading-relaxed">
+                  {project.result}
+                </p>
+              </motion.div>
+            )}
           </div>
 
           {/* Next project */}
