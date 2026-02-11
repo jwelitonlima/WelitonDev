@@ -48,16 +48,17 @@ const AboutPage = () => {
           {/* Title row */}
           <div className="grid lg:grid-cols-2 gap-12 items-start mb-20">
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight"
             >
               Ajudando marcas a prosperar no mundo digital
             </motion.h1>
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="flex items-start gap-4"
             >
               <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
@@ -72,9 +73,9 @@ const AboutPage = () => {
 
           {/* Photo */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 }}
+            initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="rounded-2xl overflow-hidden mb-24 aspect-[16/7]"
           >
             <AnimatePresence mode="wait">
@@ -107,10 +108,10 @@ const AboutPage = () => {
             {services.map((service, i) => (
               <motion.div
                 key={service.number}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ duration: 0.7, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
                 className="bg-background p-8 md:p-10"
               >
                 <div className="flex items-center gap-3 mb-4">
