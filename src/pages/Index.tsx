@@ -86,26 +86,46 @@ const Home = () => {
             </p>
 
             <motion.div
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              className="relative w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 group"
+              whileHover={{ scale: 1.06 }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="relative w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 group cursor-pointer"
             >
-              {/* Rotating border */}
-              <div className="absolute inset-0 rounded-full animate-[spin_6s_linear_infinite] opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="w-full h-full rounded-full" style={{
-                  background: "conic-gradient(from 0deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary)), transparent 60%)",
-                  padding: "2px",
-                }}>
-                  <div className="w-full h-full rounded-full bg-primary" />
-                </div>
-              </div>
-              {/* Glow effect */}
-              <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              {/* Button */}
+              {/* Outer orbital ring - slow */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 rounded-full"
+              >
+                <div className="absolute w-2 h-2 rounded-full bg-primary/40 group-hover:bg-primary/70 transition-colors duration-700 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                <div className="absolute w-1.5 h-1.5 rounded-full bg-accent/30 group-hover:bg-accent/60 transition-colors duration-700 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2" />
+              </motion.div>
+
+              {/* Middle orbital ring - medium */}
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-3 rounded-full border border-primary/[0.08] group-hover:border-primary/[0.15] transition-colors duration-700"
+              >
+                <div className="absolute w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors duration-500 top-1/2 right-0 translate-x-1/2 -translate-y-1/2" />
+              </motion.div>
+
+              {/* Inner orbital ring */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-6 rounded-full border border-accent/[0.06] group-hover:border-accent/[0.12] transition-colors duration-700"
+              >
+                <div className="absolute w-1 h-1 rounded-full bg-accent/40 group-hover:bg-accent/80 transition-colors duration-500 bottom-0 left-1/4 translate-y-1/2" />
+              </motion.div>
+
+              {/* Ambient glow */}
+              <div className="absolute inset-4 rounded-full bg-primary/[0.04] group-hover:bg-primary/[0.08] blur-2xl transition-all duration-1000 scale-125" />
+
+              {/* Core button */}
               <TransitionLink
                 to="/about"
-                className="absolute inset-[2px] rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs sm:text-sm font-semibold z-10"
+                className="absolute inset-6 sm:inset-7 lg:inset-8 rounded-full bg-foreground text-background flex items-center justify-center text-[10px] sm:text-xs font-semibold z-10 shadow-[0_0_0_1px_rgba(0,0,0,0.04)] group-hover:shadow-[0_4px_24px_-4px_hsl(var(--primary)/0.3)] transition-shadow duration-700"
               >
                 Sobre mim
               </TransitionLink>
