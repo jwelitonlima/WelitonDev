@@ -144,8 +144,9 @@ const Home = () => {
             className="max-w-3xl"
           >
             <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium text-foreground leading-relaxed mb-6">
-              A combinação da minha paixão por design, código e interação me posiciona
-              em um lugar único no mundo do web design.
+              A combinação da minha paixão por código, dados e inteligência artificial
+              me permite criar soluções digitais que unem tecnologia de ponta a
+              experiências intuitivas e impactantes.
             </p>
             <TransitionLink to="/about" className="text-sm link-underline text-foreground font-medium inline-flex items-center gap-2">
               Sobre mim →
