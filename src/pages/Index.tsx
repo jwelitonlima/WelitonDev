@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import TransitionLink from "@/components/TransitionLink";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import heroPortrait1 from "@/assets/hero-memoji.png";
@@ -93,12 +93,12 @@ const Home = () => {
               web únicas e produtos digitais de alto nível.
             </p>
 
-            <Link
+            <TransitionLink
               to="/about"
               className="btn-primary-circle w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 text-xs sm:text-sm font-semibold"
             >
               Sobre mim
-            </Link>
+            </TransitionLink>
           </motion.div>
 
           {/* Right: photo (desktop only) */}
@@ -154,9 +154,9 @@ const Home = () => {
               A combinação da minha paixão por design, código e interação me posiciona
               em um lugar único no mundo do web design.
             </p>
-            <Link to="/about" className="text-sm link-underline text-foreground font-medium inline-flex items-center gap-2">
+            <TransitionLink to="/about" className="text-sm link-underline text-foreground font-medium inline-flex items-center gap-2">
               Sobre mim →
-            </Link>
+            </TransitionLink>
           </motion.div>
         </div>
       </section>
@@ -169,9 +169,9 @@ const Home = () => {
               <p className="text-xs sm:text-sm uppercase tracking-widest text-muted-foreground mb-2">Portfólio</p>
               <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-foreground">Trabalhos Recentes</h2>
             </div>
-            <Link to="/work" className="text-sm link-underline text-foreground font-medium">
+            <TransitionLink to="/work" className="text-sm link-underline text-foreground font-medium">
               Ver todos →
-            </Link>
+            </TransitionLink>
           </div>
 
           <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
