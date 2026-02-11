@@ -43,15 +43,15 @@ const AboutPage = () => {
 
   return (
     <main>
-      <section className="section-light pt-32 pb-20">
+      <section className="section-light pt-28 sm:pt-32 pb-16 sm:pb-20">
         <div className="container-wide">
           {/* Title row */}
-          <div className="grid lg:grid-cols-2 gap-12 items-start mb-20">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start mb-12 sm:mb-20">
             <motion.h1
               initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight"
             >
               Ajudando marcas a prosperar no mundo digital
             </motion.h1>
@@ -61,10 +61,10 @@ const AboutPage = () => {
               transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="flex items-start gap-4"
             >
-              <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
                 <Globe className="w-5 h-5 text-primary-foreground" />
               </div>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                 Combino criatividade com expertise técnico para criar produtos digitais que não apenas
                 funcionam bem, mas também encantam os usuários com experiências memoráveis.
               </p>
@@ -76,7 +76,7 @@ const AboutPage = () => {
             initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-2xl overflow-hidden mb-24 aspect-[16/7]"
+            className="rounded-2xl overflow-hidden mb-12 sm:mb-24 aspect-[16/9] sm:aspect-[16/7]"
           >
             <AnimatePresence mode="wait">
               <motion.img
@@ -98,13 +98,13 @@ const AboutPage = () => {
           </motion.div>
 
           {/* Services */}
-          <div className="mb-10">
-            <p className="text-sm uppercase tracking-widest text-muted-foreground mb-8">
+          <div className="mb-6 sm:mb-10">
+            <p className="text-xs sm:text-sm uppercase tracking-widest text-muted-foreground mb-6 sm:mb-8">
               Posso te ajudar com...
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-px bg-border rounded-xl overflow-hidden">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-px bg-border rounded-xl overflow-hidden">
             {services.map((service, i) => (
               <motion.div
                 key={service.number}
@@ -112,13 +112,13 @@ const AboutPage = () => {
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                className="bg-background p-8 md:p-10"
+                className="bg-background p-6 sm:p-8 md:p-10"
               >
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3 mb-3 sm:mb-4">
                   <span className="text-xs text-muted-foreground">{service.number}</span>
                   <service.icon className="w-4 h-4 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-3">{service.title}</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 sm:mb-3">{service.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{service.description}</p>
               </motion.div>
             ))}
