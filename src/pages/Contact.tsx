@@ -39,10 +39,10 @@ const ContactPage = () => {
   };
 
   const fields = [
-    { num: "01", label: "What's your name?", key: "name", placeholder: "John Doe" },
-    { num: "02", label: "What's your email?", key: "email", placeholder: "john@doe.com" },
-    { num: "03", label: "What's your organization?", key: "organization", placeholder: "John & Doe ®" },
-    { num: "04", label: "What services are you looking for?", key: "services", placeholder: "Web Design, Web Development..." },
+    { num: "01", label: "Qual é o seu nome?", key: "name", placeholder: "João Silva" },
+    { num: "02", label: "Qual é o seu e-mail?", key: "email", placeholder: "joao@email.com" },
+    { num: "03", label: "Qual é a sua organização?", key: "organization", placeholder: "Empresa & Cia ®" },
+    { num: "04", label: "Quais serviços você procura?", key: "services", placeholder: "Web Design, Desenvolvimento Web..." },
   ];
 
   return (
@@ -56,7 +56,7 @@ const ContactPage = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-dark-fg mb-16"
             >
-              Let's start a project together
+              Vamos iniciar um projeto juntos
             </motion.h1>
 
             <form onSubmit={handleSubmit} className="space-y-12">
@@ -92,12 +92,12 @@ const ContactPage = () => {
               >
                 <label className="flex items-baseline gap-3 mb-3">
                   <span className="text-xs text-dark-fg/40">05</span>
-                  <span className="text-sm text-dark-fg/80">Your message</span>
+                  <span className="text-sm text-dark-fg/80">Sua mensagem</span>
                 </label>
                 <textarea
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  placeholder="Hello Weliton, I'd like to..."
+                  placeholder="Olá Weliton, gostaria de..."
                   rows={4}
                   className="w-full bg-transparent border-b border-dark-fg/20 pb-3 text-dark-fg placeholder:text-dark-fg/20 focus:outline-none focus:border-primary transition-colors resize-none"
                 />
@@ -114,7 +114,7 @@ const ContactPage = () => {
                 className="btn-primary-circle w-40 h-40 text-sm font-semibold gap-2"
               >
                 <Send className="w-4 h-4" />
-                Send it!
+                Enviar!
               </motion.button>
             </form>
           </div>
@@ -127,17 +127,17 @@ const ContactPage = () => {
             className="space-y-10 pt-4"
           >
             <div>
-              <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Contact Details</p>
+              <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Detalhes de Contato</p>
               <p className="text-sm text-dark-fg/80 mb-1">weliton@email.com</p>
               <p className="text-sm text-dark-fg/80">+55 (00) 00000-0000</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Business Details</p>
+              <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Detalhes Comerciais</p>
               <p className="text-sm text-dark-fg/80 mb-1">Weliton Dev</p>
               <p className="text-sm text-dark-fg/80">Brasil</p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Socials</p>
+              <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Redes Sociais</p>
               <div className="flex flex-col gap-2">
                 {["GitHub", "LinkedIn", "Instagram"].map((s) => (
                   <a key={s} href="#" className="text-sm text-dark-fg/80 link-underline inline-block w-fit">

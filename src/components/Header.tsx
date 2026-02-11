@@ -4,9 +4,9 @@ import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const navLinks = [
-  { label: "Work", path: "/work" },
-  { label: "About", path: "/about" },
-  { label: "Contact", path: "/contact" },
+  { label: "Trabalhos", path: "/work" },
+  { label: "Sobre", path: "/about" },
+  { label: "Contato", path: "/contact" },
 ];
 
 const Header = () => {

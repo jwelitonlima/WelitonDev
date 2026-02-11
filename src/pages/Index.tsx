@@ -11,13 +11,13 @@ import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
 import project4 from "@/assets/project-4.jpg";
 
-const greetings = ["Hello", "Bonjour", "Olá", "Ciao", "Hallo", "おい", "Hallå", "Guten tag"];
+const greetings = ["Hello", "Hola", "Bonjour", "Olá", "こんにちは"];
 
 const projects = [
-  { title: "E-commerce Platform", category: "Development", image: project1 },
-  { title: "Task Manager App", category: "Design & Dev", image: project2 },
-  { title: "Analytics Dashboard", category: "Development", image: project3 },
-  { title: "Social App", category: "Design", image: project4 },
+  { title: "Plataforma E-commerce", category: "Desenvolvimento", image: project1 },
+  { title: "App Gerenciador de Tarefas", category: "Design & Dev", image: project2 },
+  { title: "Painel de Analytics", category: "Desenvolvimento", image: project3 },
+  { title: "App Social", category: "Design", image: project4 },
 ];
 
 const Home = () => {
@@ -54,7 +54,7 @@ const Home = () => {
             </div>
 
             <p className="text-lg md:text-xl text-muted-foreground mb-2">
-              Freelance Designer & Developer
+              Designer & Desenvolvedor Freelance
             </p>
             <p className="text-muted-foreground max-w-md mb-10 leading-relaxed">
               Ajudando marcas a se destacarem no mundo digital através de experiências
@@ -65,7 +65,7 @@ const Home = () => {
               to="/about"
               className="btn-primary-circle w-36 h-36 text-sm font-semibold"
             >
-              About me
+              Sobre mim
             </Link>
           </motion.div>
 
@@ -86,7 +86,7 @@ const Home = () => {
             {/* Sidebar label */}
             <div className="absolute -right-6 top-1/2 -translate-y-1/2 rotate-90 origin-center">
               <span className="text-xs tracking-[0.3em] uppercase text-muted-foreground whitespace-nowrap">
-                Located in Brazil
+                Localizado no Brasil
               </span>
             </div>
           </motion.div>
@@ -107,11 +107,11 @@ const Home = () => {
         <div className="container-wide">
           <div className="flex justify-between items-end mb-12">
             <div>
-              <p className="text-sm uppercase tracking-widest text-muted-foreground mb-2">Portfolio</p>
-              <h2 className="text-3xl md:text-5xl font-bold text-foreground">Recent Work</h2>
+              <p className="text-sm uppercase tracking-widest text-muted-foreground mb-2">Portfólio</p>
+              <h2 className="text-3xl md:text-5xl font-bold text-foreground">Trabalhos Recentes</h2>
             </div>
             <Link to="/work" className="text-sm link-underline text-foreground font-medium">
-              View all →
+              Ver todos →
             </Link>
           </div>
 

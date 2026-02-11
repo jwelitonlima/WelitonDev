@@ -13,13 +13,13 @@ const services = [
   },
   {
     number: "02",
-    title: "Development",
+    title: "Desenvolvimento",
     description: "Desenvolvimento de aplicações web performáticas, escaláveis e com código limpo utilizando tecnologias modernas.",
     icon: Code,
   },
   {
     number: "03",
-    title: "The full package",
+    title: "Pacote Completo",
     description: "Do conceito à entrega final — design, desenvolvimento, deploy e suporte. Tudo em um só lugar.",
     icon: Star,
   },
@@ -37,7 +37,7 @@ const AboutPage = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight"
             >
-              Helping brands thrive in the digital world
+              Ajudando marcas a prosperar no mundo digital
             </motion.h1>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -68,7 +68,7 @@ const AboutPage = () => {
           {/* Services */}
           <div className="mb-10">
             <p className="text-sm uppercase tracking-widest text-muted-foreground mb-8">
-              I can help you with...
+              Posso te ajudar com...
             </p>
           </div>
 
