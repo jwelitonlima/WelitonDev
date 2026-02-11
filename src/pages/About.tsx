@@ -13,20 +13,20 @@ const aboutPhotos = [aboutPhoto1, aboutPhoto2, aboutPhoto3, aboutPhoto4];
 const services = [
   {
     number: "01",
-    title: "Design",
-    description: "Criação de interfaces modernas, intuitivas e visualmente impactantes que convertem visitantes em clientes.",
-    icon: Palette,
-  },
-  {
-    number: "02",
-    title: "Desenvolvimento",
-    description: "Desenvolvimento de aplicações web performáticas, escaláveis e com código limpo utilizando tecnologias modernas.",
+    title: "Desenvolvimento Web",
+    description: "Criação de aplicações web modernas, responsivas e performáticas com React, TypeScript e tecnologias de ponta.",
     icon: Code,
   },
   {
+    number: "02",
+    title: "Inteligência Artificial",
+    description: "Integração de modelos de linguagem (LLMs) e IA generativa para criar soluções inteligentes e automatizadas.",
+    icon: Globe,
+  },
+  {
     number: "03",
-    title: "Pacote Completo",
-    description: "Do conceito à entrega final — design, desenvolvimento, deploy e suporte. Tudo em um só lugar.",
+    title: "Análise de Dados",
+    description: "Transformação de dados complexos em insights acionáveis com SQL, Python, Power BI e Looker Studio.",
     icon: Star,
   },
 ];
