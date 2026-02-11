@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
-import heroPortrait from "@/assets/hero-memoji.png";
+import heroPortrait1 from "@/assets/hero-memoji.png";
+import heroPortrait2 from "@/assets/hero-memoji-2.png";
+import heroPortrait3 from "@/assets/hero-memoji-3.png";
+import heroPortrait4 from "@/assets/hero-memoji-4.png";
 import ProjectCard from "@/components/ProjectCard";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
@@ -12,6 +15,7 @@ import project3 from "@/assets/project-3.jpg";
 import project4 from "@/assets/project-4.jpg";
 
 const greetings = ["Hello", "Hola", "Bonjour", "Olá", "こんにちは"];
+const heroPortraits = [heroPortrait1, heroPortrait2, heroPortrait3, heroPortrait4];
 
 const projects = [
   { title: "Plataforma E-commerce", category: "Desenvolvimento", image: project1 },
@@ -22,10 +26,12 @@ const projects = [
 
 const Home = () => {
   const [greetingIndex, setGreetingIndex] = useState(0);
+  const [portraitIndex, setPortraitIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setGreetingIndex((prev) => (prev + 1) % greetings.length);
+      setPortraitIndex((prev) => (prev + 1) % heroPortraits.length);
     }, 2000);
     return () => clearInterval(interval);
   }, []);
@@ -77,8 +83,13 @@ const Home = () => {
             className="relative hidden lg:block"
           >
             <div className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-md ml-auto shadow-2xl">
-              <img
-                src={heroPortrait}
+              <motion.img
+                key={portraitIndex}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.5 }}
+                src={heroPortraits[portraitIndex]}
                 alt="Weliton Dev"
                 className="w-full h-full object-cover"
               />
