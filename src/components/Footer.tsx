@@ -8,7 +8,7 @@ const Footer = ({ variant = "dark" }: { variant?: "dark" | "light" }) => {
     const update = () => {
       const now = new Date();
       setTime(
-        now.toLocaleTimeString("en-US", {
+        now.toLocaleTimeString("pt-BR", {
           hour: "2-digit",
           minute: "2-digit",
           timeZoneName: "short",
@@ -35,28 +35,28 @@ const Footer = ({ variant = "dark" }: { variant?: "dark" | "light" }) => {
             Vamos trabalhar juntos
           </p>
           <h2 className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-10 ${textMain}`}>
-            Let's work<br />together
+            Vamos trabalhar<br />juntos
           </h2>
           <Link
             to="/contact"
             className="btn-primary-circle w-40 h-40 text-sm font-semibold hover:scale-110"
           >
-            Get in touch
+            Entre em contato
           </Link>
         </div>
 
         {/* Bottom bar */}
         <div className={`border-t ${borderColor} pt-6 flex flex-col md:flex-row justify-between items-center gap-4`}>
           <div className="flex items-center gap-6">
-            <span className={`text-xs ${textMuted}`}>VERSION</span>
+            <span className={`text-xs ${textMuted}`}>VERSÃO</span>
             <span className={`text-xs ${textMain}`}>v.2025.1</span>
           </div>
           <div className="flex items-center gap-6">
-            <span className={`text-xs ${textMuted}`}>LOCAL TIME</span>
+            <span className={`text-xs ${textMuted}`}>HORA LOCAL</span>
             <span className={`text-xs ${textMain}`}>{time}</span>
           </div>
           <div className="flex items-center gap-6">
-            <span className={`text-xs ${textMuted}`}>SOCIALS</span>
+            <span className={`text-xs ${textMuted}`}>REDES</span>
             <div className="flex gap-4">
               {["GitHub", "LinkedIn", "Instagram"].map((s) => (
                 <a key={s} href="#" className={`text-xs link-underline ${textMain}`}>

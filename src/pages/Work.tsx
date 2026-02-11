@@ -9,13 +9,13 @@ import project3 from "@/assets/project-3.jpg";
 import project4 from "@/assets/project-4.jpg";
 
 const allProjects = [
-  { title: "E-commerce Platform", client: "TechStore", location: "São Paulo", services: "Development", year: "2024", category: "development", image: project1 },
-  { title: "Brand Identity", client: "StartupXYZ", location: "Remote", services: "Design", year: "2024", category: "design", image: project2 },
-  { title: "Analytics Dashboard", client: "DataCo", location: "Rio de Janeiro", services: "Development", year: "2024", category: "development", image: project3 },
-  { title: "Social App", client: "ConnectApp", location: "Curitiba", services: "Design", year: "2023", category: "design", image: project4 },
-  { title: "Landing Page", client: "AgencyPro", location: "Remote", services: "Design & Dev", year: "2023", category: "development", image: project1 },
-  { title: "CRM System", client: "SalesForce BR", location: "São Paulo", services: "Development", year: "2023", category: "development", image: project2 },
-  { title: "Portfolio Website", client: "Creative Studio", location: "Florianópolis", services: "Design", year: "2023", category: "design", image: project3 },
+  { title: "Plataforma E-commerce", client: "TechStore", location: "São Paulo", services: "Desenvolvimento", year: "2024", category: "development", image: project1 },
+  { title: "Identidade Visual", client: "StartupXYZ", location: "Remoto", services: "Design", year: "2024", category: "design", image: project2 },
+  { title: "Painel de Analytics", client: "DataCo", location: "Rio de Janeiro", services: "Desenvolvimento", year: "2024", category: "development", image: project3 },
+  { title: "App Social", client: "ConnectApp", location: "Curitiba", services: "Design", year: "2023", category: "design", image: project4 },
+  { title: "Landing Page", client: "AgencyPro", location: "Remoto", services: "Design & Dev", year: "2023", category: "development", image: project1 },
+  { title: "Sistema CRM", client: "SalesForce BR", location: "São Paulo", services: "Desenvolvimento", year: "2023", category: "development", image: project2 },
+  { title: "Site Portfólio", client: "Creative Studio", location: "Florianópolis", services: "Design", year: "2023", category: "design", image: project3 },
 ];
 
 type Filter = "all" | "design" | "development";
@@ -37,13 +37,13 @@ const WorkPage = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-bold max-w-3xl mb-16 text-foreground"
           >
-            Creating next level digital products
+            Criando produtos digitais de outro nível
           </motion.h1>
 
           {/* Filters */}
           <div className="flex flex-wrap items-center justify-between gap-4 mb-10 border-b border-border pb-4">
             <div className="flex gap-6">
-              {([["all", `All`], ["design", `Design (${designCount})`], ["development", `Development (${devCount})`]] as const).map(
+              {([["all", `Todos`], ["design", `Design (${designCount})`], ["development", `Desenvolvimento (${devCount})`]] as const).map(
                 ([key, label]) => (
                   <button
                     key={key}
