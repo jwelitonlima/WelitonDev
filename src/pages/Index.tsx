@@ -9,20 +9,12 @@ import heroPortrait4 from "@/assets/hero-memoji-4.png";
 import ProjectCard from "@/components/ProjectCard";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
-import project1 from "@/assets/project-1.jpg";
-import project2 from "@/assets/project-2.jpg";
-import project3 from "@/assets/project-3.jpg";
-import project4 from "@/assets/project-4.jpg";
+import { allProjects } from "@/data/projects";
 
 const greetings = ["Hello", "Hola", "Bonjour", "Olá", "やあ"];
 const heroPortraits = [heroPortrait1, heroPortrait2, heroPortrait3, heroPortrait4];
 
-const projects = [
-  { title: "Plataforma E-commerce", category: "Desenvolvimento", image: project1 },
-  { title: "App Gerenciador de Tarefas", category: "Design & Dev", image: project2 },
-  { title: "Painel de Analytics", category: "Desenvolvimento", image: project3 },
-  { title: "App Social", category: "Design", image: project4 },
-];
+const homeProjects = allProjects.slice(0, 4);
 
 const Home = () => {
   const [greetingIndex, setGreetingIndex] = useState(0);
@@ -175,8 +167,8 @@ const Home = () => {
           </div>
 
           <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
-            {projects.map((project, i) => (
-              <ProjectCard key={project.title} {...project} index={i} />
+            {homeProjects.map((project, i) => (
+              <ProjectCard key={project.slug} title={project.title} category={project.services} image={project.image} slug={project.slug} index={i} />
             ))}
           </div>
         </div>
