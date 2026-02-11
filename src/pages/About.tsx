@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Globe, Palette, Code, Star } from "lucide-react";
-import aboutPhoto from "@/assets/about-photo.jpg";
+import aboutPhoto from "@/assets/hero-portrait.png";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
 
