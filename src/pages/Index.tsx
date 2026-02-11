@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import heroPortrait1 from "@/assets/hero-memoji.png";
 import heroPortrait2 from "@/assets/hero-memoji-2.png";
@@ -32,7 +32,7 @@ const Home = () => {
     const interval = setInterval(() => {
       setGreetingIndex((prev) => (prev + 1) % greetings.length);
       setPortraitIndex((prev) => (prev + 1) % heroPortraits.length);
-    }, 2000);
+    }, 3500);
     return () => clearInterval(interval);
   }, []);
 
@@ -47,16 +47,19 @@ const Home = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="mb-6">
-              <motion.span
-                key={greetingIndex}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-foreground"
-              >
-                {greetings[greetingIndex]}
-              </motion.span>
+            <div className="mb-6 h-[1.2em] text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight relative">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={greetingIndex}
+                  initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -20, filter: "blur(4px)" }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  className="absolute left-0 text-foreground"
+                >
+                  {greetings[greetingIndex]}
+                </motion.span>
+              </AnimatePresence>
             </div>
 
             <p className="text-lg md:text-xl text-muted-foreground mb-2">
@@ -83,16 +86,18 @@ const Home = () => {
             className="relative hidden lg:block"
           >
             <div className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-md ml-auto shadow-2xl">
-              <motion.img
-                key={portraitIndex}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.5 }}
-                src={heroPortraits[portraitIndex]}
-                alt="Weliton Dev"
-                className="w-full h-full object-cover"
-              />
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={portraitIndex}
+                  initial={{ opacity: 0, scale: 0.9, filter: "blur(6px)" }}
+                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, scale: 1.05, filter: "blur(6px)" }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                  src={heroPortraits[portraitIndex]}
+                  alt="Weliton Dev"
+                  className="w-full h-full object-cover"
+                />
+              </AnimatePresence>
             </div>
           </motion.div>
         </div>
