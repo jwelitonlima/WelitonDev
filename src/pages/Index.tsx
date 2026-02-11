@@ -14,7 +14,7 @@ import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
 import project4 from "@/assets/project-4.jpg";
 
-const greetings = ["Hello", "Hola", "Bonjour", "Olá", "こんにちは"];
+const greetings = ["Hello", "Hola", "Bonjour", "Olá"];
 const heroPortraits = [heroPortrait1, heroPortrait2, heroPortrait3, heroPortrait4];
 
 const projects = [
@@ -47,15 +47,15 @@ const Home = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="mb-6 h-[1.2em] text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight relative">
-              <AnimatePresence>
+            <div className="mb-6 h-[1.2em] text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight relative overflow-hidden">
+              <AnimatePresence mode="wait">
                 <motion.span
                   key={greetingIndex}
-                  initial={{ opacity: 0, y: 14, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, y: -14, filter: "blur(8px)", position: "absolute" }}
-                  transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-                  className="absolute left-0 text-foreground"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -30 }}
+                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                  className="block text-foreground"
                 >
                   {greetings[greetingIndex]}
                 </motion.span>
@@ -86,13 +86,13 @@ const Home = () => {
             className="relative hidden lg:block"
           >
             <div className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-md ml-auto shadow-2xl">
-              <AnimatePresence>
+              <AnimatePresence mode="wait">
                 <motion.img
                   key={portraitIndex}
-                  initial={{ opacity: 0, scale: 0.97, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, scale: 1.03, filter: "blur(8px)", position: "absolute", inset: 0 }}
-                  transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
                   src={heroPortraits[portraitIndex]}
                   alt="Weliton Dev"
                   className="w-full h-full object-cover"
