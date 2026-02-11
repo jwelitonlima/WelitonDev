@@ -86,48 +86,87 @@ const Home = () => {
             </p>
 
             <motion.div
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.96 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="relative w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 group cursor-pointer"
+              className="relative w-36 h-36 sm:w-40 sm:h-40 lg:w-44 lg:h-44 group cursor-pointer"
             >
-              {/* Outer orbital ring - slow */}
+              {/* Pulsing energy field */}
+              <motion.div
+                animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.3, 0.15] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 rounded-full bg-primary/20 blur-3xl"
+              />
+              <motion.div
+                animate={{ scale: [1.1, 1, 1.1], opacity: [0.1, 0.25, 0.1] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                className="absolute inset-0 rounded-full bg-accent/15 blur-3xl"
+              />
+
+              {/* Outer ring - dashed, rotating */}
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 rounded-full"
-              >
-                <div className="absolute w-2 h-2 rounded-full bg-primary/40 group-hover:bg-primary/70 transition-colors duration-700 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-                <div className="absolute w-1.5 h-1.5 rounded-full bg-accent/30 group-hover:bg-accent/60 transition-colors duration-700 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2" />
-              </motion.div>
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 rounded-full border border-dashed border-primary/10 group-hover:border-primary/25 transition-colors duration-1000"
+              />
 
-              {/* Middle orbital ring - medium */}
+              {/* Orbital ring 1 */}
               <motion.div
                 animate={{ rotate: -360 }}
-                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-3 rounded-full border border-primary/[0.08] group-hover:border-primary/[0.15] transition-colors duration-700"
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-2 rounded-full"
               >
-                <div className="absolute w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors duration-500 top-1/2 right-0 translate-x-1/2 -translate-y-1/2" />
+                <div className="absolute w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_2px_hsl(240_100%_67%/0.6)] top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                <div className="absolute w-1 h-1 rounded-full bg-accent/60 shadow-[0_0_6px_2px_hsl(180_100%_43%/0.4)] bottom-1 right-1" />
               </motion.div>
 
-              {/* Inner orbital ring */}
+              {/* Orbital ring 2 */}
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-6 rounded-full border border-accent/[0.06] group-hover:border-accent/[0.12] transition-colors duration-700"
+                transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-5 rounded-full border border-primary/[0.07] group-hover:border-primary/20 transition-colors duration-700"
               >
-                <div className="absolute w-1 h-1 rounded-full bg-accent/40 group-hover:bg-accent/80 transition-colors duration-500 bottom-0 left-1/4 translate-y-1/2" />
+                <div className="absolute w-1 h-1 rounded-full bg-primary/70 shadow-[0_0_6px_1px_hsl(240_100%_67%/0.5)] top-1/2 right-0 translate-x-1/2 -translate-y-1/2" />
               </motion.div>
 
-              {/* Ambient glow */}
-              <div className="absolute inset-4 rounded-full bg-primary/[0.04] group-hover:bg-primary/[0.08] blur-2xl transition-all duration-1000 scale-125" />
+              {/* Orbital ring 3 */}
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-8 rounded-full"
+              >
+                <div className="absolute w-1 h-1 rounded-full bg-accent shadow-[0_0_6px_2px_hsl(180_100%_43%/0.5)] bottom-0 left-1/3 translate-y-1/2" />
+              </motion.div>
 
-              {/* Core button */}
+              {/* Inner glow ring */}
+              <motion.div
+                animate={{ opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-10 sm:inset-11 lg:inset-12 rounded-full border border-primary/20 group-hover:border-primary/40 transition-colors duration-500"
+              />
+
+              {/* Core orb */}
+              <motion.div
+                animate={{ boxShadow: [
+                  "0 0 20px 4px hsl(240 100% 67% / 0.2), 0 0 60px 10px hsl(240 100% 67% / 0.1)",
+                  "0 0 30px 8px hsl(240 100% 67% / 0.35), 0 0 80px 20px hsl(240 100% 67% / 0.15)",
+                  "0 0 20px 4px hsl(240 100% 67% / 0.2), 0 0 60px 10px hsl(240 100% 67% / 0.1)",
+                ]}}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-11 sm:inset-12 lg:inset-13 rounded-full"
+                style={{
+                  background: "radial-gradient(circle at 40% 35%, hsl(240 100% 72%), hsl(240 100% 60%), hsl(260 80% 45%))",
+                }}
+              />
+
+              {/* Button overlay */}
               <TransitionLink
                 to="/about"
-                className="absolute inset-6 sm:inset-7 lg:inset-8 rounded-full bg-foreground text-background flex items-center justify-center text-[10px] sm:text-xs font-semibold z-10 shadow-[0_0_0_1px_rgba(0,0,0,0.04)] group-hover:shadow-[0_4px_24px_-4px_hsl(var(--primary)/0.3)] transition-shadow duration-700"
+                className="absolute inset-0 rounded-full flex items-center justify-center z-10"
               >
-                Sobre mim
+                <span className="text-[10px] sm:text-xs font-semibold text-primary-foreground drop-shadow-[0_1px_6px_rgba(0,0,0,0.4)] tracking-widest uppercase">
+                  Sobre mim
+                </span>
               </TransitionLink>
             </motion.div>
           </motion.div>
