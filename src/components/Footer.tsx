@@ -30,32 +30,32 @@ const Footer = ({ variant = "dark" }: { variant?: "dark" | "light" }) => {
     <footer className={`${bg} py-10`}>
       <div className="container-wide">
         {/* CTA */}
-        <div className="text-center py-16 md:py-24">
-          <p className={`text-sm uppercase tracking-widest mb-6 ${textMuted}`}>
+        <div className="text-center py-12 sm:py-16 md:py-24">
+          <p className={`text-sm uppercase tracking-widest mb-4 sm:mb-6 ${textMuted}`}>
             Vamos trabalhar juntos
           </p>
-          <h2 className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-10 ${textMain}`}>
+          <h2 className={`text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-8 sm:mb-10 ${textMain}`}>
             Vamos trabalhar<br />juntos
           </h2>
           <Link
             to="/contact"
-            className="btn-primary-circle w-40 h-40 text-sm font-semibold hover:scale-110"
+            className="btn-primary-circle w-32 h-32 sm:w-40 sm:h-40 text-xs sm:text-sm font-semibold hover:scale-110"
           >
             Entre em contato
           </Link>
         </div>
 
         {/* Bottom bar */}
-        <div className={`border-t ${borderColor} pt-6 flex flex-col md:flex-row justify-between items-center gap-4`}>
-          <div className="flex items-center gap-6">
+        <div className={`border-t ${borderColor} pt-6 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center`}>
+          <div className="flex items-center justify-between sm:justify-start gap-6">
             <span className={`text-xs ${textMuted}`}>VERSÃO</span>
             <span className={`text-xs ${textMain}`}>v.2025.1</span>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center justify-between sm:justify-start gap-6">
             <span className={`text-xs ${textMuted}`}>HORA LOCAL</span>
             <span className={`text-xs ${textMain}`}>{time}</span>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center justify-between sm:justify-start gap-6">
             <span className={`text-xs ${textMuted}`}>REDES</span>
             <div className="flex gap-4">
               {["GitHub", "LinkedIn", "Instagram"].map((s) => (

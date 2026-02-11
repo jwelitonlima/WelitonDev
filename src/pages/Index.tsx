@@ -39,15 +39,15 @@ const Home = () => {
   return (
     <main>
       {/* Hero */}
-      <section className="min-h-screen relative flex items-center section-light overflow-hidden">
-        <div className="container-wide w-full grid lg:grid-cols-2 gap-12 items-center pt-24 pb-16">
+      <section className="min-h-[100svh] relative flex items-center section-light overflow-hidden">
+        <div className="container-wide w-full grid lg:grid-cols-2 gap-8 lg:gap-12 items-center pt-24 pb-16">
           {/* Left: text */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="mb-6 h-[1.2em] text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight relative overflow-hidden">
+            <div className="mb-6 h-[1.2em] text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight relative overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={greetingIndex}
@@ -66,17 +66,17 @@ const Home = () => {
               </AnimatePresence>
             </div>
 
-            <p className="text-lg md:text-xl text-muted-foreground mb-2">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-1 sm:mb-2">
               Designer & Desenvolvedor Freelance
             </p>
-            <p className="text-muted-foreground max-w-md mb-10 leading-relaxed">
+            <p className="text-sm sm:text-base text-muted-foreground max-w-md mb-8 sm:mb-10 leading-relaxed">
               Ajudando marcas a se destacarem no mundo digital através de experiências
               web únicas e produtos digitais de alto nível.
             </p>
 
             <Link
               to="/about"
-              className="btn-primary-circle w-36 h-36 text-sm font-semibold"
+              className="btn-primary-circle w-28 h-28 sm:w-36 sm:h-36 text-xs sm:text-sm font-semibold"
             >
               Sobre mim
             </Link>
@@ -122,19 +122,19 @@ const Home = () => {
       </section>
 
       {/* Recent Work */}
-      <section className="section-light py-20 md:py-32">
+      <section className="section-light py-16 sm:py-20 md:py-32">
         <div className="container-wide">
-          <div className="flex justify-between items-end mb-12">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8 sm:mb-12">
             <div>
-              <p className="text-sm uppercase tracking-widest text-muted-foreground mb-2">Portfólio</p>
-              <h2 className="text-3xl md:text-5xl font-bold text-foreground">Trabalhos Recentes</h2>
+              <p className="text-xs sm:text-sm uppercase tracking-widest text-muted-foreground mb-2">Portfólio</p>
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-foreground">Trabalhos Recentes</h2>
             </div>
             <Link to="/work" className="text-sm link-underline text-foreground font-medium">
               Ver todos →
             </Link>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
             {projects.map((project, i) => (
               <ProjectCard key={project.title} {...project} index={i} />
             ))}
