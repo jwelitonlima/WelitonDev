@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Settings, Bell, Link2, Sliders } from "lucide-react";
+import FreightLayout from "@/components/freight/FreightLayout";
 import FreightHeader from "@/components/freight/FreightHeader";
 import { mockAlerts } from "@/data/freightData";
 
@@ -35,7 +36,7 @@ const FreightSettings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <FreightLayout>
       <FreightHeader alertCount={pendingAlerts} />
 
       <main className="max-w-3xl mx-auto px-4 md:px-8 py-6 space-y-8">
@@ -161,7 +162,7 @@ const FreightSettings = () => {
           </div>
         </motion.section>
       </main>
-    </div>
+    </FreightLayout>
   );
 };
 
