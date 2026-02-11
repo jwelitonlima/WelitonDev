@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import TransitionLink from "./TransitionLink";
 
 const Footer = ({ variant = "dark" }: { variant?: "dark" | "light" }) => {
   const [time, setTime] = useState("");
@@ -37,12 +37,12 @@ const Footer = ({ variant = "dark" }: { variant?: "dark" | "light" }) => {
           <h2 className={`text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-8 sm:mb-10 ${textMain}`}>
             Vamos trabalhar<br />juntos
           </h2>
-          <Link
+          <TransitionLink
             to="/contact"
             className="btn-primary-circle w-32 h-32 sm:w-40 sm:h-40 text-xs sm:text-sm font-semibold hover:scale-110"
           >
             Entre em contato
-          </Link>
+          </TransitionLink>
         </div>
 
         {/* Bottom bar */}
