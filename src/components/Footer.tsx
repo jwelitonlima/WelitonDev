@@ -58,11 +58,12 @@ const Footer = ({ variant = "dark" }: { variant?: "dark" | "light" }) => {
           <div className="flex items-center justify-between sm:justify-start gap-6">
             <span className={`text-xs ${textMuted}`}>REDES</span>
             <div className="flex gap-4">
-              {["GitHub", "LinkedIn", "Instagram"].map((s) => (
-                <a key={s} href="#" className={`text-xs link-underline ${textMain}`}>
-                  {s}
-                </a>
-              ))}
+              <a href="https://github.com/jwelitonlima" target="_blank" rel="noopener noreferrer" className={`text-xs link-underline ${textMain}`}>
+                GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/jweliton" target="_blank" rel="noopener noreferrer" className={`text-xs link-underline ${textMain}`}>
+                LinkedIn
+              </a>
             </div>
           </div>
         </div>

@@ -176,15 +176,16 @@ const Header = () => {
             >
               <p className="text-xs uppercase tracking-[0.2em] text-dark-fg/30 mb-4">Redes Sociais</p>
               <div className="flex gap-6 mb-6">
-                {["GitHub", "LinkedIn", "Instagram"].map((s) => (
-                  <a key={s} href="#" className="text-sm text-dark-fg/50 hover:text-dark-fg transition-colors duration-300">
-                    {s}
-                  </a>
-                ))}
+                <a href="https://github.com/jwelitonlima" target="_blank" rel="noopener noreferrer" className="text-sm text-dark-fg/50 hover:text-dark-fg transition-colors duration-300">
+                  GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/jweliton" target="_blank" rel="noopener noreferrer" className="text-sm text-dark-fg/50 hover:text-dark-fg transition-colors duration-300">
+                  LinkedIn
+                </a>
               </div>
               <div className="border-t border-dark-fg/10 pt-4 flex justify-between items-center">
                 <span className="text-xs text-dark-fg/25">v.2025.1</span>
-                <span className="text-xs text-dark-fg/25">weliton@email.com</span>
+                <span className="text-xs text-dark-fg/25">contato@welitondev.com</span>
               </div>
             </motion.div>
           </motion.div>
