@@ -14,7 +14,7 @@ import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
 import project4 from "@/assets/project-4.jpg";
 
-const greetings = ["Hello", "Hola", "Bonjour", "Olá"];
+const greetings = ["Hello", "Hola", "Bonjour", "Olá", "こんにちは"];
 const heroPortraits = [heroPortrait1, heroPortrait2, heroPortrait3, heroPortrait4];
 
 const projects = [
