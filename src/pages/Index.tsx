@@ -51,10 +51,14 @@ const Home = () => {
               <AnimatePresence mode="wait">
                 <motion.span
                   key={greetingIndex}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                  initial={{ opacity: 0, y: 40, filter: "blur(10px)", scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
+                  exit={{ opacity: 0, y: -40, filter: "blur(10px)", scale: 0.9 }}
+                  transition={{
+                    duration: 0.7,
+                    ease: [0.16, 1, 0.3, 1],
+                    opacity: { duration: 0.5 },
+                  }}
                   className="block text-foreground"
                 >
                   {greetings[greetingIndex]}
@@ -89,10 +93,15 @@ const Home = () => {
               <AnimatePresence mode="wait">
                 <motion.img
                   key={portraitIndex}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+                  initial={{ opacity: 0, scale: 1.08, filter: "blur(12px)" }}
+                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, scale: 0.95, filter: "blur(12px)" }}
+                  transition={{
+                    duration: 0.9,
+                    ease: [0.16, 1, 0.3, 1],
+                    opacity: { duration: 0.6 },
+                    scale: { duration: 1.1 },
+                  }}
                   src={heroPortraits[portraitIndex]}
                   alt="Weliton Dev"
                   className="w-full h-full object-cover"
