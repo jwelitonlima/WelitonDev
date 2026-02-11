@@ -58,7 +58,7 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="mb-4 lg:mb-6 h-[1.2em] text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight relative overflow-hidden">
+            <div className="mb-4 lg:mb-6 relative" style={{ minHeight: '1.2em' }}>
               <AnimatePresence mode="wait">
                 <motion.span
                   key={greetingIndex}
@@ -70,7 +70,7 @@ const Home = () => {
                     ease: [0.16, 1, 0.3, 1],
                     opacity: { duration: 0.5 },
                   }}
-                  className="block text-foreground"
+                  className="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-foreground"
                 >
                   {greetings[greetingIndex]}
                 </motion.span>

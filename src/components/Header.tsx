@@ -40,7 +40,7 @@ const Header = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-[60] transition-all duration-500 ${
           scrolled
             ? isDarkPage
               ? "bg-dark-bg/80 backdrop-blur-2xl shadow-[0_1px_0_rgba(255,255,255,0.05)]"

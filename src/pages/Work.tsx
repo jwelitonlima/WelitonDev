@@ -30,9 +30,9 @@ const WorkPage = () => {
             Projetos que combinam código, dados e IA
           </motion.h1>
 
-          {/* Filters */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 sm:mb-10 border-b border-border pb-4">
-            <div className="flex gap-3 sm:gap-6 overflow-x-auto pb-1 -mb-1 scrollbar-none">
+          {/* Filters & View Toggle */}
+          <div className="flex items-center justify-between gap-4 mb-8 sm:mb-10 border-b border-border pb-4">
+            <div className="flex gap-3 sm:gap-6 overflow-x-auto pb-1 -mb-1 scrollbar-none flex-1">
               {([["all", `Todos`], ["development", `Dev (${devCount})`], ["data", `Data (${dataCount})`], ["ai", `AI (${aiCount})`]] as const).map(
                 ([key, label]) => (
                   <button
@@ -48,7 +48,7 @@ const WorkPage = () => {
                 )
               )}
             </div>
-            <div className="flex gap-1 self-end sm:self-auto">
+            <div className="flex gap-1 flex-shrink-0">
               <button
                 onClick={() => setViewMode("list")}
                 className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded ${viewMode === "list" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"}`}
