@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
-import heroPortrait from "@/assets/hero-portrait.png";
+import heroPortrait from "@/assets/hero-memoji.png";
 import ProjectCard from "@/components/ProjectCard";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
