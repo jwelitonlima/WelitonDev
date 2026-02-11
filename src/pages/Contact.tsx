@@ -130,7 +130,7 @@ const ContactPage = () => {
             <div>
               <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Detalhes de Contato</p>
               <p className="text-sm text-dark-fg/80 mb-1">contato@welitondev.com</p>
-              <p className="text-sm text-dark-fg/80">+55 (75) 9 8182-8601</p>
+              <a href="https://wa.me/5575981828601" target="_blank" rel="noopener noreferrer" className="text-sm text-dark-fg/80 hover:text-primary transition-colors">+55 (75) 9 8182-8601</a>
             </div>
             <div>
               <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Detalhes Comerciais</p>
