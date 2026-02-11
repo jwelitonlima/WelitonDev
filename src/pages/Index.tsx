@@ -48,13 +48,13 @@ const Home = () => {
             transition={{ duration: 0.8 }}
           >
             <div className="mb-6 h-[1.2em] text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight relative">
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 <motion.span
                   key={greetingIndex}
-                  initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+                  initial={{ opacity: 0, y: 14, filter: "blur(8px)" }}
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, y: -20, filter: "blur(4px)" }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  exit={{ opacity: 0, y: -14, filter: "blur(8px)", position: "absolute" }}
+                  transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
                   className="absolute left-0 text-foreground"
                 >
                   {greetings[greetingIndex]}
@@ -86,13 +86,13 @@ const Home = () => {
             className="relative hidden lg:block"
           >
             <div className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-md ml-auto shadow-2xl">
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 <motion.img
                   key={portraitIndex}
-                  initial={{ opacity: 0, scale: 0.9, filter: "blur(6px)" }}
+                  initial={{ opacity: 0, scale: 0.97, filter: "blur(8px)" }}
                   animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, scale: 1.05, filter: "blur(6px)" }}
-                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                  exit={{ opacity: 0, scale: 1.03, filter: "blur(8px)", position: "absolute", inset: 0 }}
+                  transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
                   src={heroPortraits[portraitIndex]}
                   alt="Weliton Dev"
                   className="w-full h-full object-cover"
