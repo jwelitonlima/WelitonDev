@@ -85,12 +85,31 @@ const Home = () => {
               web únicas e produtos digitais de alto nível.
             </p>
 
-            <TransitionLink
-              to="/about"
-              className="btn-primary-circle w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 text-xs sm:text-sm font-semibold"
+            <motion.div
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              className="relative w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 group"
             >
-              Sobre mim
-            </TransitionLink>
+              {/* Rotating border */}
+              <div className="absolute inset-0 rounded-full animate-[spin_6s_linear_infinite] opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="w-full h-full rounded-full" style={{
+                  background: "conic-gradient(from 0deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary)), transparent 60%)",
+                  padding: "2px",
+                }}>
+                  <div className="w-full h-full rounded-full bg-primary" />
+                </div>
+              </div>
+              {/* Glow effect */}
+              <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              {/* Button */}
+              <TransitionLink
+                to="/about"
+                className="absolute inset-[2px] rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs sm:text-sm font-semibold z-10"
+              >
+                Sobre mim
+              </TransitionLink>
+            </motion.div>
           </motion.div>
 
           {/* Right: photo (desktop only) */}
