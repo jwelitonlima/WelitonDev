@@ -39,15 +39,34 @@ const Home = () => {
   return (
     <main>
       {/* Hero */}
-      <section className="min-h-[100svh] relative flex items-center section-light overflow-hidden">
-        <div className="container-wide w-full grid lg:grid-cols-2 gap-8 lg:gap-12 items-center pt-24 pb-16">
+      <section className="min-h-[100svh] relative flex flex-col justify-end lg:justify-center section-light overflow-hidden">
+        {/* Mobile: Full-screen memoji background */}
+        <div className="absolute inset-0 lg:hidden">
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={portraitIndex}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              src={heroPortraits[portraitIndex]}
+              alt="Weliton Dev"
+              className="w-full h-full object-cover object-top"
+            />
+          </AnimatePresence>
+          {/* Gradient overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        </div>
+
+        {/* Content */}
+        <div className="container-wide w-full grid lg:grid-cols-2 gap-8 lg:gap-12 items-end lg:items-center relative z-10 pt-24 pb-12 lg:pb-16">
           {/* Left: text */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="mb-6 h-[1.2em] text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight relative overflow-hidden">
+            <div className="mb-4 lg:mb-6 h-[1.2em] text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight relative overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={greetingIndex}
@@ -66,27 +85,27 @@ const Home = () => {
               </AnimatePresence>
             </div>
 
-            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-1 sm:mb-2">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-1">
               Designer & Desenvolvedor Freelance
             </p>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-md mb-8 sm:mb-10 leading-relaxed">
+            <p className="text-sm sm:text-base text-muted-foreground max-w-md mb-8 lg:mb-10 leading-relaxed">
               Ajudando marcas a se destacarem no mundo digital através de experiências
               web únicas e produtos digitais de alto nível.
             </p>
 
             <Link
               to="/about"
-              className="btn-primary-circle w-28 h-28 sm:w-36 sm:h-36 text-xs sm:text-sm font-semibold"
+              className="btn-primary-circle w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 text-xs sm:text-sm font-semibold"
             >
               Sobre mim
             </Link>
           </motion.div>
 
-          {/* Right: photo */}
+          {/* Right: photo (desktop only) */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative hidden lg:block"
           >
             <div className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-md ml-auto shadow-2xl">
@@ -115,14 +134,35 @@ const Home = () => {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
+          className="absolute bottom-6 lg:bottom-10 left-1/2 -translate-x-1/2 z-10"
         >
           <ArrowDown className="w-5 h-5 text-muted-foreground" />
         </motion.div>
       </section>
 
+      {/* Description section (mobile Snellenberg style) */}
+      <section className="section-light py-16 sm:py-20 md:py-28">
+        <div className="container-wide">
+          <motion.div
+            initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-3xl"
+          >
+            <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium text-foreground leading-relaxed mb-6">
+              A combinação da minha paixão por design, código e interação me posiciona
+              em um lugar único no mundo do web design.
+            </p>
+            <Link to="/about" className="text-sm link-underline text-foreground font-medium inline-flex items-center gap-2">
+              Sobre mim →
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Recent Work */}
-      <section className="section-light py-16 sm:py-20 md:py-32">
+      <section className="section-light py-16 sm:py-20 md:py-28">
         <div className="container-wide">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8 sm:mb-12">
             <div>
