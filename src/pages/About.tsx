@@ -1,8 +1,14 @@
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Globe, Palette, Code, Star } from "lucide-react";
-import aboutPhoto from "@/assets/about-memoji.png";
+import aboutPhoto1 from "@/assets/about-memoji.png";
+import aboutPhoto2 from "@/assets/about-memoji-2.png";
+import aboutPhoto3 from "@/assets/about-memoji-3.png";
+import aboutPhoto4 from "@/assets/about-memoji-4.png";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
+
+const aboutPhotos = [aboutPhoto1, aboutPhoto2, aboutPhoto3, aboutPhoto4];
 
 const services = [
   {
@@ -26,6 +32,15 @@ const services = [
 ];
 
 const AboutPage = () => {
+  const [photoIndex, setPhotoIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPhotoIndex((prev) => (prev + 1) % aboutPhotos.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <main>
       <section className="section-light pt-32 pb-20">
@@ -62,7 +77,23 @@ const AboutPage = () => {
             transition={{ delay: 0.3 }}
             className="rounded-2xl overflow-hidden mb-24 aspect-[16/7]"
           >
-            <img src={aboutPhoto} alt="Weliton working" className="w-full h-full object-cover" />
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={photoIndex}
+                initial={{ opacity: 0, scale: 1.08, filter: "blur(12px)" }}
+                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                exit={{ opacity: 0, scale: 0.95, filter: "blur(12px)" }}
+                transition={{
+                  duration: 0.9,
+                  ease: [0.16, 1, 0.3, 1],
+                  opacity: { duration: 0.6 },
+                  scale: { duration: 1.1 },
+                }}
+                src={aboutPhotos[photoIndex]}
+                alt="Weliton working"
+                className="w-full h-full object-cover"
+              />
+            </AnimatePresence>
           </motion.div>
 
           {/* Services */}
