@@ -64,6 +64,9 @@ const Footer = ({ variant = "dark" }: { variant?: "dark" | "light" }) => {
               <a href="https://www.linkedin.com/in/jweliton" target="_blank" rel="noopener noreferrer" className={`text-xs link-underline ${textMain}`}>
                 LinkedIn
               </a>
+              <a href="https://wa.me/5575981828601" target="_blank" rel="noopener noreferrer" className={`text-xs link-underline ${textMain}`}>
+                WhatsApp
+              </a>
             </div>
           </div>
         </div>
