@@ -1,22 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { LayoutGrid, List } from "lucide-react";
+import TransitionLink from "@/components/TransitionLink";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
-import project1 from "@/assets/project-1.jpg";
-import project2 from "@/assets/project-2.jpg";
-import project3 from "@/assets/project-3.jpg";
-import project4 from "@/assets/project-4.jpg";
-
-const allProjects = [
-  { title: "Plataforma E-commerce", client: "TechStore", location: "São Paulo", services: "Desenvolvimento", year: "2024", category: "development", image: project1 },
-  { title: "Identidade Visual", client: "StartupXYZ", location: "Remoto", services: "Design", year: "2024", category: "design", image: project2 },
-  { title: "Painel de Analytics", client: "DataCo", location: "Rio de Janeiro", services: "Desenvolvimento", year: "2024", category: "development", image: project3 },
-  { title: "App Social", client: "ConnectApp", location: "Curitiba", services: "Design", year: "2023", category: "design", image: project4 },
-  { title: "Landing Page", client: "AgencyPro", location: "Remoto", services: "Design & Dev", year: "2023", category: "development", image: project1 },
-  { title: "Sistema CRM", client: "SalesForce BR", location: "São Paulo", services: "Desenvolvimento", year: "2023", category: "development", image: project2 },
-  { title: "Site Portfólio", client: "Creative Studio", location: "Florianópolis", services: "Design", year: "2023", category: "design", image: project3 },
-];
+import { allProjects } from "@/data/projects";
 
 type Filter = "all" | "design" | "development";
 
@@ -79,45 +67,47 @@ const WorkPage = () => {
           {viewMode === "list" ? (
             <div className="divide-y divide-border">
               {filtered.map((project, i) => (
-                <motion.div
-                  key={project.title + i}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 py-4 sm:py-5 items-center group cursor-pointer hover:bg-secondary/50 transition-colors -mx-4 px-4 rounded gap-2"
-                >
-                  <span className="font-medium text-sm sm:text-base text-foreground group-hover:text-primary transition-colors col-span-1 sm:col-span-2 md:col-span-1 truncate">
-                    {project.client}
-                  </span>
-                  <span className="text-sm text-muted-foreground hidden md:block">{project.location}</span>
-                  <span className="text-xs sm:text-sm text-muted-foreground truncate">{project.services}</span>
-                  <span className="text-xs sm:text-sm text-muted-foreground text-right">{project.year}</span>
-                </motion.div>
+                <TransitionLink key={project.slug} to={`/project/${project.slug}`}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 py-4 sm:py-5 items-center group cursor-pointer hover:bg-secondary/50 transition-colors -mx-4 px-4 rounded gap-2"
+                  >
+                    <span className="font-medium text-sm sm:text-base text-foreground group-hover:text-primary transition-colors col-span-1 sm:col-span-2 md:col-span-1 truncate">
+                      {project.client}
+                    </span>
+                    <span className="text-sm text-muted-foreground hidden md:block">{project.location}</span>
+                    <span className="text-xs sm:text-sm text-muted-foreground truncate">{project.services}</span>
+                    <span className="text-xs sm:text-sm text-muted-foreground text-right">{project.year}</span>
+                  </motion.div>
+                </TransitionLink>
               ))}
             </div>
           ) : (
             <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
               {filtered.map((project, i) => (
-                <motion.div
-                  key={project.title + i}
-                  initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  transition={{ delay: i * 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="group cursor-pointer"
-                >
-                  <div className="relative overflow-hidden rounded-lg mb-3 sm:mb-4 aspect-[4/3] bg-secondary">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="flex justify-between items-baseline gap-2">
-                    <h3 className="font-semibold text-sm sm:text-base text-foreground truncate">{project.title}</h3>
-                    <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">{project.services}</span>
-                  </div>
-                </motion.div>
+                <TransitionLink key={project.slug} to={`/project/${project.slug}`}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{ delay: i * 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    className="group cursor-pointer"
+                  >
+                    <div className="relative overflow-hidden rounded-lg mb-3 sm:mb-4 aspect-[4/3] bg-secondary">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="flex justify-between items-baseline gap-2">
+                      <h3 className="font-semibold text-sm sm:text-base text-foreground truncate">{project.title}</h3>
+                      <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">{project.services}</span>
+                    </div>
+                  </motion.div>
+                </TransitionLink>
               ))}
             </div>
           )}

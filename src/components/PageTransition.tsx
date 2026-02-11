@@ -1,12 +1,23 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { allProjects } from "@/data/projects";
 
 const pageNames: Record<string, string> = {
   "/": "Home",
   "/work": "Work",
   "/about": "About",
   "/contact": "Contact",
+};
+
+const getPageName = (path: string): string => {
+  if (pageNames[path]) return pageNames[path];
+  const match = path.match(/^\/project\/(.+)$/);
+  if (match) {
+    const project = allProjects.find((p) => p.slug === match[1]);
+    return project?.title || "Project";
+  }
+  return "Page";
 };
 
 interface PageTransitionContextValue {
@@ -61,7 +72,7 @@ export const PageTransitionProvider = ({ children }: { children: React.ReactNode
     };
   }, [isTransitioning, targetPath, navigate]);
 
-  const pageName = pageNames[targetPath] || "Page";
+  const pageName = getPageName(targetPath);
 
   return (
     <PageTransitionContext.Provider value={{ navigateWithTransition }}>
