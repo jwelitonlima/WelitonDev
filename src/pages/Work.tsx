@@ -32,13 +32,13 @@ const WorkPage = () => {
 
           {/* Filters */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 sm:mb-10 border-b border-border pb-4">
-            <div className="flex gap-4 sm:gap-6 overflow-x-auto pb-1 -mb-1 scrollbar-none">
+            <div className="flex gap-3 sm:gap-6 overflow-x-auto pb-1 -mb-1 scrollbar-none">
               {([["all", `Todos`], ["development", `Dev (${devCount})`], ["data", `Data (${dataCount})`], ["ai", `AI (${aiCount})`]] as const).map(
                 ([key, label]) => (
                   <button
                     key={key}
                     onClick={() => setFilter(key)}
-                    className={`text-sm font-medium transition-colors whitespace-nowrap ${
+                    className={`text-sm font-medium transition-colors whitespace-nowrap py-1.5 min-h-[44px] flex items-center ${
                       filter === key ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
@@ -48,16 +48,16 @@ const WorkPage = () => {
                 )
               )}
             </div>
-            <div className="flex gap-2 self-end sm:self-auto">
+            <div className="flex gap-1 self-end sm:self-auto">
               <button
                 onClick={() => setViewMode("list")}
-                className={`p-2 rounded ${viewMode === "list" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"}`}
+                className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded ${viewMode === "list" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"}`}
               >
                 <List className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setViewMode("grid")}
-                className={`p-2 rounded ${viewMode === "grid" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"}`}
+                className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded ${viewMode === "grid" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"}`}
               >
                 <LayoutGrid className="w-4 h-4" />
               </button>
@@ -73,14 +73,16 @@ const WorkPage = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 py-4 sm:py-5 items-center group cursor-pointer hover:bg-secondary/50 transition-colors -mx-4 px-4 rounded gap-2"
+                    className="flex flex-col sm:grid sm:grid-cols-4 md:grid-cols-5 py-4 sm:py-5 items-start sm:items-center group cursor-pointer hover:bg-secondary/50 transition-colors -mx-4 px-4 rounded gap-1 sm:gap-2"
                   >
-                    <span className="font-medium text-sm sm:text-base text-foreground group-hover:text-primary transition-colors col-span-1 sm:col-span-2 md:col-span-1 truncate">
+                    <span className="font-medium text-sm sm:text-base text-foreground group-hover:text-primary transition-colors sm:col-span-2 md:col-span-1 truncate w-full">
                       {project.client}
                     </span>
                     <span className="text-sm text-muted-foreground hidden md:block">{project.location}</span>
-                    <span className="text-xs sm:text-sm text-muted-foreground truncate">{project.services}</span>
-                    <span className="text-xs sm:text-sm text-muted-foreground text-right">{project.year}</span>
+                    <div className="flex items-center justify-between w-full sm:contents">
+                      <span className="text-xs sm:text-sm text-muted-foreground">{project.services}</span>
+                      <span className="text-xs sm:text-sm text-muted-foreground sm:text-right">{project.year}</span>
+                    </div>
                   </motion.div>
                 </TransitionLink>
               ))}
