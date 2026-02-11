@@ -78,7 +78,7 @@ const Home = () => {
             </div>
 
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-1">
-              Front-end Developer | Data Analyst | AI/LLM Engineer
+              Front-end Developer Data Analyst & AI/LLM Engineer
             </p>
             <p className="text-sm sm:text-base text-muted-foreground max-w-md mb-8 lg:mb-10 leading-relaxed">
               Ajudando marcas a se destacarem no mundo digital através de experiências
