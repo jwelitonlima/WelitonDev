@@ -129,8 +129,8 @@ const ContactPage = () => {
           >
             <div>
               <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Detalhes de Contato</p>
-              <p className="text-sm text-dark-fg/80 mb-1">weliton@email.com</p>
-              <p className="text-sm text-dark-fg/80">+55 (00) 00000-0000</p>
+              <p className="text-sm text-dark-fg/80 mb-1">contato@welitondev.com</p>
+              <p className="text-sm text-dark-fg/80">+55 (75) 9 8182-8601</p>
             </div>
             <div>
               <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Detalhes Comerciais</p>
@@ -140,11 +140,12 @@ const ContactPage = () => {
             <div>
               <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Redes Sociais</p>
               <div className="flex flex-row lg:flex-col gap-4 lg:gap-2">
-                {["GitHub", "LinkedIn", "Instagram"].map((s) => (
-                  <a key={s} href="#" className="text-sm text-dark-fg/80 link-underline inline-block w-fit">
-                    {s}
-                  </a>
-                ))}
+                <a href="https://github.com/jwelitonlima" target="_blank" rel="noopener noreferrer" className="text-sm text-dark-fg/80 link-underline inline-block w-fit">
+                  GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/jweliton" target="_blank" rel="noopener noreferrer" className="text-sm text-dark-fg/80 link-underline inline-block w-fit">
+                  LinkedIn
+                </a>
               </div>
             </div>
           </motion.aside>
