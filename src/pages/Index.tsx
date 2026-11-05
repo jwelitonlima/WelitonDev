@@ -55,8 +55,8 @@ const Home = () => {
               className="w-full h-full object-cover object-top"
             />
           </AnimatePresence>
-          {/* Gradient overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+          {/* Gradiente mais forte para garantir a leitura do texto no mobile */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
         </div>
 
         {/* Content */}
@@ -86,10 +86,11 @@ const Home = () => {
               </AnimatePresence>
             </div>
 
-            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-1">
+            {/* Mudança de cor e tamanho para melhorar a leitura no mobile */}
+            <p className="text-lg sm:text-xl md:text-2xl text-foreground/90 font-medium mb-2">
               Front-end Developer Data Analyst & AI/LLM Engineer
             </p>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-md mb-8 lg:mb-10 leading-relaxed">
+            <p className="text-base sm:text-lg text-foreground/80 max-w-md mb-8 lg:mb-10 leading-relaxed">
               Desenvolvo experiências web modernas com JavaScript e frameworks, 
               análise de dados e IA generativa. Transformando dados complexos 
               em interfaces inteligentes e intuitivas.
