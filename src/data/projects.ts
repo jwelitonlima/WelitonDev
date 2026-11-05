@@ -3,8 +3,7 @@ import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
 import project4 from "@/assets/project-4.jpg";
 import projectFreteAI from "@/assets/project-freteai.jpg";
-// Importe a imagem real do InteraMed quando tiver. Usei a project-1 como placeholder.
-import projectInteraMed from "@/assets/project-interamed.png";
+import projectInteraMed from "@/assets/project-interamed.png"; 
 
 export interface Project {
   slug: string;
@@ -27,8 +26,8 @@ export const allProjects: Project[] = [
   {
     slug: "frete-ai",
     title: "FreteAI — Sistema de Monitoramento de Frete com IA",
-    client: "Projeto Pessoal",
-    location: "Remoto",
+    client: "Desafio de Logística (Parceria Acadêmica)",
+    location: "Brasil",
     services: "Full-Stack Development & AI",
     year: "2025",
     category: "ai",
@@ -43,24 +42,24 @@ export const allProjects: Project[] = [
   {
     slug: "interamed",
     title: "InteraMed — Assistente Clínico de Interações Medicamentosas",
-    client: "Projeto Pessoal",
-    location: "Remoto",
+    client: "Co-criação com Aluno de Enfermagem (UFPI)",
+    location: "Teresina, PI",
     services: "Full-Stack Development & IA",
-    year: "2025",
+    year: "2026",
     category: "development",
     image: projectInteraMed,
     description: "Ferramenta mobile-first criada para a equipe de enfermagem na linha de frente. Auxilia na checagem rápida de interações medicamentosas complexas, gestão inteligente de horários de administração e leitura de receitas via IA, reduzindo erros graves no ambiente hospitalar.",
     challenge: "No ambiente hospitalar, especialmente no SUS, enfermeiros lidam com prescrições complexas (10 a 29 medicamentos por paciente). A checagem manual é lenta, suscetível a erros e pode causar reações adversas graves e anular tratamentos.",
     solution: "Desenvolvi um MVP funcional com design premium e mobile-first (inspirado em Apple/Nike). Utiliza React, TanStack Start e Tailwind. Integra a API da ANVISA e o Llama 4 Scout (Groq) para OCR de receitas. O motor de aprazamento inteligente sugere horários que respeitam a cronobiologia e fogem da passagem de plantão.",
-    technologies: ["React", "TanStack Start", "Tailwind CSS", "Groq", "Llama 4 Scout", "APIs ANVISA"],
+    technologies: ["React", "TanStack Start", "Tailwind CSS", "Groq", "Llama 4 Scout", "APIs ANVISA", "Open FDA"],
     result: "MVP 100% funcional, com APIs de terceiros integradas, motor de regras clínicas e design validado para reduzir a fadiga cognitiva.",
     demoUrl: "https://interamed-five.vercel.app/", 
   },
   {
     slug: "analise-llms-python",
     title: "Análise Inteligente com LLMs e Python",
-    client: "Projeto Pessoal",
-    location: "Remoto",
+    client: "Projeto de Pesquisa & Extensão",
+    location: "Brasil",
     services: "AI & Data Engineering",
     year: "2024",
     category: "ai",
@@ -74,8 +73,8 @@ export const allProjects: Project[] = [
   {
     slug: "dashboard-bi",
     title: "Dashboard Interativo em Power BI & Looker Studio",
-    client: "Projeto Corporativo",
-    location: "Remoto",
+    client: "Projeto de Extensão Universitária",
+    location: "Brasil",
     services: "Business Intelligence & Analytics",
     year: "2024",
     category: "data",
@@ -89,8 +88,8 @@ export const allProjects: Project[] = [
   {
     slug: "app-assistente-ia",
     title: "Aplicação Web com Assistente IA Integrado",
-    client: "Projeto Pessoal",
-    location: "Remoto",
+    client: "Inovação Acadêmica",
+    location: "Brasil",
     services: "Full-Stack Development & AI",
     year: "2024",
     category: "ai",
@@ -104,8 +103,8 @@ export const allProjects: Project[] = [
   {
     slug: "automacao-python",
     title: "Automação de Processos com Python & APIs",
-    client: "Projeto Corporativo",
-    location: "Remoto",
+    client: "Solução para Demanda Real de Empresa",
+    location: "Brasil",
     services: "Data & Automation",
     year: "2024",
     category: "data",
