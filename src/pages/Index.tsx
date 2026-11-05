@@ -55,8 +55,8 @@ const Home = () => {
               className="w-full h-full object-cover object-top"
             />
           </AnimatePresence>
-          {/* Gradiente muito mais sutil apenas na base para transição suave */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80" />
+          {/* Gradiente ajustado: mais forte na base para leitura do texto, mas transparente no topo para não esconder o memoji */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/90 to-transparent" style={{ backgroundSize: '100% 70%', backgroundPosition: 'bottom', backgroundRepeat: 'no-repeat' }} />
         </div>
 
         {/* Content */}
@@ -67,43 +67,40 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Aplicando efeito de vidro (glassmorphism) apenas no mobile para não apagar a foto */}
-            <div className="lg:bg-transparent bg-background/60 backdrop-blur-md p-6 rounded-2xl shadow-sm lg:p-0 lg:shadow-none lg:backdrop-blur-none">
-              <div className="mb-4 lg:mb-6 relative" style={{ minHeight: '1.2em' }}>
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={greetingIndex}
-                    initial={{ opacity: 0, y: 40, filter: "blur(10px)", scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
-                    exit={{ opacity: 0, y: -40, filter: "blur(10px)", scale: 0.9 }}
-                    transition={{
-                      duration: 0.7,
-                      ease: [0.16, 1, 0.3, 1],
-                      opacity: { duration: 0.5 },
-                    }}
-                    className="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-foreground"
-                  >
-                    {greetings[greetingIndex]}
-                  </motion.span>
-                </AnimatePresence>
-              </div>
-
-              <p className="text-lg sm:text-xl md:text-2xl text-foreground font-medium mb-2">
-                Front-end Developer Data Analyst & AI/LLM Engineer
-              </p>
-              <p className="text-base sm:text-lg text-foreground/80 max-w-md mb-8 lg:mb-10 leading-relaxed">
-                Desenvolvo experiências web modernas com JavaScript e frameworks, 
-                análise de dados e IA generativa. Transformando dados complexos 
-                em interfaces inteligentes e intuitivas.
-              </p>
-
-              <TransitionLink
-                to="/about"
-                className="btn-primary-circle w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 text-xs sm:text-sm font-semibold"
-              >
-                Sobre mim
-              </TransitionLink>
+            <div className="mb-4 lg:mb-6 relative" style={{ minHeight: '1.2em' }}>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={greetingIndex}
+                  initial={{ opacity: 0, y: 40, filter: "blur(10px)", scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
+                  exit={{ opacity: 0, y: -40, filter: "blur(10px)", scale: 0.9 }}
+                  transition={{
+                    duration: 0.7,
+                    ease: [0.16, 1, 0.3, 1],
+                    opacity: { duration: 0.5 },
+                  }}
+                  className="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-foreground"
+                >
+                  {greetings[greetingIndex]}
+                </motion.span>
+              </AnimatePresence>
             </div>
+
+            <p className="text-lg sm:text-xl md:text-2xl text-foreground font-medium mb-2">
+              Front-end Developer Data Analyst & AI/LLM Engineer
+            </p>
+            <p className="text-base sm:text-lg text-foreground/80 max-w-md mb-8 lg:mb-10 leading-relaxed">
+              Desenvolvo experiências web modernas com JavaScript e frameworks, 
+              análise de dados e IA generativa. Transformando dados complexos 
+              em interfaces inteligentes e intuitivas.
+            </p>
+
+            <TransitionLink
+              to="/about"
+              className="btn-primary-circle w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36 text-xs sm:text-sm font-semibold"
+            >
+              Sobre mim
+            </TransitionLink>
           </motion.div>
 
           {/* Right: photo (desktop only) */}
