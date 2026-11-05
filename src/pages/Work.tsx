@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { LayoutGrid, List, ArrowUpRight } from "lucide-react";
+import { LayoutGrid, List, ArrowUpRight, Play } from "lucide-react"; // Adicionado ícone Play
 import TransitionLink from "@/components/TransitionLink";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
@@ -84,6 +84,18 @@ const WorkPage = () => {
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
+                    
+                    {/* Badge de Demo Live Mobile */}
+                    {project.demoUrl && (
+                      <div className="absolute top-3 left-3 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        Demo Live
+                      </div>
+                    )}
+
                     <div className="absolute bottom-0 left-0 right-0 p-4">
                       <span className="text-xs font-medium text-background/70 uppercase tracking-wider">
                         {project.services}
@@ -117,8 +129,9 @@ const WorkPage = () => {
                       transition={{ delay: i * 0.05 }}
                       className="grid grid-cols-4 md:grid-cols-5 py-5 items-center group cursor-pointer hover:bg-secondary/50 transition-colors -mx-4 px-4 rounded gap-2"
                     >
-                      <span className="font-medium text-base text-foreground group-hover:text-primary transition-colors col-span-2 md:col-span-1 truncate">
-                        {project.client}
+                      <span className="font-medium text-base text-foreground group-hover:text-primary transition-colors col-span-2 md:col-span-1 truncate flex items-center gap-2">
+                        {project.title}
+                        {project.demoUrl && <Play className="w-3 h-3 text-green-500 fill-green-500" />}
                       </span>
                       <span className="text-sm text-muted-foreground hidden md:block">{project.location}</span>
                       <span className="text-sm text-muted-foreground">{project.services}</span>
@@ -144,6 +157,17 @@ const WorkPage = () => {
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                           loading="lazy"
                         />
+                        
+                        {/* Badge de Demo Live Desktop */}
+                        {project.demoUrl && (
+                          <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
+                            <span className="relative flex h-2 w-2">
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                            </span>
+                            Demo Live
+                          </div>
+                        )}
                       </div>
                       <div className="flex justify-between items-baseline gap-2">
                         <h3 className="font-semibold text-base text-foreground truncate">{project.title}</h3>

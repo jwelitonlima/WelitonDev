@@ -4,7 +4,7 @@ import project3 from "@/assets/project-3.jpg";
 import project4 from "@/assets/project-4.jpg";
 import projectFreteAI from "@/assets/project-freteai.jpg";
 // Importe a imagem real do InteraMed quando tiver. Usei a project-1 como placeholder.
-import projectInteraMed from "@/assets/project-1.jpg"; 
+import projectInteraMed from "@/assets/project-interamed.png";
 
 export interface Project {
   slug: string;
