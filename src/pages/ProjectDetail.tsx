@@ -7,6 +7,7 @@ import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
 import { allProjects } from "@/data/projects";
 import { DemoModal } from "@/components/DemoModal";
+import { DeviceMockupCarousel } from "@/components/DeviceMockupCarousel";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -32,6 +33,7 @@ const ProjectDetail = () => {
     <main>
       <section className="section-light pt-28 sm:pt-32 pb-16 sm:pb-20">
         <div className="container-wide">
+          {/* Back link */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -46,6 +48,7 @@ const ProjectDetail = () => {
             </TransitionLink>
           </motion.div>
 
+          {/* Title & meta */}
           <div className="grid lg:grid-cols-[1fr_320px] gap-8 lg:gap-16 mb-10 sm:mb-16">
             <motion.h1
               initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
@@ -63,37 +66,41 @@ const ProjectDetail = () => {
               className="flex flex-wrap gap-x-8 gap-y-4 text-sm"
             >
               <div>
-                <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Cliente</p>
+                <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Origem</p>
                 <p className="text-foreground font-medium">{project.client}</p>
-              </div>
-              <div>
-                <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Serviços</p>
-                <p className="text-foreground font-medium">{project.services}</p>
-              </div>
-              <div>
-                <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Ano</p>
-                <p className="text-foreground font-medium">{project.year}</p>
               </div>
               <div>
                 <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Local</p>
                 <p className="text-foreground font-medium">{project.location}</p>
               </div>
+              <div>
+                <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Ano</p>
+                <p className="text-foreground font-medium">{project.year}</p>
+              </div>
             </motion.div>
           </div>
 
+          {/* HERO SECTION: Carrossel de Mockups ou Imagem Normal */}
           <motion.div
             initial={{ opacity: 0, scale: 0.97, filter: "blur(10px)" }}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1, delay: 0.2, ease }}
-            className="rounded-2xl overflow-hidden mb-16 sm:mb-24 aspect-[16/9] bg-secondary"
+            className="mb-16 sm:mb-24 w-full"
           >
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-full object-cover"
-            />
+            {project.gallery ? (
+              <DeviceMockupCarousel images={project.gallery} title={project.title} />
+            ) : (
+              <div className="rounded-2xl overflow-hidden aspect-[16/9] bg-secondary">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
           </motion.div>
 
+          {/* Description */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 mb-16 sm:mb-24">
             <motion.div
               initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
@@ -127,6 +134,7 @@ const ProjectDetail = () => {
             </motion.div>
           </div>
 
+          {/* Challenge, Solution & Result */}
           <div className="grid lg:grid-cols-2 gap-px bg-border rounded-xl overflow-hidden mb-16 sm:mb-24">
             <motion.div
               initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
@@ -170,6 +178,7 @@ const ProjectDetail = () => {
             )}
           </div>
 
+          {/* Demo Button */}
           {project.demoUrl && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -188,6 +197,7 @@ const ProjectDetail = () => {
             </motion.div>
           )}
 
+          {/* Next project */}
           {(() => {
             const currentIndex = allProjects.findIndex((p) => p.slug === slug);
             const nextProject = allProjects[(currentIndex + 1) % allProjects.length];

@@ -3,7 +3,15 @@ import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
 import project4 from "@/assets/project-4.jpg";
 import projectFreteAI from "@/assets/project-freteai.jpg";
-import projectInteraMed from "@/assets/project-interamed.png"; 
+
+// Importando os 4 mockups do InteraMed
+import mockup1 from "@/assets/interamed-mockup-1.png";
+import mockup2 from "@/assets/interamed-mockup-2.png";
+import mockup3 from "@/assets/interamed-mockup-3.png";
+import mockup4 from "@/assets/interamed-mockup-4.png";
+
+// Como não temos mais a foto antiga, usamos o mockup 1 como capa do card
+const projectInteraMed = mockup1;
 
 export interface Project {
   slug: string;
@@ -20,6 +28,7 @@ export interface Project {
   technologies: string[];
   result?: string;
   demoUrl?: string;
+  gallery?: string[]; // Novo campo para os mockups
 }
 
 export const allProjects: Project[] = [
@@ -42,18 +51,19 @@ export const allProjects: Project[] = [
   {
     slug: "interamed",
     title: "InteraMed — Assistente Clínico de Interações Medicamentosas",
-    client: "Co-criação com João Victor Pinheiro - Enfermagem - UFPI",
-    location: "Picos, Piauí",
+    client: "Co-criação com João Victor Pinheiro (Enfermagem - UFPI)",
+    location: "Picos, PI",
     services: "Full-Stack Development & IA",
     year: "2026",
     category: "development",
-    image: projectInteraMed,
+    image: projectInteraMed, // Agora isso aponta para o mockup1
     description: "Ferramenta mobile-first criada para a equipe de enfermagem na linha de frente. Auxilia na checagem rápida de interações medicamentosas complexas, gestão inteligente de horários de administração e leitura de receitas via IA, reduzindo erros graves no ambiente hospitalar.",
     challenge: "No ambiente hospitalar, especialmente no SUS, enfermeiros lidam com prescrições complexas (10 a 29 medicamentos por paciente). A checagem manual é lenta e suscetível a erros. A dor foi mapeada junto ao aluno de enfermagem João Victor Pinheiro (UFPI/Picos), unindo a vivência clínica dele com a minha experiência em tecnologia e no setor de saúde laboratorial.",
-    solution: "Desenvolvi um MVP funcional com design premium e mobile-first. Utiliza React, TanStack Start e Tailwind. Integra a API da ANVISA e o Llama 4 Scout (Groq) para OCR de receitas. O motor de aprazamento inteligente sugere horários que respeitam a cronobiologia e fogem da passagem de plantão.",
-    technologies: ["React", "TanStack Start", "Tailwind CSS", "Groq", "Llama 4 Scout", "APIs ANVISA", "API Open FDA"],
+    solution: "Desenvolvi um MVP funcional com design premium e mobile-first (inspirado em Apple/Nike). Utiliza React, TanStack Start e Tailwind. Integra a API da ANVISA e o Llama 4 Scout (Groq) para OCR de receitas. O motor de aprazamento inteligente sugere horários que respeitam a cronobiologia e fogem da passagem de plantão.",
+    technologies: ["React", "TanStack Start", "Tailwind CSS", "Groq", "Llama 4 Scout", "APIs ANVISA", "Open FDA"],
     result: "MVP 100% funcional, com APIs de terceiros integradas, motor de regras clínicas e design validado para reduzir a fadiga cognitiva.",
     demoUrl: "https://interamed-five.vercel.app/", 
+    gallery: [mockup1, mockup2, mockup3, mockup4], // Galeria com os 4 mockups
   },
   {
     slug: "analise-llms-python",
