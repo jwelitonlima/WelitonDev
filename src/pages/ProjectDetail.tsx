@@ -33,7 +33,6 @@ const ProjectDetail = () => {
     <main>
       <section className="section-light pt-28 sm:pt-32 pb-16 sm:pb-20">
         <div className="container-wide">
-          {/* Back link */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -48,7 +47,6 @@ const ProjectDetail = () => {
             </TransitionLink>
           </motion.div>
 
-          {/* Title & meta */}
           <div className="grid lg:grid-cols-[1fr_320px] gap-8 lg:gap-16 mb-10 sm:mb-16">
             <motion.h1
               initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
@@ -80,7 +78,6 @@ const ProjectDetail = () => {
             </motion.div>
           </div>
 
-          {/* HERO SECTION: Carrossel de Mockups ou Imagem Normal */}
           <motion.div
             initial={{ opacity: 0, scale: 0.97, filter: "blur(10px)" }}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
@@ -88,7 +85,11 @@ const ProjectDetail = () => {
             className="mb-16 sm:mb-24 w-full"
           >
             {project.gallery ? (
-              <DeviceMockupCarousel images={project.gallery} title={project.title} />
+              <DeviceMockupCarousel 
+                images={project.gallery} 
+                videoUrl={project.videoUrl} 
+                title={project.title} 
+              />
             ) : (
               <div className="rounded-2xl overflow-hidden aspect-[16/9] bg-secondary">
                 <img
@@ -100,7 +101,6 @@ const ProjectDetail = () => {
             )}
           </motion.div>
 
-          {/* Description */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 mb-16 sm:mb-24">
             <motion.div
               initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
@@ -134,7 +134,6 @@ const ProjectDetail = () => {
             </motion.div>
           </div>
 
-          {/* Challenge, Solution & Result */}
           <div className="grid lg:grid-cols-2 gap-px bg-border rounded-xl overflow-hidden mb-16 sm:mb-24">
             <motion.div
               initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
@@ -178,7 +177,6 @@ const ProjectDetail = () => {
             )}
           </div>
 
-          {/* Demo Button */}
           {project.demoUrl && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -197,7 +195,6 @@ const ProjectDetail = () => {
             </motion.div>
           )}
 
-          {/* Next project */}
           {(() => {
             const currentIndex = allProjects.findIndex((p) => p.slug === slug);
             const nextProject = allProjects[(currentIndex + 1) % allProjects.length];

@@ -10,7 +10,10 @@ import mockup2 from "@/assets/interamed-mockup-2.png";
 import mockup3 from "@/assets/interamed-mockup-3.png";
 import mockup4 from "@/assets/interamed-mockup-4.png";
 
-// Como não temos mais a foto antiga, usamos o mockup 1 como capa do card
+// Importando o vídeo
+import interamedVideo from "@/assets/interamed-video.mp4";
+
+// Como não temos a foto antiga, usamos o mockup 1 como capa
 const projectInteraMed = mockup1;
 
 export interface Project {
@@ -28,7 +31,8 @@ export interface Project {
   technologies: string[];
   result?: string;
   demoUrl?: string;
-  gallery?: string[]; // Novo campo para os mockups
+  gallery?: string[]; 
+  videoUrl?: string;
 }
 
 export const allProjects: Project[] = [
@@ -56,14 +60,15 @@ export const allProjects: Project[] = [
     services: "Full-Stack Development & IA",
     year: "2026",
     category: "development",
-    image: projectInteraMed, // Agora isso aponta para o mockup1
+    image: projectInteraMed, 
     description: "Ferramenta mobile-first criada para a equipe de enfermagem na linha de frente. Auxilia na checagem rápida de interações medicamentosas complexas, gestão inteligente de horários de administração e leitura de receitas via IA, reduzindo erros graves no ambiente hospitalar.",
     challenge: "No ambiente hospitalar, especialmente no SUS, enfermeiros lidam com prescrições complexas (10 a 29 medicamentos por paciente). A checagem manual é lenta e suscetível a erros. A dor foi mapeada junto ao aluno de enfermagem João Victor Pinheiro (UFPI/Picos), unindo a vivência clínica dele com a minha experiência em tecnologia e no setor de saúde laboratorial.",
     solution: "Desenvolvi um MVP funcional com design premium e mobile-first (inspirado em Apple/Nike). Utiliza React, TanStack Start e Tailwind. Integra a API da ANVISA e o Llama 4 Scout (Groq) para OCR de receitas. O motor de aprazamento inteligente sugere horários que respeitam a cronobiologia e fogem da passagem de plantão.",
     technologies: ["React", "TanStack Start", "Tailwind CSS", "Groq", "Llama 4 Scout", "APIs ANVISA", "Open FDA"],
     result: "MVP 100% funcional, com APIs de terceiros integradas, motor de regras clínicas e design validado para reduzir a fadiga cognitiva.",
     demoUrl: "https://interamed-five.vercel.app/", 
-    gallery: [mockup1, mockup2, mockup3, mockup4], // Galeria com os 4 mockups
+    gallery: [mockup1, mockup2, mockup3, mockup4],
+    videoUrl: interamedVideo,
   },
   {
     slug: "analise-llms-python",
