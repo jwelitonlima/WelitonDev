@@ -3,6 +3,8 @@ import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
 import project4 from "@/assets/project-4.jpg";
 import projectFreteAI from "@/assets/project-freteai.jpg";
+// Importe a imagem real do InteraMed quando tiver. Usei a project-1 como placeholder.
+import projectInteraMed from "@/assets/project-1.jpg"; 
 
 export interface Project {
   slug: string;
@@ -39,19 +41,20 @@ export const allProjects: Project[] = [
     demoUrl: "/dashboard",
   },
   {
-    slug: "foro-estudantil",
-    title: "Foro Estudantil",
-    client: "Foro Estudantil",
+    slug: "interamed",
+    title: "InteraMed — Assistente Clínico de Interações Medicamentosas",
+    client: "Projeto Pessoal",
     location: "Remoto",
-    services: "Web Development",
-    year: "2024",
+    services: "Full-Stack Development & IA",
+    year: "2025",
     category: "development",
-    image: project1,
-    description: "Plataforma de fórum estudantil desenvolvida com React e Vite. Interface moderna com componentes reutilizáveis, gerenciamento de estado avançado e integração com APIs. Sistema de postagens, comentários e notificações em tempo real.",
-    challenge: "Criar uma plataforma intuitiva que engajasse estudantes a consumir e produzir conteúdo dentro do ambiente acadêmico, com performance e responsividade.",
-    solution: "Desenvolvi uma aplicação fullstack com React e Vite, componentes reutilizáveis, gerenciamento de estado avançado e integração com APIs REST.",
-    technologies: ["React", "Vite", "JavaScript/TypeScript", "HTML/CSS", "APIs REST"],
-    result: "Aplicação fullstack com performance otimizada (Lighthouse 95+)",
+    image: projectInteraMed,
+    description: "Ferramenta mobile-first criada para a equipe de enfermagem na linha de frente. Auxilia na checagem rápida de interações medicamentosas complexas, gestão inteligente de horários de administração e leitura de receitas via IA, reduzindo erros graves no ambiente hospitalar.",
+    challenge: "No ambiente hospitalar, especialmente no SUS, enfermeiros lidam com prescrições complexas (10 a 29 medicamentos por paciente). A checagem manual é lenta, suscetível a erros e pode causar reações adversas graves e anular tratamentos.",
+    solution: "Desenvolvi um MVP funcional com design premium e mobile-first (inspirado em Apple/Nike). Utiliza React, TanStack Start e Tailwind. Integra a API da ANVISA e o Llama 4 Scout (Groq) para OCR de receitas. O motor de aprazamento inteligente sugere horários que respeitam a cronobiologia e fogem da passagem de plantão.",
+    technologies: ["React", "TanStack Start", "Tailwind CSS", "Groq", "Llama 4 Scout", "APIs ANVISA"],
+    result: "MVP 100% funcional, com APIs de terceiros integradas, motor de regras clínicas e design validado para reduzir a fadiga cognitiva.",
+    demoUrl: "https://interamed-five.vercel.app/", 
   },
   {
     slug: "analise-llms-python",
