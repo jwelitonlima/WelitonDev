@@ -29,7 +29,7 @@ export interface Project {
 export const allProjects: Project[] = [
   {
     slug: "frete-ai",
-    title: "FreteAI — Sistema de Monitoramento de Frete com IA",
+    title: "FreteAI — Sistema de Monitoramento Logístico com IA",
     client: "Projeto de Inovação Acadêmica",
     location: "Feira de Santana - Bahia",
     services: "Full-Stack Development - AI",
