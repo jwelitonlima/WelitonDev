@@ -40,15 +40,15 @@ const AppContent = () => {
           
           {/* Rotas traduzidas */}
           <Route path="/projetos" element={<Work />} />
+          <Route path="/projetos/:slug" element={<ProjectDetail />} />
           <Route path="/sobre" element={<About />} />
           <Route path="/contato" element={<Contact />} />
-          <Route path="/projetos/:slug" element={<ProjectDetail />} />
 
           {/* Rotas antigas mantidas por compatibilidade */}
           <Route path="/work" element={<Work />} />
+          <Route path="/project/:slug" element={<ProjectDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/project/:slug" element={<ProjectDetail />} />
 
           {/* Rotas do FreteAI */}
           <Route path="/dashboard" element={<FreightDashboard />} />

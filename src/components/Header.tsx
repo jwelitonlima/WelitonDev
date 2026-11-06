@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import TransitionLink from "./TransitionLink";
 
 const navLinks = [
-  { label: "Início", path: "/" }, // Traduzido de "Home"
+  { label: "Início", path: "/" },
   { label: "Projetos", path: "/projetos" },
   { label: "Sobre", path: "/sobre" },
   { label: "Contato", path: "/contato" },
@@ -35,7 +35,6 @@ const Header = () => {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  // Lógica de fundo escuro para a página de contato (ajustado para a rota traduzida)
   const isDarkPage = location.pathname === "/contato" || location.pathname === "/contact";
 
   return (
@@ -77,7 +76,7 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Mobile hamburger - always in header */}
+          {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className={`md:hidden w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 relative z-50 ${
@@ -87,7 +86,8 @@ const Header = () => {
                   ? "bg-dark-fg text-dark-bg"
                   : "bg-foreground text-background"
             }`}
-            aria-label="Menu"
+            aria-label={menuOpen ? "Fechar menu" : "Abrir menu de navegação"}
+            aria-expanded={menuOpen}
           >
             <AnimatePresence mode="wait">
               {menuOpen ? (
@@ -116,7 +116,7 @@ const Header = () => {
         </div>
       </header>
 
-      {/* Mobile menu overlay - premium circular reveal */}
+      {/* Mobile menu overlay */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div

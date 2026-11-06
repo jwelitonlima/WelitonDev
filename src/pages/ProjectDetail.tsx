@@ -21,7 +21,7 @@ const ProjectDetail = () => {
       <main className="section-light min-h-[100svh] flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-foreground mb-4">Projeto não encontrado</h1>
-          <TransitionLink to="/work" className="text-sm link-underline text-foreground font-medium">
+          <TransitionLink to="/projetos" className="text-sm link-underline text-foreground font-medium">
             ← Voltar aos trabalhos
           </TransitionLink>
         </div>
@@ -41,7 +41,7 @@ const ProjectDetail = () => {
             transition={{ duration: 0.5, ease }}
           >
             <TransitionLink
-              to="/work"
+              to="/projetos"
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8 sm:mb-12"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -90,7 +90,6 @@ const ProjectDetail = () => {
             className="mb-16 sm:mb-24 w-full"
           >
             {isDesktop && project.videoUrl ? (
-              // MacBook grande e centralizado para projetos Desktop
               <div className="w-full flex justify-center py-4">
                 <div className="relative w-full max-w-5xl flex flex-col items-center justify-end">
                   <div className="relative w-full aspect-video bg-[#1a1a1a] rounded-t-2xl p-[14px] pb-[20px] shadow-2xl border-[2px] border-gray-700">
@@ -104,6 +103,7 @@ const ProjectDetail = () => {
                         muted
                         loop
                         playsInline
+                        preload="metadata"
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/10 pointer-events-none" />
@@ -115,7 +115,6 @@ const ProjectDetail = () => {
                 </div>
               </div>
             ) : project.gallery ? (
-              // Carrossel para Mobile (InteraMed)
               <DeviceMockupCarousel 
                 images={project.gallery} 
                 videoUrl={project.videoUrl} 
@@ -123,7 +122,6 @@ const ProjectDetail = () => {
                 deviceType={project.deviceType}
               />
             ) : (
-              // Fallback para imagem estática
               <div className="rounded-2xl overflow-hidden aspect-[16/9] bg-secondary">
                 <img
                   src={project.image}
@@ -243,7 +241,7 @@ const ProjectDetail = () => {
               >
                 <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Próximo projeto</p>
                 <TransitionLink
-                  to={`/project/${nextProject.slug}`}
+                  to={`/projetos/${nextProject.slug}`}
                   className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground hover:text-primary transition-colors"
                 >
                   {nextProject.title} →

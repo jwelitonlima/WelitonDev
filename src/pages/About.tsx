@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Globe, Palette, Code, Star } from "lucide-react";
-import aboutPhoto1 from "@/assets/about-memoji.png";
-import aboutPhoto2 from "@/assets/about-memoji-2.png";
-import aboutPhoto3 from "@/assets/about-memoji-3.png";
-import aboutPhoto4 from "@/assets/about-memoji-4.png";
+import aboutPhoto1 from "@/assets/optimized/about-memoji.webp";
+import aboutPhoto2 from "@/assets/optimized/about-memoji-2.webp";
+import aboutPhoto3 from "@/assets/optimized/about-memoji-3.webp";
+import aboutPhoto4 from "@/assets/optimized/about-memoji-4.webp";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
 
@@ -97,6 +97,7 @@ const AboutPage = () => {
                 src={aboutPhotos[photoIndex]}
                 alt="Weliton trabalhando"
                 className="w-full h-full object-cover"
+                loading={photoIndex === 0 ? "eager" : "lazy"}
               />
             </AnimatePresence>
           </motion.div>
@@ -119,7 +120,6 @@ const AboutPage = () => {
                 className="bg-background p-6 sm:p-8 md:p-10"
               >
                 <div className="flex items-center gap-3 mb-4 sm:mb-5">
-                  {/* Removido o span do número. O ícone agora fica sozinho e maior */}
                   <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
                     <service.icon className="w-5 h-5 text-primary" />
                   </div>
