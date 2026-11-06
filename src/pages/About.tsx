@@ -12,19 +12,16 @@ const aboutPhotos = [aboutPhoto1, aboutPhoto2, aboutPhoto3, aboutPhoto4];
 
 const services = [
   {
-    number: "01",
     title: "Desenvolvimento Web",
     description: "Criação de aplicações web modernas, responsivas e performáticas com React, TypeScript e tecnologias de ponta.",
     icon: Code,
   },
   {
-    number: "02",
     title: "Inteligência Artificial",
     description: "Integração de modelos de linguagem (LLMs) e IA generativa para criar soluções inteligentes e automatizadas.",
     icon: Globe,
   },
   {
-    number: "03",
     title: "Análise de Dados",
     description: "Transformação de dados complexos em insights acionáveis com SQL, Python, Power BI e Looker Studio.",
     icon: Star,
@@ -67,7 +64,10 @@ const AboutPage = () => {
                 Desenvolvedor frontend especializado em criar interfaces modernas e responsivas. Trabalho com React, Vite, JavaScript/TypeScript e CSS avançado para construir aplicações web de alta performance.
               </p>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                Complemento minha expertise em desenvolvimento com experiência em análise de dados (SQL, Python, Power BI, Looker Studio) e experiência em integração de modelos de linguagem (LLMs), desenvolvendo soluções que combinam interfaces inteligentes com IA.
+                Complemento minha expertise em desenvolvimento com experiência em análise de dados (SQL, Python, Power BI, Looker Studio) e integração de modelos de linguagem (LLMs), desenvolvendo soluções que combinam interfaces inteligentes com IA.
+              </p>
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                Minha vivência no setor de saúde, atuando na matriz de uma rede de laboratórios com 22 unidades, me deu a base para criar soluções de tecnologia focadas em HealthTech, entendendo a dor real de quem está na linha de frente.
               </p>
               <p className="text-sm sm:text-base text-foreground font-medium leading-relaxed">
                 Sou um desenvolvedor versátil que transforma ideias em produtos digitais funcionais e inteligentes.
@@ -95,7 +95,7 @@ const AboutPage = () => {
                   scale: { duration: 1.1 },
                 }}
                 src={aboutPhotos[photoIndex]}
-                alt="Weliton working"
+                alt="Weliton trabalhando"
                 className="w-full h-full object-cover"
               />
             </AnimatePresence>
@@ -111,16 +111,18 @@ const AboutPage = () => {
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-px bg-border rounded-xl overflow-hidden">
             {services.map((service, i) => (
               <motion.div
-                key={service.number}
+                key={service.title}
                 initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
                 className="bg-background p-6 sm:p-8 md:p-10"
               >
-                <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                  <span className="text-xs text-muted-foreground">{service.number}</span>
-                  <service.icon className="w-4 h-4 text-primary" />
+                <div className="flex items-center gap-3 mb-4 sm:mb-5">
+                  {/* Removido o span do número. O ícone agora fica sozinho e maior */}
+                  <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+                    <service.icon className="w-5 h-5 text-primary" />
+                  </div>
                 </div>
                 <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 sm:mb-3">{service.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{service.description}</p>

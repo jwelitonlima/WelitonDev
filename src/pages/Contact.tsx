@@ -38,11 +38,12 @@ const ContactPage = () => {
     setForm({ name: "", email: "", organization: "", services: "", message: "" });
   };
 
+  // Removemos o 'num' dos fields
   const fields = [
-    { num: "01", label: "Qual é o seu nome?", key: "name", placeholder: "João Silva" },
-    { num: "02", label: "Qual é o seu e-mail?", key: "email", placeholder: "joao@email.com" },
-    { num: "03", label: "Qual é a sua organização?", key: "organization", placeholder: "Empresa & Cia ®" },
-    { num: "04", label: "Quais serviços você procura?", key: "services", placeholder: "Web Design, Desenvolvimento Web..." },
+    { label: "Qual é o seu nome?", key: "name", placeholder: "João Silva" },
+    { label: "Qual é o seu e-mail?", key: "email", placeholder: "joao@email.com" },
+    { label: "Qual é a sua empresa/organização?", key: "organization", placeholder: "Empresa & Cia" },
+    { label: "Quais serviços você procura?", key: "services", placeholder: "Web Design, Desenvolvimento Web..." },
   ];
 
   return (
@@ -69,15 +70,15 @@ const ContactPage = () => {
                   transition={{ delay: 0.1 + i * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <label className="flex items-baseline gap-3 mb-3">
-                    <span className="text-xs text-dark-fg/40">{field.num}</span>
-                    <span className="text-sm text-dark-fg/80">{field.label}</span>
+                    {/* Removido o span que mostrava o número */}
+                    <span className="text-sm font-medium text-dark-fg/80">{field.label}</span>
                   </label>
                   <input
                     type={field.key === "email" ? "email" : "text"}
                     value={form[field.key as keyof typeof form]}
                     onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
                     placeholder={field.placeholder}
-                    className="w-full bg-transparent border-b border-dark-fg/20 pb-3 text-dark-fg placeholder:text-dark-fg/20 focus:outline-none focus:border-primary transition-colors text-base"
+                    className="w-full bg-transparent border-b border-dark-fg/20 pb-3 text-dark-fg placeholder:text-dark-fg/30 focus:outline-none focus:border-primary transition-colors text-base"
                   />
                   {errors[field.key] && (
                     <p className="text-xs text-destructive mt-1">{errors[field.key]}</p>
@@ -92,15 +93,14 @@ const ContactPage = () => {
                 transition={{ delay: 0.42, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               >
                 <label className="flex items-baseline gap-3 mb-3">
-                  <span className="text-xs text-dark-fg/40">05</span>
-                  <span className="text-sm text-dark-fg/80">Sua mensagem</span>
+                  <span className="text-sm font-medium text-dark-fg/80">Sua mensagem</span>
                 </label>
                 <textarea
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   placeholder="Olá Weliton, gostaria de..."
                   rows={4}
-                  className="w-full bg-transparent border-b border-dark-fg/20 pb-3 text-dark-fg placeholder:text-dark-fg/20 focus:outline-none focus:border-primary transition-colors resize-none text-base"
+                  className="w-full bg-transparent border-b border-dark-fg/20 pb-3 text-dark-fg placeholder:text-dark-fg/30 focus:outline-none focus:border-primary transition-colors resize-none text-base"
                 />
                 {errors.message && (
                   <p className="text-xs text-destructive mt-1">{errors.message}</p>
