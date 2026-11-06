@@ -31,7 +31,7 @@ export const allProjects: Project[] = [
     slug: "frete-ai",
     title: "FreteAI — Sistema de Monitoramento de Frete com IA",
     client: "Projeto de Inovação Acadêmica",
-    location: "Brasil",
+    location: "Feira de Santana - Bahia",
     services: "Full-Stack Development - AI",
     year: "2025",
     category: "ai",
