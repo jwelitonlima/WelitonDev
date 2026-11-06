@@ -1,19 +1,10 @@
-import project1 from "@/assets/project-1.jpg";
-import project2 from "@/assets/project-2.jpg";
-import project3 from "@/assets/project-3.jpg";
-import project4 from "@/assets/project-4.jpg";
 import projectFreteAI from "@/assets/project-freteai.jpg";
-
-// Importando os 4 mockups do InteraMed
 import mockup1 from "@/assets/interamed-mockup-1.png";
 import mockup2 from "@/assets/interamed-mockup-2.png";
 import mockup3 from "@/assets/interamed-mockup-3.png";
 import mockup4 from "@/assets/interamed-mockup-4.png";
-
-// Importando o vídeo
 import interamedVideo from "@/assets/interamed-video.mp4";
 
-// Como não temos a foto antiga, usamos o mockup 1 como capa
 const projectInteraMed = mockup1;
 
 export interface Project {
@@ -31,7 +22,7 @@ export interface Project {
   technologies: string[];
   result?: string;
   demoUrl?: string;
-  gallery?: string[]; 
+  gallery?: string[];
   videoUrl?: string;
 }
 
@@ -60,74 +51,14 @@ export const allProjects: Project[] = [
     services: "Full-Stack Development & IA",
     year: "2026",
     category: "development",
-    image: projectInteraMed, 
+    image: projectInteraMed,
     description: "Ferramenta mobile-first criada para a equipe de enfermagem na linha de frente. Auxilia na checagem rápida de interações medicamentosas complexas, gestão inteligente de horários de administração e leitura de receitas via IA, reduzindo erros graves no ambiente hospitalar.",
     challenge: "No ambiente hospitalar, especialmente no SUS, enfermeiros lidam com prescrições complexas (10 a 29 medicamentos por paciente). A checagem manual é lenta e suscetível a erros. A dor foi mapeada junto ao aluno de enfermagem João Victor Pinheiro (UFPI/Picos), unindo a vivência clínica dele com a minha experiência em tecnologia e no setor de saúde laboratorial.",
     solution: "Desenvolvi um MVP funcional com design premium e mobile-first (inspirado em Apple/Nike). Utiliza React, TanStack Start e Tailwind. Integra a API da ANVISA e o Llama 4 Scout (Groq) para OCR de receitas. O motor de aprazamento inteligente sugere horários que respeitam a cronobiologia e fogem da passagem de plantão.",
     technologies: ["React", "TanStack Start", "Tailwind CSS", "Groq", "Llama 4 Scout", "APIs ANVISA", "Open FDA"],
     result: "MVP 100% funcional, com APIs de terceiros integradas, motor de regras clínicas e design validado para reduzir a fadiga cognitiva.",
-    demoUrl: "https://interamed-five.vercel.app/", 
+    demoUrl: "https://interamed-five.vercel.app/",
     gallery: [mockup1, mockup2, mockup3, mockup4],
     videoUrl: interamedVideo,
-  },
-  {
-    slug: "analise-llms-python",
-    title: "Análise Inteligente com LLMs e Python",
-    client: "Projeto de Pesquisa & Extensão",
-    location: "Brasil",
-    services: "AI & Data Engineering",
-    year: "2024",
-    category: "ai",
-    image: project2,
-    description: "Pipeline de dados que integra modelos de linguagem para processamento de textos, análise de sentimentos e extração de insights. Utiliza Python com pandas, requests e integrações com APIs de LLM, com dashboard interativo para visualização.",
-    challenge: "Processar grandes volumes de texto de forma automatizada, extraindo insights relevantes com precisão e velocidade.",
-    solution: "Criei um pipeline de dados com Python que integra LLMs para análise de sentimentos e extração de insights, com dashboard interativo para visualização dos resultados.",
-    technologies: ["Python", "LLMs (OpenAI/Llama)", "APIs", "Google Colab", "SQL"],
-    result: "Automação de análise que reduz tempo de processamento em 80%",
-  },
-  {
-    slug: "dashboard-bi",
-    title: "Dashboard Interativo em Power BI & Looker Studio",
-    client: "Case: Rede de Laboratórios (22 unidades)",
-    location: "Brasil",
-    services: "Business Intelligence & Analytics",
-    year: "2024",
-    category: "data",
-    image: project3,
-    description: "Criação de dashboards interativos com análise em tempo real, KPIs visuais e relatórios automatizados. Integração de múltiplas fontes de dados com SQL e visualização de insights estratégicos para a gestão de saúde laboratorial.",
-    challenge: "Consolidar dados de múltiplas fontes (atendimentos, exames, faturamento) de 22 unidades em dashboards claros e acionáveis para tomada de decisão estratégica da matriz.",
-    solution: "Desenvolvi dashboards interativos com KPIs visuais, relatórios automatizados e integração de múltiplas fontes de dados via SQL, otimizando a gestão e a tomada de decisão no setor de saúde.",
-    technologies: ["Power BI", "Looker Studio", "SQL", "Python"],
-    result: "Tomada de decisão baseada em dados com 95% de acurácia e visão unificada de 22 unidades.",
-  },
-  {
-    slug: "app-assistente-ia",
-    title: "Aplicação Web com Assistente IA Integrado",
-    client: "Inovação Acadêmica",
-    location: "Brasil",
-    services: "Full-Stack Development & AI",
-    year: "2024",
-    category: "ai",
-    image: project4,
-    description: "Aplicação web desenvolvida com React/Vite que integra modelos de linguagem para criar um assistente inteligente. Interface responsiva, backend robusto com APIs e integração seamless com LLMs.",
-    challenge: "Integrar modelos de linguagem de forma fluida em uma aplicação web, mantendo performance e experiência do usuário otimizadas.",
-    solution: "Criei uma aplicação React/Vite com assistente IA integrado, backend robusto com APIs e interface responsiva com UX otimizada.",
-    technologies: ["React", "Vite", "JavaScript", "Python", "LLMs", "APIs REST"],
-    result: "Plataforma funcional com capacidades de IA e UX otimizada",
-  },
-  {
-    slug: "automacao-python",
-    title: "Automação de Processos com Python & APIs",
-    client: "Solução para Demanda Real (Setor de Saúde)",
-    location: "Brasil",
-    services: "Data & Automation",
-    year: "2024",
-    category: "data",
-    image: project1,
-    description: "Scripts em Python para automação de tarefas repetitivas, scraping de dados, integração de APIs e processamento em lote. Inclui análise de dados e geração de relatórios automatizados.",
-    challenge: "Eliminar tarefas manuais repetitivas que consumiam horas de trabalho semanalmente na rotina de uma rede de laboratórios.",
-    solution: "Desenvolvi scripts Python para automação de scraping, integração de APIs e processamento em lote, com geração de relatórios automatizados.",
-    technologies: ["Python", "APIs", "SQL", "Automação", "Pandas"],
-    result: "Redução de 15 horas semanais em tarefas manuais",
   },
 ];
