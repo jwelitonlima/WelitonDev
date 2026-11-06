@@ -80,17 +80,19 @@ const ProjectDetail = () => {
             </motion.div>
           </div>
 
+          {/* HERO SECTION: Se tiver video, mostra o mockup do video. Se tiver galeria, mostra o carrossel. Senão, mostra a imagem. */}
           <motion.div
             initial={{ opacity: 0, scale: 0.97, filter: "blur(10px)" }}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1, delay: 0.2, ease }}
             className="mb-16 sm:mb-24 w-full"
           >
-            {project.gallery ? (
+            {project.videoUrl || project.gallery ? (
               <DeviceMockupCarousel 
                 images={project.gallery} 
                 videoUrl={project.videoUrl} 
-                title={project.title} 
+                title={project.title}
+                deviceType={project.deviceType}
               />
             ) : (
               <div className="rounded-2xl overflow-hidden aspect-[16/9] bg-secondary">
