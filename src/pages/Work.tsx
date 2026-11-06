@@ -4,11 +4,53 @@ import { LayoutGrid, List, ArrowUpRight, Play } from "lucide-react";
 import TransitionLink from "@/components/TransitionLink";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
-import { allProjects } from "@/data/projects";
+import { allProjects, Project } from "@/data/projects";
 
 type Filter = "all" | "development" | "data" | "ai";
 
 const ease = [0.16, 1, 0.3, 1] as const;
+
+// Função que renderiza o Mockup no Card
+const renderCardMedia = (project: Project) => {
+  const isDesktop = project.deviceType === "desktop";
+  
+  if (project.videoUrl) {
+    if (isDesktop) {
+      // Mockup MacBook no Card
+      return (
+        <div className="relative w-[85%] flex flex-col items-center justify-center">
+          <div className="relative w-full aspect-video bg-[#1a1a1a] rounded-t-lg p-[4px] pb-[6px] shadow-lg border border-gray-700">
+            <div className="relative w-full h-full bg-black rounded-sm overflow-hidden">
+              <video src={project.videoUrl} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+            </div>
+          </div>
+          <div className="relative w-[110%] h-2 bg-gradient-to-b from-gray-400 to-gray-600 rounded-b-lg shadow-md">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-0.5 bg-gray-700 rounded-b-sm"></div>
+          </div>
+        </div>
+      );
+    } else {
+      // Mockup iPhone no Card
+      return (
+        <div className="relative h-[85%] aspect-[9/19.5] bg-[#1a1a1a] rounded-[1.5rem] p-[3px] shadow-xl border border-gray-700">
+          <div className="relative w-full h-full bg-black rounded-[1.3rem] overflow-hidden">
+            <div className="absolute top-1 inset-x-0 h-3 flex justify-center z-20">
+              <div className="w-10 h-3 bg-black rounded-full"></div>
+            </div>
+            <video src={project.videoUrl} autoPlay muted loop playsInline className="w-full h-full object-cover rounded-[1.3rem]" />
+          </div>
+        </div>
+      );
+    }
+  }
+
+  // Fallback para Imagem (se não tiver vídeo)
+  return (
+    <div className="w-full h-full flex items-center justify-center p-4">
+      <img src={project.image} alt={project.title} className="w-full h-full object-contain" />
+    </div>
+  );
+};
 
 const WorkPage = () => {
   const [filter, setFilter] = useState<Filter>("all");
@@ -76,29 +118,12 @@ const WorkPage = () => {
                   transition={{ delay: i * 0.08, duration: 0.6, ease }}
                   className="group cursor-pointer"
                 >
-                  {/* AQUI ESTÁ A CORREÇÃO: aspect-[4/3] fixo para todos */}
+                  {/* Container do Card - Mantém a proporção 4:3 e centraliza o mockup */}
                   <div className="relative overflow-hidden rounded-xl bg-secondary mb-4 flex items-center justify-center aspect-[4/3]">
-                    {project.videoUrl ? (
-                      <video
-                        src={project.videoUrl}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
-                      />
-                    ) : (
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                    {renderCardMedia(project)}
                     
                     {project.demoUrl && (
-                      <div className="absolute top-3 left-3 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
+                      <div className="absolute top-3 left-3 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm z-20">
                         <span className="relative flex h-2 w-2">
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
                           <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
@@ -107,7 +132,7 @@ const WorkPage = () => {
                       </div>
                     )}
 
-                    <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-background/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-background/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
                       <ArrowUpRight className="w-4 h-4 text-foreground" />
                     </div>
                   </div>
@@ -158,28 +183,12 @@ const WorkPage = () => {
                       transition={{ delay: i * 0.1, duration: 0.7, ease }}
                       className="group cursor-pointer flex flex-col h-full"
                     >
-                      {/* AQUI ESTÁ A CORREÇÃO: aspect-[4/3] fixo para todos no desktop também */}
+                      {/* Container do Card - Mantém a proporção 4:3 e centraliza o mockup */}
                       <div className="relative overflow-hidden rounded-2xl mb-5 bg-secondary flex items-center justify-center aspect-[4/3]">
-                        {project.videoUrl ? (
-                          <video
-                            src={project.videoUrl}
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                            className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
-                          />
-                        ) : (
-                          <img
-                            src={project.image}
-                            alt={project.title}
-                            className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
-                            loading="lazy"
-                          />
-                        )}
+                        {renderCardMedia(project)}
                         
                         {project.demoUrl && (
-                          <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
+                          <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm z-20">
                             <span className="relative flex h-2 w-2">
                               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
                               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
