@@ -1,5 +1,5 @@
 import projectFreteAI from "@/assets/project-freteai.jpg";
-import freteAIVideo from "@/assets/freteai-video.mp4"; // Importando o vídeo do FreteAI
+import freteAIVideo from "@/assets/freteai-video.mp4"; 
 import mockup1 from "@/assets/interamed-mockup-1.png";
 import mockup2 from "@/assets/interamed-mockup-2.png";
 import mockup3 from "@/assets/interamed-mockup-3.png";
@@ -25,6 +25,7 @@ export interface Project {
   demoUrl?: string;
   gallery?: string[];
   videoUrl?: string;
+  deviceType?: "mobile" | "desktop"; // NOVO CAMPO AQUI
 }
 
 export const allProjects: Project[] = [
@@ -43,7 +44,8 @@ export const allProjects: Project[] = [
     technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Recharts", "shadcn/ui"],
     result: "Redução de 60% no tempo de resposta a incidentes e 40% menos entregas atrasadas",
     demoUrl: "/dashboard",
-    videoUrl: freteAIVideo, // Vídeo adicionado aqui
+    videoUrl: freteAIVideo,
+    deviceType: "desktop", // Definido como desktop
   },
   {
     slug: "interamed",
@@ -62,5 +64,6 @@ export const allProjects: Project[] = [
     demoUrl: "https://interamed-five.vercel.app/",
     gallery: [mockup1, mockup2, mockup3, mockup4],
     videoUrl: interamedVideo,
+    deviceType: "mobile", // Definido como mobile
   },
 ];

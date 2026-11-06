@@ -76,7 +76,9 @@ const WorkPage = () => {
                   transition={{ delay: i * 0.08, duration: 0.6, ease }}
                   className="group cursor-pointer"
                 >
-                  <div className="relative overflow-hidden rounded-xl bg-secondary mb-4 flex items-center justify-center">
+                  <div className={`relative overflow-hidden rounded-xl bg-secondary mb-4 flex items-center justify-center ${
+                    project.deviceType === "mobile" ? "aspect-[9/16]" : "aspect-video"
+                  }`}>
                     {project.videoUrl ? (
                       <video
                         src={project.videoUrl}
@@ -84,13 +86,13 @@ const WorkPage = () => {
                         muted
                         loop
                         playsInline
-                        className="w-full h-auto max-h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                       />
                     ) : (
                       <img
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-auto max-h-[500px] object-contain transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
                       />
                     )}
@@ -157,7 +159,9 @@ const WorkPage = () => {
                       transition={{ delay: i * 0.1, duration: 0.7, ease }}
                       className="group cursor-pointer flex flex-col h-full"
                     >
-                      <div className="relative overflow-hidden rounded-2xl mb-5 bg-secondary flex items-center justify-center min-h-[300px]">
+                      <div className={`relative overflow-hidden rounded-2xl mb-5 bg-secondary flex items-center justify-center min-h-[300px] ${
+                        project.deviceType === "mobile" ? "aspect-[9/16]" : "aspect-video"
+                      }`}>
                         {project.videoUrl ? (
                           <video
                             src={project.videoUrl}
@@ -165,13 +169,13 @@ const WorkPage = () => {
                             muted
                             loop
                             playsInline
-                            className="w-full h-auto max-h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
+                            className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                           />
                         ) : (
                           <img
                             src={project.image}
                             alt={project.title}
-                            className="w-full h-auto max-h-[450px] object-contain transition-transform duration-700 group-hover:scale-105"
+                            className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                             loading="lazy"
                           />
                         )}

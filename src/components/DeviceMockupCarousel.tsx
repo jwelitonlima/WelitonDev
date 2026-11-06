@@ -1,16 +1,15 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Project } from "@/data/projects";
 
 interface DeviceMockupCarouselProps {
   images?: string[];
   videoUrl?: string;
   title: string;
+  deviceType?: "mobile" | "desktop";
 }
 
-export const DeviceMockupCarousel = ({ images = [], videoUrl, title }: DeviceMockupCarouselProps) => {
-  // Detecta se é o projeto desktop (FreteAI) para renderizar o MacBook
-  const isDesktopProject = title.includes("FreteAI");
-
+export const DeviceMockupCarousel = ({ images = [], videoUrl, title, deviceType = "mobile" }: DeviceMockupCarouselProps) => {
   return (
     <div className="w-full relative">
       <p className="text-xs uppercase tracking-widest text-muted-foreground mb-6 flex items-center gap-2">
@@ -37,22 +36,22 @@ export const DeviceMockupCarousel = ({ images = [], videoUrl, title }: DeviceMoc
           </motion.div>
         ))}
 
-        {/* Renderiza o vídeo dentro do mockup correto */}
+        {/* Renderiza o vídeo no mockup correto baseado no deviceType */}
         {videoUrl && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: images.length * 0.1, duration: 0.6 }}
-            className="relative shrink-0 w-[320px] sm:w-[480px] snap-center flex justify-center items-center py-4"
+            className={`relative shrink-0 snap-center flex justify-center items-center py-4 ${
+              deviceType === "desktop" ? "w-[320px] sm:w-[480px]" : "w-[280px] sm:w-[380px]"
+            }`}
           >
-            {isDesktopProject ? (
+            {deviceType === "desktop" ? (
               // MOCKUP DO MACBOOK (Horizontal - 16:9)
               <div className="relative w-full flex flex-col items-center justify-end">
-                {/* Tela do MacBook */}
                 <div className="relative w-full aspect-video bg-[#1a1a1a] rounded-t-xl p-[10px] pb-[14px] shadow-2xl border-[2px] border-gray-700">
                   <div className="relative w-full h-full bg-black rounded-md overflow-hidden">
-                    {/* Câmera */}
                     <div className="absolute top-1.5 inset-x-0 h-2 flex justify-center z-20">
                       <div className="w-2 h-2 bg-[#111] rounded-full border border-gray-800 shadow-inner"></div>
                     </div>
@@ -67,9 +66,7 @@ export const DeviceMockupCarousel = ({ images = [], videoUrl, title }: DeviceMoc
                     <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/10 pointer-events-none" />
                   </div>
                 </div>
-                {/* Base do MacBook */}
                 <div className="relative w-[112%] h-3 sm:h-4 bg-gradient-to-b from-gray-400 to-gray-600 rounded-b-xl shadow-[0_10px_20px_rgba(0,0,0,0.4)]">
-                  {/* Entalhe para abrir */}
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-gray-700 rounded-b-sm"></div>
                 </div>
               </div>
