@@ -1,12 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Fundo preto com bordas arredondadas (Apple Style) -->
-  <rect width="512" height="512" rx="120" fill="#000000" />
+  <!-- Fundo Preto Premium -->
+  <rect width="512" height="512" rx="110" fill="#000000" />
   
-  <!-- Traços geométricos perfeitos para preencher o espaço -->
-  <g fill="none" stroke="#ffffff" stroke-width="80" stroke-linecap="round" stroke-linejoin="round">
-    <!-- O Chevron (>) -->
-    <polyline points="150,150 320,256 150,362" />
-    <!-- O Underline (_) -->
-    <line x1="320" y1="380" x2="450" y2="380" stroke-width="50" />
+  <!-- O Terminal usando fonte limpa e fina, mas com escala ampliada para preencher o ícone -->
+  <g fill="#FFFFFF" font-family="'Courier New', Courier, monospace" font-weight="normal">
+    <!-- Aumentamos o tamanho da fonte para 380 para não ficar minúsculo -->
+    <text x="256" y="360" font-size="380" text-anchor="middle" letter-spacing="-12">>_</text>
   </g>
 </svg>
