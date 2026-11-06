@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { Project } from "@/data/projects";
 
 interface DeviceMockupCarouselProps {
   images?: string[];

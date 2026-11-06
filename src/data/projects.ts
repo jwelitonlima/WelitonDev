@@ -25,7 +25,7 @@ export interface Project {
   demoUrl?: string;
   gallery?: string[];
   videoUrl?: string;
-  deviceType?: "mobile" | "desktop"; // NOVO CAMPO AQUI
+  deviceType?: "mobile" | "desktop"; // Lógica correta para o futuro
 }
 
 export const allProjects: Project[] = [
@@ -45,7 +45,7 @@ export const allProjects: Project[] = [
     result: "Redução de 60% no tempo de resposta a incidentes e 40% menos entregas atrasadas",
     demoUrl: "/dashboard",
     videoUrl: freteAIVideo,
-    deviceType: "desktop", // Definido como desktop
+    deviceType: "desktop",
   },
   {
     slug: "interamed",
@@ -64,6 +64,6 @@ export const allProjects: Project[] = [
     demoUrl: "https://interamed-five.vercel.app/",
     gallery: [mockup1, mockup2, mockup3, mockup4],
     videoUrl: interamedVideo,
-    deviceType: "mobile", // Definido como mobile
+    deviceType: "mobile",
   },
 ];

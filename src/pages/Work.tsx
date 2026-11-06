@@ -76,9 +76,8 @@ const WorkPage = () => {
                   transition={{ delay: i * 0.08, duration: 0.6, ease }}
                   className="group cursor-pointer"
                 >
-                  <div className={`relative overflow-hidden rounded-xl bg-secondary mb-4 flex items-center justify-center ${
-                    project.deviceType === "mobile" ? "aspect-[9/16]" : "aspect-video"
-                  }`}>
+                  {/* AQUI ESTÁ A CORREÇÃO: aspect-[4/3] fixo para todos */}
+                  <div className="relative overflow-hidden rounded-xl bg-secondary mb-4 flex items-center justify-center aspect-[4/3]">
                     {project.videoUrl ? (
                       <video
                         src={project.videoUrl}
@@ -159,9 +158,8 @@ const WorkPage = () => {
                       transition={{ delay: i * 0.1, duration: 0.7, ease }}
                       className="group cursor-pointer flex flex-col h-full"
                     >
-                      <div className={`relative overflow-hidden rounded-2xl mb-5 bg-secondary flex items-center justify-center min-h-[300px] ${
-                        project.deviceType === "mobile" ? "aspect-[9/16]" : "aspect-video"
-                      }`}>
+                      {/* AQUI ESTÁ A CORREÇÃO: aspect-[4/3] fixo para todos no desktop também */}
+                      <div className="relative overflow-hidden rounded-2xl mb-5 bg-secondary flex items-center justify-center aspect-[4/3]">
                         {project.videoUrl ? (
                           <video
                             src={project.videoUrl}
