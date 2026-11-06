@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import TransitionLink from "./TransitionLink";
 
 const navLinks = [
-  { label: "Home", path: "/" },
+  { label: "Início", path: "/" }, // Traduzido de "Home"
   { label: "Projetos", path: "/projetos" },
   { label: "Sobre", path: "/sobre" },
   { label: "Contato", path: "/contato" },
@@ -35,7 +35,8 @@ const Header = () => {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  const isDarkPage = location.pathname === "/contact";
+  // Lógica de fundo escuro para a página de contato (ajustado para a rota traduzida)
+  const isDarkPage = location.pathname === "/contato" || location.pathname === "/contact";
 
   return (
     <>

@@ -7,7 +7,6 @@ import { PageTransitionProvider } from "@/components/PageTransition";
 import Header from "@/components/Header";
 import { lazy, Suspense } from "react";
 
-// Lazy loading das páginas para reduzir o tamanho do bundle inicial
 const Index = lazy(() => import("./pages/Index"));
 const Work = lazy(() => import("./pages/Work"));
 const About = lazy(() => import("./pages/About"));
@@ -20,10 +19,8 @@ const FreightDetailPage = lazy(() => import("./pages/FreightDetailPage"));
 const FreightSettings = lazy(() => import("./pages/FreightSettings"));
 
 const queryClient = new QueryClient();
-
 const freightRoutes = ["/dashboard", "/rastreamento", "/configuracoes"];
 
-// Componente de loading simples enquanto a página é carregada
 const PageLoader = () => (
   <div className="min-h-[100svh] flex items-center justify-center bg-background">
     <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
@@ -37,18 +34,28 @@ const AppContent = () => {
   return (
     <PageTransitionProvider>
       {!isFreightApp && <Header />}
-      {/* O Suspense fica aqui, envolvendo as rotas para garantir o carregamento correto */}
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Index />} />
+          
+          {/* Rotas traduzidas */}
+          <Route path="/projetos" element={<Work />} />
+          <Route path="/sobre" element={<About />} />
+          <Route path="/contato" element={<Contact />} />
+          <Route path="/projetos/:slug" element={<ProjectDetail />} />
+
+          {/* Rotas antigas mantidas por compatibilidade */}
           <Route path="/work" element={<Work />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/project/:slug" element={<ProjectDetail />} />
+
+          {/* Rotas do FreteAI */}
           <Route path="/dashboard" element={<FreightDashboard />} />
           <Route path="/rastreamento" element={<FreightTracking />} />
           <Route path="/frete/:id" element={<FreightDetailPage />} />
           <Route path="/configuracoes" element={<FreightSettings />} />
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
