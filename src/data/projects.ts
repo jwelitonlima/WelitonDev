@@ -1,4 +1,4 @@
-import projectFreteAI from "@/assets/project-freteai.jpg";
+import projectFreteAI from "@/assets/project-freteai.jpg"; // <-- Se for trocar, mude o nome aqui
 import freteAIVideo from "@/assets/freteai-video.mp4"; 
 import mockup1 from "@/assets/interamed-mockup-1.png";
 import mockup2 from "@/assets/interamed-mockup-2.png";
@@ -25,7 +25,7 @@ export interface Project {
   demoUrl?: string;
   gallery?: string[];
   videoUrl?: string;
-  deviceType?: "mobile" | "desktop"; // Lógica correta para o futuro
+  deviceType?: "mobile" | "desktop";
 }
 
 export const allProjects: Project[] = [
@@ -37,7 +37,7 @@ export const allProjects: Project[] = [
     services: "Full-Stack Development - AI",
     year: "2025",
     category: "ai",
-    image: projectFreteAI,
+    image: projectFreteAI, // Usa a imagem do print aqui
     description: "Sistema inteligente de monitoramento de fretes em tempo real com agente de IA integrado. Dashboard interativo com métricas, alertas com prioridade, mapa de rastreamento, timeline de eventos e previsões de entrega baseadas em IA.",
     challenge: "Técnicos de logística precisam monitorar dezenas de fretes simultaneamente, identificando atrasos, paradas prolongadas e desvios de rota rapidamente para evitar prejuízos.",
     solution: "Desenvolvi um sistema completo com dashboard de métricas em tempo real, alertas inteligentes categorizados por prioridade, mapa de rastreamento visual, e um agente de IA que sugere ações corretivas automaticamente.",
