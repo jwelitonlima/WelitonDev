@@ -6,9 +6,9 @@ import TransitionLink from "./TransitionLink";
 
 const navLinks = [
   { label: "Home", path: "/" },
-  { label: "Work", path: "/work" },
-  { label: "About", path: "/about" },
-  { label: "Contact", path: "/contact" },
+  { label: "Projetos", path: "/projetos" },
+  { label: "Sobre", path: "/sobre" },
+  { label: "Contato", path: "/contato" },
 ];
 
 const Header = () => {
