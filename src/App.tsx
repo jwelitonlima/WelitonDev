@@ -37,6 +37,7 @@ const AppContent = () => {
   return (
     <PageTransitionProvider>
       {!isFreightApp && <Header />}
+      {/* O Suspense fica aqui, envolvendo as rotas para garantir o carregamento correto */}
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Index />} />
