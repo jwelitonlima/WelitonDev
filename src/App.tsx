@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { PageTransitionProvider } from "@/components/PageTransition";
 import Header from "@/components/Header";
+import BackToTop from "@/components/BackToTop";
 import { lazy, Suspense } from "react";
 
 const Index = lazy(() => import("./pages/Index"));
@@ -34,6 +35,7 @@ const AppContent = () => {
   return (
     <PageTransitionProvider>
       {!isFreightApp && <Header />}
+      {!isFreightApp && <BackToTop />}
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Index />} />
