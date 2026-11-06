@@ -1,9 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Fundo Preto com bordas arredondadas (Apple Style) -->
-  <rect width="512" height="512" rx="120" fill="#000000" />
+  <!-- Sem a tag <rect> de fundo. O fundo agora é transparente. -->
   
-  <!-- O Símbolo >_ usando fonte sem serifa (Sans-serif) -->
-  <g fill="#FFFFFF" font-family="Inter, system-ui, -apple-system, sans-serif" font-weight="700">
-    <text x="256" y="330" font-size="220" text-anchor="middle" letter-spacing="-4">>_</text>
+  <!-- Ajustamos o texto para ficar com o tamanho ideal e sem perder a qualidade -->
+  <g fill="#000000" font-family="Inter, system-ui, -apple-system, sans-serif" font-weight="700">
+    <text x="256" y="340" font-size="250" text-anchor="middle" letter-spacing="-10">>_</text>
   </g>
 </svg>
