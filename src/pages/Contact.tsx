@@ -42,7 +42,7 @@ const ContactPage = () => {
   const fields = [
     { label: "Qual é o seu nome?", key: "name", placeholder: "João Silva" },
     { label: "Qual é o seu e-mail?", key: "email", placeholder: "joao@email.com" },
-    { label: "Qual é a sua empresa/organização?", key: "organization", placeholder: "Empresa & Cia" },
+    { label: "Qual é a sua empresa?", key: "organization", placeholder: "Empresa & Cia" },
     { label: "Quais serviços você procura?", key: "services", placeholder: "Web Design, Desenvolvimento Web..." },
   ];
 

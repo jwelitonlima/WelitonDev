@@ -1,30 +1,32 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, createContext, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { allProjects } from "@/data/projects";
 
+// Dicionário atualizado com as rotas em português
 const pageNames: Record<string, string> = {
-  "/": "Home",
-  "/work": "Work",
-  "/about": "About",
-  "/contact": "Contact",
+  "/": "Início",
+  "/projetos": "Projetos",
+  "/sobre": "Sobre",
+  "/contato": "Contato",
 };
 
 const getPageName = (path: string): string => {
   if (pageNames[path]) return pageNames[path];
-  const match = path.match(/^\/project\/(.+)$/);
+  
+  // Ajuste para a rota de detalhes do projeto
+  const match = path.match(/^\/(?:project|projetos)\/(.+)$/);
   if (match) {
     const project = allProjects.find((p) => p.slug === match[1]);
-    return project?.title || "Project";
+    return project?.title || "Projeto";
   }
-  return "Page";
+  
+  return "Página";
 };
 
 interface PageTransitionContextValue {
   navigateWithTransition: (to: string) => void;
 }
-
-import { createContext, useContext } from "react";
 
 export const PageTransitionContext = createContext<PageTransitionContextValue>({
   navigateWithTransition: () => {},
