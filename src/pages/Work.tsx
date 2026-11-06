@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { LayoutGrid, List, ArrowUpRight, Play } from "lucide-react"; // Adicionado ícone Play
+import { LayoutGrid, List, ArrowUpRight, Play } from "lucide-react";
 import TransitionLink from "@/components/TransitionLink";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
@@ -67,7 +67,7 @@ const WorkPage = () => {
           </div>
 
           {/* Mobile: always card view / Desktop: toggleable */}
-          <div className="sm:hidden flex flex-col gap-5">
+          <div className="sm:hidden flex flex-col gap-8">
             {filtered.map((project, i) => (
               <TransitionLink key={project.slug} to={`/project/${project.slug}`}>
                 <motion.div
@@ -76,16 +76,15 @@ const WorkPage = () => {
                   transition={{ delay: i * 0.08, duration: 0.6, ease }}
                   className="group cursor-pointer"
                 >
-                  <div className="relative overflow-hidden rounded-xl aspect-[16/10] bg-secondary mb-3">
+                  <div className="relative overflow-hidden rounded-xl aspect-[16/10] bg-secondary mb-4">
                     <img
                       src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
-                    {/* Badge de Demo Live Mobile */}
                     {project.demoUrl && (
                       <div className="absolute top-3 left-3 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
                         <span className="relative flex h-2 w-2">
@@ -96,22 +95,19 @@ const WorkPage = () => {
                       </div>
                     )}
 
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <span className="text-xs font-medium text-background/70 uppercase tracking-wider">
-                        {project.services}
-                      </span>
-                    </div>
                     <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-background/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <ArrowUpRight className="w-4 h-4 text-foreground" />
                     </div>
                   </div>
-                  <div className="flex items-baseline justify-between gap-2">
-                    <h3 className="font-semibold text-base text-foreground group-hover:text-primary transition-colors">
+                  <div className="flex flex-col gap-1">
+                    <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors leading-tight">
                       {project.title}
                     </h3>
-                    <span className="text-xs text-muted-foreground flex-shrink-0">{project.year}</span>
+                    <div className="flex justify-between items-center text-sm text-muted-foreground">
+                      <span>{project.client}</span>
+                      <span>{project.year}</span>
+                    </div>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">{project.client}</p>
                 </motion.div>
               </TransitionLink>
             ))}
@@ -127,30 +123,30 @@ const WorkPage = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.05 }}
-                      className="grid grid-cols-4 md:grid-cols-5 py-5 items-center group cursor-pointer hover:bg-secondary/50 transition-colors -mx-4 px-4 rounded gap-2"
+                      className="grid grid-cols-4 md:grid-cols-5 py-6 items-center group cursor-pointer hover:bg-secondary/50 transition-colors -mx-4 px-4 rounded gap-4"
                     >
-                      <span className="font-medium text-base text-foreground group-hover:text-primary transition-colors col-span-2 md:col-span-1 truncate flex items-center gap-2">
+                      <span className="font-medium text-lg text-foreground group-hover:text-primary transition-colors col-span-2 md:col-span-1 truncate flex items-center gap-2">
                         {project.title}
-                        {project.demoUrl && <Play className="w-3 h-3 text-green-500 fill-green-500" />}
+                        {project.demoUrl && <Play className="w-4 h-4 text-green-500 fill-green-500" />}
                       </span>
-                      <span className="text-sm text-muted-foreground hidden md:block">{project.location}</span>
-                      <span className="text-sm text-muted-foreground">{project.services}</span>
+                      <span className="text-sm text-muted-foreground hidden md:block truncate">{project.client}</span>
+                      <span className="text-sm text-muted-foreground truncate">{project.services}</span>
                       <span className="text-sm text-muted-foreground text-right">{project.year}</span>
                     </motion.div>
                   </TransitionLink>
                 ))}
               </div>
             ) : (
-              <div className="grid sm:grid-cols-2 gap-8">
+              <div className="grid sm:grid-cols-2 gap-8 lg:gap-12">
                 {filtered.map((project, i) => (
                   <TransitionLink key={project.slug} to={`/project/${project.slug}`}>
                     <motion.div
                       initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
                       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                       transition={{ delay: i * 0.1, duration: 0.7, ease }}
-                      className="group cursor-pointer"
+                      className="group cursor-pointer flex flex-col"
                     >
-                      <div className="relative overflow-hidden rounded-lg mb-4 aspect-[4/3] bg-secondary">
+                      <div className="relative overflow-hidden rounded-2xl mb-5 aspect-[4/3] bg-secondary shadow-sm">
                         <img
                           src={project.image}
                           alt={project.title}
@@ -158,7 +154,6 @@ const WorkPage = () => {
                           loading="lazy"
                         />
                         
-                        {/* Badge de Demo Live Desktop */}
                         {project.demoUrl && (
                           <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
                             <span className="relative flex h-2 w-2">
@@ -169,9 +164,14 @@ const WorkPage = () => {
                           </div>
                         )}
                       </div>
-                      <div className="flex justify-between items-baseline gap-2">
-                        <h3 className="font-semibold text-base text-foreground truncate">{project.title}</h3>
-                        <span className="text-sm text-muted-foreground whitespace-nowrap">{project.services}</span>
+                      <div className="flex justify-between items-start gap-4">
+                        <div>
+                          <h3 className="font-bold text-xl text-foreground mb-1 group-hover:text-primary transition-colors">
+                            {project.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">{project.client}</p>
+                        </div>
+                        <span className="text-sm font-medium text-muted-foreground whitespace-nowrap bg-secondary px-3 py-1 rounded-full">{project.services}</span>
                       </div>
                     </motion.div>
                   </TransitionLink>
