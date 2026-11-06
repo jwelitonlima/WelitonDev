@@ -1,73 +1,241 @@
-import project1 from "@/assets/project-1.jpg";
-import project2 from "@/assets/project-2.jpg";
-import project3 from "@/assets/project-3.jpg";
-import project4 from "@/assets/project-4.jpg";
-import projectFreteAI from "@/assets/project-freteai.jpg";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowLeft, Play } from "lucide-react";
+import TransitionLink from "@/components/TransitionLink";
+import WavyDivider from "@/components/WavyDivider";
+import Footer from "@/components/Footer";
+import { allProjects } from "@/data/projects";
+import { DemoModal } from "@/components/DemoModal";
+import { DeviceMockupCarousel } from "@/components/DeviceMockupCarousel";
 
-// Importando os 4 mockups do InteraMed
-import mockup1 from "@/assets/interamed-mockup-1.png";
-import mockup2 from "@/assets/interamed-mockup-2.png";
-import mockup3 from "@/assets/interamed-mockup-3.png";
-import mockup4 from "@/assets/interamed-mockup-4.png";
+const ease = [0.16, 1, 0.3, 1] as const;
 
-// Importando o vídeo
-import interamedVideo from "@/assets/interamed-video.mp4";
+const ProjectDetail = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const project = allProjects.find((p) => p.slug === slug);
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
 
-// Como não temos a foto antiga, usamos o mockup 1 como capa
-const projectInteraMed = mockup1;
+  if (!project) {
+    return (
+      <main className="section-light min-h-[100svh] flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-foreground mb-4">Projeto não encontrado</h1>
+          <TransitionLink to="/work" className="text-sm link-underline text-foreground font-medium">
+            ← Voltar aos trabalhos
+          </TransitionLink>
+        </div>
+      </main>
+    );
+  }
 
-export interface Project {
-  slug: string;
-  title: string;
-  client: string;
-  location: string;
-  services: string;
-  year: string;
-  category: "development" | "design" | "data" | "ai";
-  image: string;
-  description: string;
-  challenge: string;
-  solution: string;
-  technologies: string[];
-  result?: string;
-  demoUrl?: string;
-  gallery?: string[]; 
-  videoUrl?: string;
-}
+  return (
+    <main>
+      <section className="section-light pt-28 sm:pt-32 pb-16 sm:pb-20">
+        <div className="container-wide">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease }}
+          >
+            <TransitionLink
+              to="/work"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8 sm:mb-12"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Voltar aos trabalhos
+            </TransitionLink>
+          </motion.div>
 
-export const allProjects: Project[] = [
-  {
-    slug: "frete-ai",
-    title: "FreteAI — Sistema de Monitoramento de Frete com IA",
-    client: "Projeto de Inovação Acadêmica",
-    location: "Brasil",
-    services: "Full-Stack Development & AI",
-    year: "2025",
-    category: "ai",
-    image: projectFreteAI,
-    description: "Sistema inteligente de monitoramento de fretes em tempo real com agente de IA integrado. Dashboard interativo com métricas, alertas com prioridade, mapa de rastreamento, timeline de eventos e previsões de entrega baseadas em IA.",
-    challenge: "Técnicos de logística precisam monitorar dezenas de fretes simultaneamente, identificando atrasos, paradas prolongadas e desvios de rota rapidamente para evitar prejuízos.",
-    solution: "Desenvolvi um sistema completo com dashboard de métricas em tempo real, alertas inteligentes categorizados por prioridade, mapa de rastreamento visual, e um agente de IA que sugere ações corretivas automaticamente.",
-    technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Recharts", "shadcn/ui"],
-    result: "Redução de 60% no tempo de resposta a incidentes e 40% menos entregas atrasadas",
-    demoUrl: "/dashboard",
-  },
-  {
-    slug: "interamed",
-    title: "InteraMed — Assistente Clínico de Interações Medicamentosas",
-    client: "Co-criação com João Victor Pinheiro (Enfermagem - UFPI)",
-    location: "Picos, PI",
-    services: "Full-Stack Development & IA",
-    year: "2026",
-    category: "development",
-    image: projectInteraMed, 
-    description: "Ferramenta mobile-first criada para a equipe de enfermagem na linha de frente. Auxilia na checagem rápida de interações medicamentosas complexas, gestão inteligente de horários de administração e leitura de receitas via IA, reduzindo erros graves no ambiente hospitalar.",
-    challenge: "No ambiente hospitalar, especialmente no SUS, enfermeiros lidam com prescrições complexas (10 a 29 medicamentos por paciente). A checagem manual é lenta e suscetível a erros. A dor foi mapeada junto ao aluno de enfermagem João Victor Pinheiro (UFPI/Picos), unindo a vivência clínica dele com a minha experiência em tecnologia e no setor de saúde laboratorial.",
-    solution: "Desenvolvi um MVP funcional com design premium e mobile-first (inspirado em Apple/Nike). Utiliza React, TanStack Start e Tailwind. Integra a API da ANVISA e o Llama 4 Scout (Groq) para OCR de receitas. O motor de aprazamento inteligente sugere horários que respeitam a cronobiologia e fogem da passagem de plantão.",
-    technologies: ["React", "TanStack Start", "Tailwind CSS", "Groq", "Llama 4 Scout", "APIs ANVISA", "Open FDA"],
-    result: "MVP 100% funcional, com APIs de terceiros integradas, motor de regras clínicas e design validado para reduzir a fadiga cognitiva.",
-    demoUrl: "https://interamed-five.vercel.app/", 
-    gallery: [mockup1, mockup2, mockup3, mockup4],
-    videoUrl: interamedVideo,
-  },
-];
+          <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-6 lg:gap-10 mb-10 sm:mb-16">
+            <motion.h1
+              initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, ease }}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight max-w-4xl"
+            >
+              {project.title}
+            </motion.h1>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.6, delay: 0.15, ease }}
+              className="flex flex-col sm:flex-row flex-wrap gap-x-8 gap-y-4 text-sm shrink-0 w-full xl:w-auto"
+            >
+              <div className="w-full xl:w-auto">
+                <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Cliente / Origem</p>
+                <p className="text-foreground font-medium sm:whitespace-nowrap">{project.client}</p>
+              </div>
+              <div className="flex gap-8">
+                <div>
+                  <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Local</p>
+                  <p className="text-foreground font-medium">{project.location}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Ano</p>
+                  <p className="text-foreground font-medium">{project.year}</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97, filter: "blur(10px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: 1, delay: 0.2, ease }}
+            className="mb-16 sm:mb-24 w-full"
+          >
+            {project.gallery ? (
+              <DeviceMockupCarousel 
+                images={project.gallery} 
+                videoUrl={project.videoUrl} 
+                title={project.title} 
+              />
+            ) : (
+              <div className="rounded-2xl overflow-hidden aspect-[16/9] bg-secondary">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 mb-16 sm:mb-24">
+            <motion.div
+              initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease }}
+            >
+              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Sobre o projeto</p>
+              <p className="text-lg sm:text-xl text-foreground leading-relaxed">
+                {project.description}
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.1, ease }}
+            >
+              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Tecnologias</p>
+              <div className="flex flex-wrap gap-2">
+                {project.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-4 py-2 rounded-full bg-secondary text-foreground text-sm font-medium"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-px bg-border rounded-xl overflow-hidden mb-16 sm:mb-24">
+            <motion.div
+              initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease }}
+              className="bg-background p-8 sm:p-12"
+            >
+              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">O Desafio</p>
+              <p className="text-base sm:text-lg text-foreground leading-relaxed">
+                {project.challenge}
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.1, ease }}
+              className="bg-background p-8 sm:p-12"
+            >
+              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">A Solução</p>
+              <p className="text-base sm:text-lg text-foreground leading-relaxed">
+                {project.solution}
+              </p>
+            </motion.div>
+
+            {project.result && (
+              <motion.div
+                initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.2, ease }}
+                className="bg-background p-8 sm:p-12 lg:col-span-2"
+              >
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Resultado</p>
+                <p className="text-base sm:text-lg text-primary font-semibold leading-relaxed">
+                  {project.result}
+                </p>
+              </motion.div>
+            )}
+          </div>
+
+          {project.demoUrl && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease }}
+              className="mb-16 sm:mb-24 text-center"
+            >
+              <button
+                onClick={() => setIsDemoOpen(true)}
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold hover:scale-105 transition-transform"
+              >
+                <Play className="w-4 h-4 fill-current" />
+                Abrir Demo Interativa
+              </button>
+            </motion.div>
+          )}
+
+          {(() => {
+            const currentIndex = allProjects.findIndex((p) => p.slug === slug);
+            if (currentIndex === allProjects.length - 1) return null;
+
+            const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
+            return (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease }}
+                className="text-center"
+              >
+                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Próximo projeto</p>
+                <TransitionLink
+                  to={`/project/${nextProject.slug}`}
+                  className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground hover:text-primary transition-colors"
+                >
+                  {nextProject.title} →
+                </TransitionLink>
+              </motion.div>
+            );
+          })()}
+        </div>
+      </section>
+
+      <WavyDivider direction="light-to-dark" />
+      <Footer variant="dark" />
+
+      {project.demoUrl && (
+        <DemoModal
+          isOpen={isDemoOpen}
+          onClose={() => setIsDemoOpen(false)}
+          url={project.demoUrl}
+          title={project.title}
+        />
+      )}
+    </main>
+  );
+};
+
+export default ProjectDetail;

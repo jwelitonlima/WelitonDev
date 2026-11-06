@@ -66,7 +66,7 @@ const WorkPage = () => {
             </div>
           </div>
 
-          {/* Mobile: always card view / Desktop: toggleable */}
+          {/* Mobile: always card view */}
           <div className="sm:hidden flex flex-col gap-8">
             {filtered.map((project, i) => (
               <TransitionLink key={project.slug} to={`/project/${project.slug}`}>
@@ -76,11 +76,11 @@ const WorkPage = () => {
                   transition={{ delay: i * 0.08, duration: 0.6, ease }}
                   className="group cursor-pointer"
                 >
-                  <div className="relative overflow-hidden rounded-xl aspect-[16/10] bg-secondary mb-4">
+                  <div className="relative overflow-hidden rounded-xl bg-secondary mb-4 flex items-center justify-center">
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-auto max-h-[500px] object-contain transition-transform duration-700 group-hover:scale-105"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -113,7 +113,7 @@ const WorkPage = () => {
             ))}
           </div>
 
-          {/* Desktop list view */}
+          {/* Desktop: Grid/List */}
           <div className="hidden sm:block">
             {viewMode === "list" ? (
               <div className="divide-y divide-border">
@@ -144,13 +144,13 @@ const WorkPage = () => {
                       initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
                       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                       transition={{ delay: i * 0.1, duration: 0.7, ease }}
-                      className="group cursor-pointer flex flex-col"
+                      className="group cursor-pointer flex flex-col h-full"
                     >
-                      <div className="relative overflow-hidden rounded-2xl mb-5 aspect-[4/3] bg-secondary shadow-sm">
+                      <div className="relative overflow-hidden rounded-2xl mb-5 bg-secondary flex items-center justify-center min-h-[300px]">
                         <img
                           src={project.image}
                           alt={project.title}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          className="w-full h-auto max-h-[450px] object-contain transition-transform duration-700 group-hover:scale-105"
                           loading="lazy"
                         />
                         
@@ -164,7 +164,7 @@ const WorkPage = () => {
                           </div>
                         )}
                       </div>
-                      <div className="flex justify-between items-start gap-4">
+                      <div className="flex justify-between items-start gap-4 mt-auto">
                         <div>
                           <h3 className="font-bold text-xl text-foreground mb-1 group-hover:text-primary transition-colors">
                             {project.title}
