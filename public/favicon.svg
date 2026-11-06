@@ -1,8 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Sem a tag <rect> de fundo. O fundo agora é transparente. -->
+  <!-- Fundo: Cinza muito escuro, quase preto, com bordas super arredondadas -->
+  <rect width="512" height="512" rx="140" fill="#18181B" />
   
-  <!-- Ajustamos o texto para ficar com o tamanho ideal e sem perder a qualidade -->
-  <g fill="#000000" font-family="Inter, system-ui, -apple-system, sans-serif" font-weight="700">
-    <text x="256" y="340" font-size="250" text-anchor="middle" letter-spacing="-10">>_</text>
+  <!-- Símbolo: Branco puro, fonte monoespaçada, bem grande para preencher o espaço -->
+  <g fill="#FFFFFF" font-family="'Courier New', Courier, monospace" font-weight="bold">
+    <!-- Aumentei o font-size de 250 para 320 e ajustei a posição -->
+    <text x="256" y="350" font-size="320" text-anchor="middle" letter-spacing="-15">>_</text>
   </g>
 </svg>
