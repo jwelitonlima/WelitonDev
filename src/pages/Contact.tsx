@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Instagram } from "lucide-react";
+import { Send, Instagram, Mail, MessageCircle } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 
@@ -38,11 +38,10 @@ const ContactPage = () => {
     setForm({ name: "", email: "", organization: "", services: "", message: "" });
   };
 
-  // Removemos o 'num' dos fields
   const fields = [
     { label: "Qual é o seu nome?", key: "name", placeholder: "João Silva" },
     { label: "Qual é o seu e-mail?", key: "email", placeholder: "joao@email.com" },
-    { label: "Qual é a sua empresa?", key: "organization", placeholder: "Empresa & Cia" },
+    { label: "Qual é a sua empresa/organização?", key: "organization", placeholder: "Empresa & Cia" },
     { label: "Quais serviços você procura?", key: "services", placeholder: "Web Design, Desenvolvimento Web..." },
   ];
 
@@ -70,7 +69,6 @@ const ContactPage = () => {
                   transition={{ delay: 0.1 + i * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <label className="flex items-baseline gap-3 mb-3">
-                    {/* Removido o span que mostrava o número */}
                     <span className="text-sm font-medium text-dark-fg/80">{field.label}</span>
                   </label>
                   <input
@@ -129,25 +127,40 @@ const ContactPage = () => {
           >
             <div>
               <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Detalhes de Contato</p>
-              <p className="text-sm text-dark-fg/80 mb-1">contato@welitondev.com</p>
-              <a href="https://wa.me/5575983422981" target="_blank" rel="noopener noreferrer" className="text-sm text-dark-fg/80 link-underline inline-block w-fit">+55 (75) 9 8342 - 2981</a>
+              
+              {/* E-mail: sublinhado + ícone sutil */}
+              <a href="mailto:contato@welitondev.com" className="group flex items-center gap-2 text-sm text-dark-fg/80 hover:text-dark-fg transition-colors w-fit mb-2">
+                <Mail className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
+                <span className="link-underline">contato@welitondev.com</span>
+              </a>
+              
+              {/* WhatsApp: sublinhado + ícone sutil */}
+              <a href="https://wa.me/5575981828601" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-sm text-dark-fg/80 hover:text-dark-fg transition-colors w-fit">
+                <MessageCircle className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
+                <span className="link-underline">+55 (75) 9 8182-8601</span>
+              </a>
             </div>
+            
             <div>
               <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Detalhes Comerciais</p>
-              <p className="text-sm text-dark-fg/80 mb-1">Brasil</p>
-              <a href="https://www.instagram.com/welitondev" target="_blank" rel="noopener noreferrer" className="text-sm text-dark-fg/80 inline-flex items-center gap-1.5 w-fit">
-                <Instagram className="w-3.5 h-3.5" />
+              <p className="text-sm text-dark-fg/80 mb-2">Brasil</p>
+              
+              {/* Instagram: sublinhado + ícone sutil */}
+              <a href="https://www.instagram.com/welitondev" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-sm text-dark-fg/80 hover:text-dark-fg transition-colors w-fit">
+                <Instagram className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
                 <span className="link-underline">@welitondev</span>
               </a>
             </div>
+
             <div>
               <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Redes Sociais</p>
-              <div className="flex flex-row lg:flex-col gap-4 lg:gap-2">
-                <a href="https://github.com/jwelitonlima" target="_blank" rel="noopener noreferrer" className="text-sm text-dark-fg/80 link-underline inline-block w-fit">
-                  GitHub
+              <div className="flex flex-col gap-2">
+                {/* GitHub e LinkedIn: Apenas texto com sublinhado permanente */}
+                <a href="https://github.com/jwelitonlima" target="_blank" rel="noopener noreferrer" className="text-sm text-dark-fg/80 hover:text-dark-fg transition-colors w-fit">
+                  <span className="link-underline">GitHub</span>
                 </a>
-                <a href="https://www.linkedin.com/in/jweliton" target="_blank" rel="noopener noreferrer" className="text-sm text-dark-fg/80 link-underline inline-block w-fit">
-                  LinkedIn
+                <a href="https://www.linkedin.com/in/jweliton" target="_blank" rel="noopener noreferrer" className="text-sm text-dark-fg/80 hover:text-dark-fg transition-colors w-fit">
+                  <span className="link-underline">LinkedIn</span>
                 </a>
               </div>
             </div>
