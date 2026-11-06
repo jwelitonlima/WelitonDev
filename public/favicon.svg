@@ -1,10 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- Fundo Preto Premium -->
-  <rect width="512" height="512" rx="110" fill="#000000" />
-  
-  <!-- O Terminal usando fonte limpa e fina, mas com escala ampliada para preencher o ícone -->
-  <g fill="#FFFFFF" font-family="'Courier New', Courier, monospace" font-weight="normal">
-    <!-- Aumentamos o tamanho da fonte para 380 para não ficar minúsculo -->
-    <text x="256" y="360" font-size="380" text-anchor="middle" letter-spacing="-12">>_</text>
+  <rect width="512" height="512" rx="100" fill="#000000" />
+  <g fill="#FFFFFF" font-family="'Courier New', Courier, monospace" font-weight="bold">
+    <text x="256" y="330" font-size="200" text-anchor="middle">>_</text>
   </g>
 </svg>
