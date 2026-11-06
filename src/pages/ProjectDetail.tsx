@@ -29,6 +29,8 @@ const ProjectDetail = () => {
     );
   }
 
+  const isDesktop = project.deviceType === "desktop";
+
   return (
     <main>
       <section className="section-light pt-28 sm:pt-32 pb-16 sm:pb-20">
@@ -80,14 +82,40 @@ const ProjectDetail = () => {
             </motion.div>
           </div>
 
-          {/* HERO SECTION: Se tiver video, mostra o mockup do video. Se tiver galeria, mostra o carrossel. Senão, mostra a imagem. */}
+          {/* HERO SECTION */}
           <motion.div
             initial={{ opacity: 0, scale: 0.97, filter: "blur(10px)" }}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1, delay: 0.2, ease }}
             className="mb-16 sm:mb-24 w-full"
           >
-            {project.videoUrl || project.gallery ? (
+            {isDesktop && project.videoUrl ? (
+              // MacBook grande e centralizado para projetos Desktop
+              <div className="w-full flex justify-center py-4">
+                <div className="relative w-full max-w-5xl flex flex-col items-center justify-end">
+                  <div className="relative w-full aspect-video bg-[#1a1a1a] rounded-t-2xl p-[14px] pb-[20px] shadow-2xl border-[2px] border-gray-700">
+                    <div className="relative w-full h-full bg-black rounded-lg overflow-hidden">
+                      <div className="absolute top-2 inset-x-0 h-3 flex justify-center z-20">
+                        <div className="w-3 h-3 bg-[#111] rounded-full border border-gray-800 shadow-inner"></div>
+                      </div>
+                      <video
+                        src={project.videoUrl}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/10 pointer-events-none" />
+                    </div>
+                  </div>
+                  <div className="relative w-[112%] h-5 sm:h-6 bg-gradient-to-b from-gray-400 to-gray-600 rounded-b-2xl shadow-[0_15px_30px_rgba(0,0,0,0.4)]">
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1.5 bg-gray-700 rounded-b-md"></div>
+                  </div>
+                </div>
+              </div>
+            ) : project.gallery ? (
+              // Carrossel para Mobile (InteraMed)
               <DeviceMockupCarousel 
                 images={project.gallery} 
                 videoUrl={project.videoUrl} 
@@ -95,6 +123,7 @@ const ProjectDetail = () => {
                 deviceType={project.deviceType}
               />
             ) : (
+              // Fallback para imagem estática
               <div className="rounded-2xl overflow-hidden aspect-[16/9] bg-secondary">
                 <img
                   src={project.image}
