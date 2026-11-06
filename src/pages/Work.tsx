@@ -77,13 +77,24 @@ const WorkPage = () => {
                   className="group cursor-pointer"
                 >
                   <div className="relative overflow-hidden rounded-xl bg-secondary mb-4 flex items-center justify-center">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-auto max-h-[500px] object-contain transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    {project.videoUrl ? (
+                      <video
+                        src={project.videoUrl}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-full h-auto max-h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    ) : (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-auto max-h-[500px] object-contain transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                     
                     {project.demoUrl && (
                       <div className="absolute top-3 left-3 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
@@ -147,12 +158,23 @@ const WorkPage = () => {
                       className="group cursor-pointer flex flex-col h-full"
                     >
                       <div className="relative overflow-hidden rounded-2xl mb-5 bg-secondary flex items-center justify-center min-h-[300px]">
-                        <img
-                          src={project.image}
-                          alt={project.title}
-                          className="w-full h-auto max-h-[450px] object-contain transition-transform duration-700 group-hover:scale-105"
-                          loading="lazy"
-                        />
+                        {project.videoUrl ? (
+                          <video
+                            src={project.videoUrl}
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            className="w-full h-auto max-h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                        ) : (
+                          <img
+                            src={project.image}
+                            alt={project.title}
+                            className="w-full h-auto max-h-[450px] object-contain transition-transform duration-700 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                        )}
                         
                         {project.demoUrl && (
                           <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
