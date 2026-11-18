@@ -1,3 +1,4 @@
+import AgentPanel from "@/components/freight/AgentPanel";
 import { useState, useEffect, useCallback } from "react";
 import { Truck, AlertTriangle, Bell, CheckCircle, Plus, Search, Zap, BarChart3, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -88,6 +89,9 @@ const FreightDashboard = () => {
           <MetricCard title="Alertas Pendentes" value={pendingAlerts} icon={Bell} color="warning" delay={0.1} />
           <MetricCard title="Taxa de Entrega" value={deliveryRate} displayValue={`${deliveryRate}%`} icon={CheckCircle} color="success" delay={0.15} trend={{ value: 5, label: "vs semana" }} />
         </div>
+
+        {/* ⚠️ NOVO PAINEL DO AGENTE IA AQUI ⚠️ */}
+        <AgentPanel freights={mockFreights} />
 
         {/* Main content grid */}
         <div className="grid lg:grid-cols-[1fr_340px] gap-6">

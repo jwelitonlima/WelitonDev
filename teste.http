@@ -1,0 +1,14 @@
+POST https://welitondev.app.n8n.cloud/webhook-test/analisar-fretes
+Content-Type: application/json
+
+{
+  "freights": [
+    {
+      "code": "BR999",
+      "status": "atrasado",
+      "incidents": [
+        { "description": "Atraso climático severo" }
+      ]
+    }
+  ]
+}
