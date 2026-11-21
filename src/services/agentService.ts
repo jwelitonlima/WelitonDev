@@ -16,12 +16,11 @@ export interface AgentResponse {
   logs: AgentActionLog[];
 }
 
-// Forçando a URL correta de produção
-const N8N_WEBHOOK_URL = "https://welitondev.app.n8n.cloud/webhook/analisar-fretes";
+// Usa a variável de ambiente da Vercel, ou a URL de produção do seu n8n como fallback
+const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL || "https://welitondev.app.n8n.cloud/webhook/analisar-fretes";
 
 export const analyzeFreightsWithAgent = async (freights: FreightItem[]): Promise<AgentResponse> => {
   const freightsToAnalyze = freights.filter(
-  
     (f) => f.status === "critico" || f.status === "atrasado" || f.incidents.length > 0
   );
 
