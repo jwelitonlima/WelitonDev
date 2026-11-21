@@ -1,37 +1,50 @@
-import { FreightItem } from "@/data/freightData";
+import { motion } from "framer-motion";
+import { MapPin, Clock } from "lucide-react";
+import { FreightItem, statusLabels } from "@/data/freightData";
 import StatusBadge from "./StatusBadge";
-import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface FreteListItemProps {
   freight: FreightItem;
-  selected?: boolean;
+  selected: boolean;
   onClick: (freight: FreightItem) => void;
 }
 
 const FreteListItem = ({ freight, selected, onClick }: FreteListItemProps) => {
-  const eta = new Date(freight.eta);
-  const etaStr = eta.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
-
   return (
     <button
       onClick={() => onClick(freight)}
       className={cn(
-        "w-full text-left p-3 rounded-lg border transition-all",
-        selected ? "bg-freight-primary/10 border-freight-primary/30" : "bg-card border-border hover:bg-muted/50"
+        "w-full text-left p-3 rounded-2xl border transition-all duration-300 group",
+        selected
+          ? "border-white/20 bg-white/10"
+          : "border-white/5 bg-white/[0.02] hover:bg-white/5 hover:border-white/10"
       )}
-      aria-label={`Frete ${freight.code}`}
     >
       <div className="flex items-center justify-between mb-1.5">
-        <code className="text-xs font-mono font-semibold">{freight.code}</code>
-        <StatusBadge status={freight.status} className="text-[10px] px-2 py-0" />
+        <code className={cn(
+          "text-xs font-mono font-bold transition-colors",
+          selected ? "text-white" : "text-zinc-300 group-hover:text-white"
+        )}>
+          {freight.code}
+        </code>
+        <StatusBadge status={freight.status} className="text-[9px] px-2 py-0 shrink-0" />
       </div>
-      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-        <span className="truncate max-w-[80px]">{freight.origin.split(",")[0]}</span>
-        <ArrowRight className="w-3 h-3 shrink-0" />
-        <span className="truncate max-w-[80px]">{freight.destination.split(",")[0]}</span>
+
+      <div className="space-y-1">
+        <div className="flex items-center gap-1.5 text-[11px] text-zinc-400">
+          <MapPin className="w-3 h-3 shrink-0" />
+          <span className="truncate">
+            {freight.origin.split(",")[0]} → {freight.destination.split(",")[0]}
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5 text-[10px] text-zinc-500">
+          <Clock className="w-3 h-3 shrink-0" />
+          <span>
+            ETA: {new Date(freight.eta).toLocaleDateString("pt-BR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })}
+          </span>
+        </div>
       </div>
-      <p className="text-[10px] text-muted-foreground mt-1">ETA: {etaStr}</p>
     </button>
   );
 };

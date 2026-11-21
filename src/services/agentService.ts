@@ -21,6 +21,7 @@ const N8N_WEBHOOK_URL = "https://welitondev.app.n8n.cloud/webhook/analisar-frete
 
 export const analyzeFreightsWithAgent = async (freights: FreightItem[]): Promise<AgentResponse> => {
   const freightsToAnalyze = freights.filter(
+  
     (f) => f.status === "critico" || f.status === "atrasado" || f.incidents.length > 0
   );
 

@@ -6,9 +6,14 @@ interface FreightLayoutProps {
 
 const FreightLayout = ({ children }: FreightLayoutProps) => {
   useEffect(() => {
+    // Adiciona o tema escuro geral (para o layout base)
     document.documentElement.classList.add("dark");
+    // Adiciona a classe exclusiva para sobrescrever as cores com o estilo Apple (preto/branco)
+    document.documentElement.classList.add("freight-theme"); 
+    
     return () => {
       document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove("freight-theme");
     };
   }, []);
 

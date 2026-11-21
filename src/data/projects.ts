@@ -1,10 +1,13 @@
-import projectFreteAI from "@/assets/project-freteai.jpg"; // <-- Se for trocar, mude o nome aqui
+import projectFreteAI from "@/assets/project-freteai.jpg";
 import freteAIVideo from "@/assets/freteai-video.mp4"; 
 import mockup1 from "@/assets/interamed-mockup-1.png";
 import mockup2 from "@/assets/interamed-mockup-2.png";
 import mockup3 from "@/assets/interamed-mockup-3.png";
 import mockup4 from "@/assets/interamed-mockup-4.png";
 import interamedVideo from "@/assets/interamed-video.mp4";
+// --- IMPORTS DO NOVO PROJETO ---
+import projectDelivery from "@/assets/delivery-dashboard.jpg"; 
+import deliveryVideo from "@/assets/delivery-dashboard-video.mp4";
 
 const projectInteraMed = mockup1;
 
@@ -37,7 +40,7 @@ export const allProjects: Project[] = [
     services: "Full-Stack Development - AI",
     year: "2025",
     category: "ai",
-    image: projectFreteAI, // Usa a imagem do print aqui
+    image: projectFreteAI,
     description: "Sistema inteligente de monitoramento de fretes em tempo real com agente de IA integrado. Dashboard interativo com métricas, alertas com prioridade, mapa de rastreamento, timeline de eventos e previsões de entrega baseadas em IA.",
     challenge: "Técnicos de logística precisam monitorar dezenas de fretes simultaneamente, identificando atrasos, paradas prolongadas e desvios de rota rapidamente para evitar prejuízos.",
     solution: "Desenvolvi um sistema completo com dashboard de métricas em tempo real, alertas inteligentes categorizados por prioridade, mapa de rastreamento visual, e um agente de IA que sugere ações corretivas automaticamente.",
@@ -65,5 +68,24 @@ export const allProjects: Project[] = [
     gallery: [mockup1, mockup2, mockup3, mockup4],
     videoUrl: interamedVideo,
     deviceType: "mobile",
+  },
+  // --- NOVO PROJETO ADICIONADO AQUI ---
+  {
+    slug: "delivery-insights",
+    title: "Dashboard Insights — Análise Logística com IA",
+    client: "Data Science & Analytics",
+    location: "Brasil (Remoto)",
+    services: "Data Engineering, Analytics & AI",
+    year: "2026",
+    category: "data",
+    image: projectDelivery,
+    description: "Uma ferramenta de inteligência operacional que responde a uma das perguntas mais complexas da logística urbana: 'Por que as entregas atrasam?'. O projeto analisa 50.000 registros de delivery, gera hipóteses baseadas em trânsito, clima e tempo de preparo, e utiliza IA para prescrever soluções de melhoria.",
+    challenge: "Gestores de operações precisam identificar a 'causa raiz' dos atrasos em milhares de pedidos diários. Fazer isso manualmente é lento, subjetivo e suscetível a erros, impactando diretamente a satisfação do cliente e o custo operacional da empresa.",
+    solution: "Desenvolvi um pipeline completo (ETL + Analytics) em Python e Pandas, visualizado em um dashboard interativo (Streamlit + Plotly). O grande diferencial é a integração com um LLM (Groq API), que atua como um consultor sênior: o usuário clica em um botão e a IA cruza os dados, valida as hipóteses e gera um relatório executivo com ações práticas de melhoria.",
+    technologies: ["Python", "Streamlit", "Pandas", "Plotly", "Groq API"],
+    result: "Dashboard 100% funcional que transforma dados brutos em um plano de ação executivo em segundos. Simula com perfeição a rotina de um Analista de Dados focado em otimização logística.",
+    demoUrl: "https://projeto-delivery-data-gbbnwmrsymsjc8ev2hjudc.streamlit.app/?embed=true",
+    videoUrl: deliveryVideo,
+    deviceType: "desktop",
   },
 ];
