@@ -30,4 +30,9 @@ pnpm-debug.log*
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?HANDOFF.md
+*.sw?
+
+# Documentos internos (não publicar)
+HANDOFF.md
+handoff.md
+docs-internos/
