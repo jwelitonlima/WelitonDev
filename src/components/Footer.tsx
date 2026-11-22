@@ -32,13 +32,13 @@ const Footer = ({ variant = "dark" }: { variant?: "dark" | "light" }) => {
         {/* CTA */}
         <div className="text-center py-12 sm:py-16 md:py-24">
           <p className={`text-sm uppercase tracking-widest mb-4 sm:mb-6 ${textMuted}`}>
-            Vamos trabalhar juntos
+            Contato
           </p>
           <h2 className={`text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-8 sm:mb-10 ${textMain}`}>
-            Vamos trabalhar<br />juntos
+            Vamos construir<br />algo incrível?
           </h2>
           <TransitionLink
-            to="/contact"
+            to="/contato"
             className="btn-primary-circle w-32 h-32 sm:w-40 sm:h-40 text-xs sm:text-sm font-semibold hover:scale-110"
           >
             Entre em contato
