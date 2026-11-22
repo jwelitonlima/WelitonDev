@@ -16,7 +16,7 @@ export const TabletMockup = ({
   const [hasStarted, setHasStarted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Efeito de digitação na barra de URL (mantido no mobile e desktop)
+  // Efeito de digitação na barra de URL
   useEffect(() => {
     let i = 0;
     setTypedText("");
@@ -144,14 +144,14 @@ export const TabletMockup = ({
                             <Play className="w-7 h-7 sm:w-8 sm:h-8 fill-current ml-1" />
                           </div>
 
-                          {/* Aviso de áudio pulsante */}
+                          {/* Aviso de áudio pulsante (Usando a cor primary do seu tema) */}
                           <motion.div 
                             animate={{ 
                               scale: [1, 1.05, 1],
                               boxShadow: [
-                                "0px 0px 0px 0px rgba(16, 185, 129, 0)",
-                                "0px 0px 0px 4px rgba(16, 185, 129, 0.15)",
-                                "0px 0px 0px 0px rgba(16, 185, 129, 0)"
+                                "0px 0px 0px 0px hsl(var(--primary) / 0)",
+                                "0px 0px 0px 6px hsl(var(--primary) / 0.2)",
+                                "0px 0px 0px 0px hsl(var(--primary) / 0)"
                               ]
                             }}
                             transition={{ 
@@ -159,7 +159,7 @@ export const TabletMockup = ({
                               duration: 2,
                               ease: "easeInOut"
                             }}
-                            className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/80 border border-primary/30 text-white text-[10px] sm:text-sm font-medium"
+                            className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/80 border border-primary/40 text-white text-[10px] sm:text-sm font-medium"
                           >
                             <Volume2 className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
                             <span className="text-primary font-semibold tracking-wide">
