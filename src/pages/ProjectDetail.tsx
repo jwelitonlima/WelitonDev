@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import TransitionLink from "@/components/TransitionLink";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
@@ -9,6 +9,7 @@ import { allProjects } from "@/data/projects";
 import { DemoModal } from "@/components/DemoModal";
 import { DeviceMockupCarousel } from "@/components/DeviceMockupCarousel";
 import { TabletMockup } from "@/components/TabletMockup";
+import { SlideToUnlock } from "@/components/SlideToUnlock"; // Importa o novo componente
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -51,7 +52,7 @@ const ProjectDetail = () => {
             </TransitionLink>
           </motion.div>
 
-          {/* Header do Projeto (Título + Botão de Demo) */}
+          {/* Header do Projeto */}
           <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-6 lg:gap-10 mb-10 sm:mb-16">
             <motion.h1
               initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
@@ -85,19 +86,20 @@ const ProjectDetail = () => {
                   </div>
                 </div>
               </div>
-
-              {/* Botão de Demo Minimalista e com Destaque */}
-              {project.demoUrl && (
-                <button
-                  onClick={() => setIsDemoOpen(true)}
-                  className="group flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-foreground text-background font-semibold text-sm transition-all hover:bg-foreground/90 hover:scale-[1.02] w-full sm:w-auto mt-4 sm:mt-0"
-                >
-                  Ver Demo Interativa
-                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </button>
-              )}
             </motion.div>
           </div>
+
+          {/* SLIDER DE ACESSO (Novo) */}
+          {project.demoUrl && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3, ease }}
+              className="mb-10 sm:mb-16 flex justify-start"
+            >
+              <SlideToUnlock onComplete={() => setIsDemoOpen(true)} />
+            </motion.div>
+          )}
 
           {/* HERO SECTION (Vídeo/Mockup) */}
           <motion.div
