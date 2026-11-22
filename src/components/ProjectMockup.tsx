@@ -4,7 +4,7 @@ import { Project } from "@/data/projects";
 
 interface ProjectMockupProps {
   project: Project;
-  isDetail?: boolean; // true na página de detalhes, false na home
+  isDetail?: boolean;
 }
 
 export const ProjectMockup = ({ project, isDetail = false }: ProjectMockupProps) => {
@@ -12,28 +12,36 @@ export const ProjectMockup = ({ project, isDetail = false }: ProjectMockupProps)
 
   if (project.slug === "frete-ai" && project.videoUrl) {
     return (
-      <TabletMockup
-        videoUrl={project.videoUrl}
-        urlText="https://weliton-dev.vercel.app/project/frete-ai"
-      />
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="w-full max-w-[110%] scale-[0.85] origin-center">
+          <TabletMockup
+            videoUrl={project.videoUrl}
+            urlText="https://weliton-dev.vercel.app/project/frete-ai"
+          />
+        </div>
+      </div>
     );
   }
 
   if (project.gallery) {
     return (
-      <DeviceMockupCarousel
-        images={project.gallery}
-        videoUrl={project.videoUrl}
-        title={project.title}
-        deviceType={project.deviceType}
-      />
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="w-full max-w-[110%] scale-[0.85] origin-center">
+          <DeviceMockupCarousel
+            images={project.gallery}
+            videoUrl={project.videoUrl}
+            title={project.title}
+            deviceType={project.deviceType}
+          />
+        </div>
+      </div>
     );
   }
 
   if (isDesktop && project.videoUrl) {
     return (
-      <div className="w-full flex justify-center">
-        <div className="relative w-full max-w-5xl flex flex-col items-center justify-end">
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="w-full max-w-5xl flex flex-col items-center justify-end scale-[0.85] origin-center">
           <div className="relative w-full aspect-video bg-[#1a1a1a] rounded-t-2xl p-[14px] pb-[20px] shadow-2xl border-[2px] border-gray-700">
             <div className="relative w-full h-full bg-black rounded-lg overflow-hidden">
               <div className="absolute top-2 inset-x-0 h-3 flex justify-center z-20">
@@ -42,7 +50,7 @@ export const ProjectMockup = ({ project, isDetail = false }: ProjectMockupProps)
               <video
                 src={project.videoUrl}
                 autoPlay
-                muted={!isDetail} // Mudo na home para não assustar
+                muted={!isDetail}
                 loop
                 controls={isDetail}
                 playsInline
@@ -59,12 +67,13 @@ export const ProjectMockup = ({ project, isDetail = false }: ProjectMockupProps)
     );
   }
 
-  // Fallback para imagem simples
   return (
-    <img
-      src={project.image}
-      alt={project.title}
-      className="w-full h-auto max-h-[80vh] object-contain drop-shadow-2xl rounded-lg"
-    />
+    <div className="w-full h-full flex items-center justify-center p-4">
+      <img
+        src={project.image}
+        alt={project.title}
+        className="w-full h-auto max-h-full object-contain drop-shadow-2xl rounded-lg"
+      />
+    </div>
   );
 };

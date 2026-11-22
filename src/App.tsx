@@ -34,7 +34,7 @@ const AppContent = () => {
 
   return (
     <PageTransitionProvider>
-      {/* O Suspense agora engloba o Header e as Rotas para evitar tela branca */}
+      {/* O Suspense engloba o Header e as Rotas para evitar tela branca no refresh */}
       <Suspense fallback={<PageLoader />}>
         {!isFreightApp && <Header />}
         {!isFreightApp && <BackToTop />}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import TransitionLink from "@/components/TransitionLink";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, LayoutGrid, List } from "lucide-react";
 import heroPortrait1 from "@/assets/optimized/hero-memoji.webp";
 import heroPortrait2 from "@/assets/optimized/hero-memoji-2.webp";
 import heroPortrait3 from "@/assets/optimized/hero-memoji-3.webp";
@@ -41,7 +41,6 @@ const Home = () => {
     <main>
       {/* Hero */}
       <section className="min-h-[100svh] relative flex flex-col justify-end lg:justify-center section-light overflow-hidden">
-        {/* Mobile: Full-screen memoji background */}
         <div className="absolute inset-0 lg:hidden">
           <AnimatePresence mode="wait">
             <motion.img
@@ -58,9 +57,7 @@ const Home = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/90 to-transparent" style={{ backgroundSize: '100% 70%', backgroundPosition: 'bottom', backgroundRepeat: 'no-repeat' }} />
         </div>
 
-        {/* Content */}
         <div className="container-wide w-full grid lg:grid-cols-2 gap-8 lg:gap-12 items-end lg:items-center relative z-10 pt-24 pb-12 lg:pb-16">
-          {/* Left: text */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -109,7 +106,6 @@ const Home = () => {
             </TransitionLink>
           </motion.div>
 
-          {/* Right: photo (desktop only) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
@@ -138,7 +134,6 @@ const Home = () => {
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
@@ -148,7 +143,6 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Description section */}
       <section className="section-light py-16 sm:py-20 md:py-28">
         <div className="container-wide">
           <motion.div
@@ -170,119 +164,88 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Recent Work */}
+      {/* Recent Work - Agora com layout idêntico ao da imagem */}
       <section className="section-light py-16 sm:py-20 md:py-28">
         <div className="container-wide">
           
-          {/* Mobile: Work-page inspired layout */}
-          <div className="sm:hidden">
-            <motion.h2
-              initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
-              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease }}
-              className="text-2xl font-bold text-foreground mb-6"
-            >
-              Projetos que combinam código, dados e IA
-            </motion.h2>
-
-            {/* Filters */}
-            <div className="flex gap-3 mb-6 border-b border-border pb-3">
-              {([["all", "Todos"], ["development", `Dev (${devCount})`], ["data", `Data (${dataCount})`], ["ai", `AI (${aiCount})`]] as const).map(
-                ([key, label]) => (
-                  <button
-                    key={key}
-                    onClick={() => setFilter(key)}
-                    className={`text-sm font-medium transition-colors whitespace-nowrap py-1 ${
-                      filter === key ? "text-foreground" : "text-muted-foreground"
-                    }`}
-                  >
-                    {filter === key && <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent mr-1.5" />}
-                    {label}
-                  </button>
-                )
-              )}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8">
+            <div>
+              <p className="text-xs sm:text-sm uppercase tracking-widest text-muted-foreground mb-2">Portfólio</p>
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-foreground">Trabalhos Recentes</h2>
             </div>
-
-            {/* Grid Mobile */}
-            <div className="grid grid-cols-1 gap-6">
-              {filtered.map((project, i) => (
-                <TransitionLink key={project.slug} to={`/projetos/${project.slug}`}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.06, duration: 0.5, ease }}
-                    className="group cursor-pointer flex flex-col"
-                  >
-                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-secondary/80 to-secondary/30 p-6 flex items-center justify-center aspect-[4/3] mb-4 transition-transform duration-500 group-hover:scale-[1.02]">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    </div>
-                    
-                    <div className="px-1">
-                      <h3 className="font-bold text-lg text-foreground mb-1 leading-tight">{project.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-snug">
-                        {project.client} · {project.year}
-                      </p>
-                    </div>
-                  </motion.div>
-                </TransitionLink>
-              ))}
-            </div>
-
-            <div className="mt-10 text-center">
-              <TransitionLink to="/projetos" className="text-sm link-underline text-foreground font-medium">
-                Ver todos os projetos →
-              </TransitionLink>
+            
+            <div className="flex items-center gap-4">
+              <div className="flex bg-secondary rounded-lg p-1">
+                 <button className="p-2 text-muted-foreground hover:text-foreground transition-colors"><List className="w-4 h-4" /></button>
+                 <button className="p-2 bg-foreground text-background rounded-md shadow-sm"><LayoutGrid className="w-4 h-4" /></button>
+              </div>
             </div>
           </div>
 
-          {/* Desktop: Original layout */}
-          <div className="hidden sm:block">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8 sm:mb-12">
-              <div>
-                <p className="text-xs sm:text-sm uppercase tracking-widest text-muted-foreground mb-2">Portfólio</p>
-                <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-foreground">Trabalhos Recentes</h2>
-              </div>
-              <TransitionLink to="/projetos" className="text-sm link-underline text-foreground font-medium">
-                Ver todos →
-              </TransitionLink>
-            </div>
+          {/* Filtros (restaurados) */}
+          <div className="flex gap-4 mb-8 border-b border-border pb-4">
+            {([["all", "Todos"], ["development", `Dev (${devCount})`], ["data", `Data (${dataCount})`], ["ai", `AI (${aiCount})`]] as const).map(
+              ([key, label]) => (
+                <button
+                  key={key}
+                  onClick={() => setFilter(key)}
+                  className={`text-sm font-medium transition-colors flex items-center gap-2 ${
+                    filter === key ? "text-foreground" : "text-muted-foreground hover:text-foreground/80"
+                  }`}
+                >
+                  {filter === key && <span className="w-1.5 h-1.5 rounded-full bg-accent" />}
+                  {label}
+                </button>
+              )
+            )}
+          </div>
 
-            {/* Grid com os mockups premium */}
-            <div className="grid sm:grid-cols-2 gap-8">
-              {homeProjects.map((project, i) => (
-                <TransitionLink key={project.slug} to={`/projetos/${project.slug}`} className="group block">
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1, duration: 0.6, ease }}
-                    className="flex flex-col h-full"
-                  >
-                    {/* A Moldura Premium */}
-                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-secondary/80 to-secondary/30 p-6 sm:p-8 flex items-center justify-center aspect-[4/3] mb-4 transition-transform duration-500 group-hover:scale-[1.02] border border-border/50 shadow-sm">
-                      <div className="w-full flex items-center justify-center transform scale-90 group-hover:scale-100 transition-transform duration-500">
-                         <ProjectMockup project={project} isDetail={false} />
+          {/* Grid Principal */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10">
+            {filtered.map((project, i) => (
+              <TransitionLink key={project.slug} to={`/projetos/${project.slug}`} className="group block">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.6, ease }}
+                  className="flex flex-col h-full"
+                >
+                  {/* Moldura do Card */}
+                  <div className="relative overflow-hidden rounded-2xl bg-[#f4f4f5] p-4 sm:p-8 flex items-center justify-center aspect-[4/3] mb-5 transition-transform duration-500 group-hover:shadow-lg border border-border/50">
+                    
+                    {/* Tag Demo Live */}
+                    {project.demoUrl && (
+                      <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 bg-background rounded-full border border-border shadow-sm text-xs font-medium text-foreground">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                        Demo Live
                       </div>
-                    </div>
+                    )}
 
-                    <div className="px-1">
-                      <h3 className="font-bold text-lg text-foreground mb-1 leading-tight group-hover:text-primary transition-colors">
+                    <div className="w-full h-full flex items-center justify-center transform group-hover:scale-[1.03] transition-transform duration-500">
+                       <ProjectMockup project={project} isDetail={false} />
+                    </div>
+                  </div>
+
+                  {/* Informações do Projeto */}
+                  <div className="flex flex-col gap-2 px-1">
+                    <div className="flex justify-between items-start gap-4">
+                      <h3 className="font-bold text-lg sm:text-xl text-foreground leading-tight group-hover:text-primary transition-colors">
                         {project.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground leading-snug">
-                        {project.client} · {project.year}
-                      </p>
+                      {project.services && (
+                        <span className="hidden sm:inline-block px-3 py-1 rounded-full bg-secondary text-muted-foreground text-[10px] font-medium whitespace-nowrap">
+                          {project.services}
+                        </span>
+                      )}
                     </div>
-                  </motion.div>
-                </TransitionLink>
-              ))}
-            </div>
+                    <p className="text-sm text-muted-foreground leading-snug">
+                      {project.client} · {project.location}
+                    </p>
+                  </div>
+                </motion.div>
+              </TransitionLink>
+            ))}
           </div>
         </div>
       </section>
