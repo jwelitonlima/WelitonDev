@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Play } from "lucide-react";
@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { allProjects } from "@/data/projects";
 import { DemoModal } from "@/components/DemoModal";
 import { DeviceMockupCarousel } from "@/components/DeviceMockupCarousel";
+import { SoundAlert } from "@/components/SoundAlert"; // <-- IMPORTAÇÃO ADICIONADA
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -15,6 +16,9 @@ const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const project = allProjects.find((p) => p.slug === slug);
   const [isDemoOpen, setIsDemoOpen] = useState(false);
+  
+  // REF ADICIONADA PARA CONTROLAR O VÍDEO
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   if (!project) {
     return (
@@ -97,7 +101,9 @@ const ProjectDetail = () => {
                       <div className="absolute top-2 inset-x-0 h-3 flex justify-center z-20">
                         <div className="w-3 h-3 bg-[#111] rounded-full border border-gray-800 shadow-inner"></div>
                       </div>
+                      {/* REF E O COMPONENTE SOUNDALERT ADICIONADOS AQUI */}
                       <video
+                        ref={videoRef}
                         src={project.videoUrl}
                         autoPlay
                         muted
@@ -106,6 +112,8 @@ const ProjectDetail = () => {
                         preload="metadata"
                         className="w-full h-full object-cover"
                       />
+                      <SoundAlert videoRef={videoRef} />
+                      
                       <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/10 pointer-events-none" />
                     </div>
                   </div>
