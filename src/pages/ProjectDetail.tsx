@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Play } from "lucide-react";
@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import { allProjects } from "@/data/projects";
 import { DemoModal } from "@/components/DemoModal";
 import { DeviceMockupCarousel } from "@/components/DeviceMockupCarousel";
-import { SoundAlert } from "@/components/SoundAlert"; // <-- IMPORTAÇÃO ADICIONADA
+import { TabletMockup } from "@/components/TabletMockup";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -16,9 +16,6 @@ const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const project = allProjects.find((p) => p.slug === slug);
   const [isDemoOpen, setIsDemoOpen] = useState(false);
-  
-  // REF ADICIONADA PARA CONTROLAR O VÍDEO
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   if (!project) {
     return (
@@ -93,7 +90,17 @@ const ProjectDetail = () => {
             transition={{ duration: 1, delay: 0.2, ease }}
             className="mb-16 sm:mb-24 w-full"
           >
-            {isDesktop && project.videoUrl ? (
+            {/* CONDIÇÃO: Se for o FreteAI, usa o Tablet. Se for Interamed, usa o Carrossel. Senão, imagem padrão. */}
+            {project.slug === "frete-ai" && project.videoUrl ? (
+              <TabletMockup videoUrl={project.videoUrl} urlText="welitondev.com/dashboard" />
+            ) : project.gallery ? (
+              <DeviceMockupCarousel 
+                images={project.gallery} 
+                videoUrl={project.videoUrl} 
+                title={project.title}
+                deviceType={project.deviceType}
+              />
+            ) : isDesktop && project.videoUrl ? (
               <div className="w-full flex justify-center py-4">
                 <div className="relative w-full max-w-5xl flex flex-col items-center justify-end">
                   <div className="relative w-full aspect-video bg-[#1a1a1a] rounded-t-2xl p-[14px] pb-[20px] shadow-2xl border-[2px] border-gray-700">
@@ -101,19 +108,13 @@ const ProjectDetail = () => {
                       <div className="absolute top-2 inset-x-0 h-3 flex justify-center z-20">
                         <div className="w-3 h-3 bg-[#111] rounded-full border border-gray-800 shadow-inner"></div>
                       </div>
-                      {/* REF E O COMPONENTE SOUNDALERT ADICIONADOS AQUI */}
                       <video
-                        ref={videoRef}
                         src={project.videoUrl}
                         autoPlay
-                        muted
-                        loop
+                        controls
                         playsInline
-                        preload="metadata"
                         className="w-full h-full object-cover"
                       />
-                      <SoundAlert videoRef={videoRef} />
-                      
                       <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/10 pointer-events-none" />
                     </div>
                   </div>
@@ -122,13 +123,6 @@ const ProjectDetail = () => {
                   </div>
                 </div>
               </div>
-            ) : project.gallery ? (
-              <DeviceMockupCarousel 
-                images={project.gallery} 
-                videoUrl={project.videoUrl} 
-                title={project.title}
-                deviceType={project.deviceType}
-              />
             ) : (
               <div className="rounded-2xl overflow-hidden aspect-[16/9] bg-secondary">
                 <img
