@@ -92,11 +92,14 @@ const ProjectDetail = () => {
           >
             {/* CONDIÇÃO: Se for o FreteAI, usa o Tablet. Se for Interamed, usa o Carrossel. Senão, imagem padrão. */}
             {project.slug === "frete-ai" && project.videoUrl ? (
-              <TabletMockup videoUrl={project.videoUrl} urlText="welitondev.com/dashboard" />
+              <TabletMockup
+                videoUrl={project.videoUrl}
+                urlText="https://weliton-dev.vercel.app/project/frete-ai"
+              />
             ) : project.gallery ? (
-              <DeviceMockupCarousel 
-                images={project.gallery} 
-                videoUrl={project.videoUrl} 
+              <DeviceMockupCarousel
+                images={project.gallery}
+                videoUrl={project.videoUrl}
                 title={project.title}
                 deviceType={project.deviceType}
               />
