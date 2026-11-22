@@ -8,7 +8,7 @@ interface TabletMockupProps {
 
 export const TabletMockup = ({ 
   videoUrl, 
-  urlText = "welitondev.com/dashboard" 
+  urlText = "weliton-dev.vercel.app/project/frete-ai" 
 }: TabletMockupProps) => {
   const [isTyping, setIsTyping] = useState(true);
   const [typedText, setTypedText] = useState("");
