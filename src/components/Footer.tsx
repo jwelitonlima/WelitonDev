@@ -32,7 +32,7 @@ const Footer = ({ variant = "dark" }: { variant?: "dark" | "light" }) => {
         {/* CTA */}
         <div className="text-center py-12 sm:py-16 md:py-24">
           <p className={`text-sm uppercase tracking-widest mb-4 sm:mb-6 ${textMuted}`}>
-            Contato
+            Próximo passo
           </p>
           <h2 className={`text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-8 sm:mb-10 ${textMain}`}>
             Vamos construir<br />algo incrível?
