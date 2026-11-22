@@ -212,7 +212,7 @@ const Home = () => {
                   {/* Moldura do Card */}
                   <div className="relative overflow-hidden rounded-2xl bg-[#f4f4f5] p-4 sm:p-8 flex items-center justify-center aspect-[4/3] mb-5 transition-transform duration-500 group-hover:shadow-lg border border-border/50">
                     
-                    {/* Tag Demo Live (Padronizada) */}
+                    {/* Tag Demo Live */}
                     {project.demoUrl && (
                       <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 bg-background rounded-full border border-border shadow-sm text-xs font-medium text-foreground">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />

@@ -10,7 +10,7 @@ interface ProjectMockupProps {
 export const ProjectMockup = ({ project, isDetail = false }: ProjectMockupProps) => {
   const isDesktop = project.deviceType === "desktop";
 
-  // 1. FreteAI (Notebook)
+  // 1. FreteAI (Notebook com vídeo)
   if (project.slug === "frete-ai" && project.videoUrl) {
     return (
       <div className="w-full h-full flex items-center justify-center overflow-hidden">
@@ -24,13 +24,14 @@ export const ProjectMockup = ({ project, isDetail = false }: ProjectMockupProps)
     );
   }
 
-  // 2. InteraMed (Celular com Carrossel/Video)
-  if (project.gallery) {
+  // 2. InteraMed (Celular rodando o vídeo único)
+  if (project.gallery && project.slug === "interamed") {
     return (
       <div className="w-full h-full flex items-center justify-center overflow-hidden">
+        {/* Usa o DeviceMockupCarousel mas forçando apenas a exibição do vídeo/imagem principal */}
         <div className="w-full max-w-[120%] scale-[0.75] sm:scale-[0.85] origin-center">
           <DeviceMockupCarousel
-            images={project.gallery}
+            images={[project.gallery[0]]} // Força apenas a primeira imagem para não ter carrossel
             videoUrl={project.videoUrl}
             title={project.title}
             deviceType={project.deviceType}
@@ -70,7 +71,7 @@ export const ProjectMockup = ({ project, isDetail = false }: ProjectMockupProps)
     );
   }
 
-  // 4. Fallback (Imagem Estática) - Só cai aqui se não tiver vídeo
+  // 4. Fallback (Imagem Estática)
   return (
     <div className="w-full h-full flex items-center justify-center p-4">
       <img
