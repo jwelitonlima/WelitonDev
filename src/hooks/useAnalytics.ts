@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { ENDPOINT, initSession, isTrackingEnabled, track } from "@/lib/analytics";
+import { ENDPOINT, initSession, isTrackingEnabled, track, trackMany } from "@/lib/analytics";
+import type { PageEvent } from "@/lib/analytics";
 
 type PE = PerformanceEntry & { value?: number; hadRecentInput?: boolean };
 
@@ -16,27 +17,33 @@ const labelOf = (el: HTMLElement) => {
   );
 };
 
+/** EspIAn 🕵️ — liga toda a coleta. Chamar UMA vez, dentro do BrowserRouter. */
 export function useAnalytics() {
   const location = useLocation();
   const page = useRef({ path: "", activeMs: 0, resumedAt: null as number | null, maxScroll: 0 });
 
-  const flush = () => {
+  /** Fecha a página atual e devolve os eventos de tempo ativo e rolagem (sem enviar). */
+  const collectPage = (): PageEvent[] => {
     const p = page.current;
-    if (!p.path) return;
+    const out: PageEvent[] = [];
+    if (!p.path) return out;
     if (p.resumedAt !== null) {
       p.activeMs += Date.now() - p.resumedAt;
       p.resumedAt = null;
     }
     const seconds = Math.round(p.activeMs / 1000);
-    if (seconds > 0) track("page_leave", p.path, { value: seconds });
-    if (p.maxScroll > 0) track("scroll_depth", p.path, { value: p.maxScroll });
+    if (seconds > 0) out.push({ type: "page_leave", path: p.path, value: seconds });
+    if (p.maxScroll > 0) out.push({ type: "scroll_depth", path: p.path, value: p.maxScroll });
     p.activeMs = 0;
+    return out;
   };
 
+  // ---------- Liga uma única vez ----------
   useEffect(() => {
     const { isNewSession, isReturning } = initSession();
     if (!isTrackingEnabled()) return;
 
+    // 1) Início de sessão: contexto do visitante
     if (isNewSession) {
       let referrer = "";
       try { referrer = document.referrer ? new URL(document.referrer).hostname : ""; } catch { /* ignora */ }
@@ -59,6 +66,7 @@ export function useAnalytics() {
       });
     }
 
+    // 2) Cliques + cliques de raiva
     const recent: { t: number; x: number; y: number }[] = [];
     let lastRage = 0;
 
@@ -96,6 +104,7 @@ export function useAnalytics() {
       });
     };
 
+    // 3) Rolagem
     const onScroll = () => {
       const h = document.documentElement;
       const pct = ((window.scrollY + window.innerHeight) / Math.max(h.scrollHeight, 1)) * 100;
@@ -103,6 +112,7 @@ export function useAnalytics() {
       if (step > page.current.maxScroll) page.current.maxScroll = step;
     };
 
+    // 4) Core Web Vitals (sem biblioteca)
     let lcp = 0, cls = 0, inp = 0, vitalsSent = false;
     const observe = (type: string, cb: (e: PE) => void, extra: object = {}) => {
       try {
@@ -116,25 +126,40 @@ export function useAnalytics() {
       observe("layout-shift", (e) => { if (!e.hadRecentInput) cls += e.value || 0; }),
       observe("event", (e) => { if (e.duration > inp) inp = e.duration; }, { durationThreshold: 40 }),
     ];
-    const sendVitals = () => {
-      if (vitalsSent) return;
+    const vitalEvents = (): PageEvent[] => {
+      if (vitalsSent) return [];
       vitalsSent = true;
       const path = window.location.pathname;
-      if (lcp) track("vital", path, { label: "LCP", value: Math.round(lcp) });
-      track("vital", path, { label: "CLS", value: Math.round(cls * 1000) });
-      if (inp) track("vital", path, { label: "INP", value: Math.round(inp) });
+      const out: PageEvent[] = [];
+      if (lcp) out.push({ type: "vital", path, label: "LCP", value: Math.round(lcp) });
+      out.push({ type: "vital", path, label: "CLS", value: Math.round(cls * 1000) });
+      if (inp) out.push({ type: "vital", path, label: "INP", value: Math.round(inp) });
+      return out;
     };
 
+    // 5) Saída da visita: tempo, rolagem e vitais saem JUNTOS com o "session_end"
+    //    (o servidor monta o resumo da visita e manda no Telegram)
+    let ended = false;
+    const endSession = () => {
+      if (ended) return;
+      ended = true;
+      trackMany([
+        ...collectPage(),
+        ...vitalEvents(),
+        { type: "session_end", path: window.location.pathname },
+      ]);
+    };
     const onVisibility = () => {
       if (document.visibilityState === "hidden") {
-        sendVitals();
-        flush();
+        endSession();
       } else {
+        ended = false;
         page.current.resumedAt = Date.now();
       }
     };
-    const onPageHide = () => { sendVitals(); flush(); };
+    const onPageHide = () => endSession();
 
+    // 6) Erros de JS, recursos que falharam (img/video/script) e promises rejeitadas
     const onError = (e: Event) => {
       const t = e.target as HTMLElement | null;
       if (t && t !== (window as unknown as HTMLElement) && t.tagName) {
@@ -158,6 +183,7 @@ export function useAnalytics() {
       track("error", window.location.pathname, { label: `Promise: ${msg}`.slice(0, 200) });
     };
 
+    // 7) Requisições lentas (>2s) ou com falha (inclui o webhook do FreteAI)
     const origFetch = window.fetch.bind(window);
     window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
       const start = performance.now();
@@ -185,6 +211,7 @@ export function useAnalytics() {
       }
     };
 
+    // 8) Vídeos com controles (página de detalhe): quantos segundos assistiu
     const playing = new WeakMap<HTMLVideoElement, number>();
     const onPlay = (e: Event) => {
       const v = e.target as HTMLVideoElement;
@@ -199,6 +226,7 @@ export function useAnalytics() {
       if (s >= 1) track("video", window.location.pathname, { label: (v.currentSrc || "").split("/").pop()?.slice(0, 60), value: s });
     };
 
+    // 9) Cópia (só o tipo; nunca o conteúdo)
     const onCopy = () => {
       const t = (window.getSelection()?.toString() || "").trim();
       if (!t) return;
@@ -235,9 +263,10 @@ export function useAnalytics() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // ---------- A cada troca de página: fecha a anterior e abre a nova ----------
   useEffect(() => {
     if (!isTrackingEnabled()) return;
-    flush();
+    trackMany(collectPage());
     page.current = {
       path: location.pathname,
       activeMs: 0,

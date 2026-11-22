@@ -1,12 +1,13 @@
 // EspIAn 🕵️ — telemetria própria. Sem IP, sem fingerprint, sem dado pessoal.
 export const ENDPOINT = "/api/track";
-const SID_KEY = "pf_sid";
-const VID_KEY = "pf_vid";
+const SID_KEY = "pf_sid"; // sessão (some ao fechar a aba)
+const VID_KEY = "pf_vid"; // visitante (ID aleatório)
 const OWNER_KEY = "pf_owner";
-const MAX_EVENTS_PER_SESSION = 400;
+const MAX_EVENTS_PER_SESSION = 400; // trava anti-loop
 
 export type EventType =
   | "session_start"
+  | "session_end"
   | "page_view"
   | "page_leave"
   | "click"
@@ -28,6 +29,8 @@ interface Extra {
   meta?: Meta;
 }
 
+export type PageEvent = Extra & { type: EventType; path: string };
+
 let sid = "";
 let vid = "";
 let sent = 0;
@@ -44,6 +47,7 @@ const write = (s: Storage, k: string, v: string) => {
   try { s.setItem(k, v); } catch { /* ignora */ }
 };
 
+/** Abra o site com ?owner=1 para NÃO contar suas visitas (?owner=0 volta a contar). */
 function checkOwner() {
   const p = new URLSearchParams(window.location.search).get("owner");
   if (p === "1") write(localStorage, OWNER_KEY, "1");
@@ -77,12 +81,13 @@ export function initSession() {
   return { isNewSession, isReturning };
 }
 
-export function track(type: EventType, path: string, extra: Extra = {}) {
-  if (!isTrackingEnabled() || !sid) return;
+/** Envia vários eventos em UM único pedido (chegam juntos e na ordem certa). */
+export function trackMany(events: PageEvent[]) {
+  if (!events.length || !isTrackingEnabled() || !sid) return;
   if (sent >= MAX_EVENTS_PER_SESSION) return;
-  sent++;
+  sent += events.length;
 
-  const body = JSON.stringify({ sid, vid, events: [{ type, path, ...extra }] });
+  const body = JSON.stringify({ sid, vid, events: events.slice(0, 20) });
 
   try {
     const ok = navigator.sendBeacon?.(ENDPOINT, new Blob([body], { type: "application/json" }));
@@ -97,6 +102,14 @@ export function track(type: EventType, path: string, extra: Extra = {}) {
   }).catch(() => {});
 }
 
+export function track(type: EventType, path: string, extra: Extra = {}) {
+  trackMany([{ type, path, ...extra }]);
+}
+
+/**
+ * Envolve uma função para registrar sucesso, falha e duração.
+ * Exemplo: const analisar = tracked("analisar_fretes", analisarFretes);
+ */
 export function tracked<A extends unknown[], R>(name: string, fn: (...args: A) => Promise<R>) {
   return async (...args: A): Promise<R> => {
     const start = performance.now();
