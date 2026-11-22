@@ -180,6 +180,28 @@ html {
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Efeito Shimmer (Slide to Unlock iOS) */
+  @keyframes shimmer {
+    0% { background-position: 150% center; }
+    100% { background-position: -50% center; }
+  }
+
+  .shimmer-text {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--muted-foreground)) 0%,
+      hsl(var(--muted-foreground)) 40%,
+      hsl(var(--foreground)) 50%,
+      hsl(var(--muted-foreground)) 60%,
+      hsl(var(--muted-foreground)) 100%
+    );
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shimmer 2.5s linear infinite;
+  }
 }
 
 /* =========================================

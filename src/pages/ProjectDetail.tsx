@@ -9,7 +9,7 @@ import { allProjects } from "@/data/projects";
 import { DemoModal } from "@/components/DemoModal";
 import { DeviceMockupCarousel } from "@/components/DeviceMockupCarousel";
 import { TabletMockup } from "@/components/TabletMockup";
-import { SlideToUnlock } from "@/components/SlideToUnlock"; // Importa o novo componente
+import { SlideToUnlock } from "@/components/SlideToUnlock";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -67,7 +67,7 @@ const ProjectDetail = () => {
               initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.6, delay: 0.15, ease }}
-              className="flex flex-col sm:flex-row flex-wrap items-start xl:items-end gap-6 shrink-0 w-full xl:w-auto"
+              className="flex flex-col sm:flex-row flex-wrap items-start xl:items-end gap-6 xl:gap-10 shrink-0 w-full xl:w-auto"
             >
               {/* Informações Laterais */}
               <div className="flex flex-col sm:flex-row gap-x-8 gap-y-4 text-sm">
@@ -86,20 +86,15 @@ const ProjectDetail = () => {
                   </div>
                 </div>
               </div>
+
+              {/* Slider posicionado na barra lateral no Desktop */}
+              {project.demoUrl && (
+                <div className="w-full sm:w-auto mt-2 sm:mt-0 xl:ml-4">
+                  <SlideToUnlock onComplete={() => setIsDemoOpen(true)} />
+                </div>
+              )}
             </motion.div>
           </div>
-
-          {/* SLIDER DE ACESSO (Novo) */}
-          {project.demoUrl && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease }}
-              className="mb-10 sm:mb-16 flex justify-start"
-            >
-              <SlideToUnlock onComplete={() => setIsDemoOpen(true)} />
-            </motion.div>
-          )}
 
           {/* HERO SECTION (Vídeo/Mockup) */}
           <motion.div

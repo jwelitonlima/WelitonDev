@@ -11,7 +11,7 @@ export const SlideToUnlock = ({ onComplete }: SlideToUnlockProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
 
-  // Opacidade do texto muda conforme você arrasta
+  // Opacidade do texto some conforme você arrasta
   const textOpacity = useTransform(x, [0, 100], [1, 0]);
 
   const handleDragEnd = () => {
@@ -23,36 +23,31 @@ export const SlideToUnlock = ({ onComplete }: SlideToUnlockProps) => {
     // Se arrastou mais da metade do caminho, completa a ação
     if (x.get() > maxDrag * 0.6) {
       setIsUnlocked(true);
-      // Pequeno delay para a animação de completar terminar antes de abrir o modal
       setTimeout(() => onComplete(), 300);
     } else {
-      // Se não arrastou o suficiente, volta para o início
-      x.set(0);
+      x.set(0); // Volta para o início
     }
   };
 
   return (
     <div 
       ref={containerRef}
-      className="relative w-full max-w-sm h-14 bg-foreground/5 border border-foreground/10 rounded-full flex items-center p-1 overflow-hidden select-none"
+      className="relative w-full sm:w-[280px] h-14 bg-foreground/5 border border-foreground/10 rounded-full flex items-center p-1 overflow-hidden select-none"
     >
-      {/* Texto de Fundo (Deslize) */}
+      {/* Texto de Fundo com Efeito Shimmer */}
       <motion.span 
         style={{ opacity: textOpacity }}
-        className="absolute inset-0 flex items-center justify-center text-sm font-medium text-foreground/50 tracking-widest uppercase pointer-events-none"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
       >
-        <motion.span 
-          animate={{ x: [0, 5, 0] }} 
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-        >
+        <span className="shimmer-text text-[10px] sm:text-xs font-semibold tracking-widest uppercase">
           Deslize para acessar
-        </motion.span>
+        </span>
       </motion.span>
 
       {/* Botão Deslizante */}
       <motion.div
         drag="x"
-        dragConstraints={{ left: 0, right: containerRef.current ? containerRef.current.offsetWidth - 64 : 250 }}
+        dragConstraints={{ left: 0, right: containerRef.current ? containerRef.current.offsetWidth - 64 : 216 }}
         dragElastic={0.05}
         dragMomentum={false}
         onDragEnd={handleDragEnd}
