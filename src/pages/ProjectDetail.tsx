@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import TransitionLink from "@/components/TransitionLink";
 import WavyDivider from "@/components/WavyDivider";
@@ -88,14 +88,24 @@ const ProjectDetail = () => {
                 </div>
               </div>
 
-              {/* Slider abaixo das informações (Regra de Ouro do Layout) */}
+              {/* Slider abaixo das informações */}
               {project.demoUrl && (
-                <div className="mt-2">
-                  <SlideToUnlock
-                    key={`${project.slug}-${location.key}`}
-                    resetKey={location.key}
-                    onComplete={() => setIsDemoOpen(true)}
-                  />
+                <div className="mt-2 min-h-[56px]">
+                  <AnimatePresence mode="wait">
+                    {!isDemoOpen && (
+                      <motion.div
+                        key={`slider-${project.slug}-${location.key}`}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <SlideToUnlock
+                          onComplete={() => setIsDemoOpen(true)}
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               )}
             </motion.div>

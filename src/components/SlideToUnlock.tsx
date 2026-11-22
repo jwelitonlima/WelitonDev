@@ -8,13 +8,14 @@ interface SlideToUnlockProps {
 }
 
 const BUTTON_SIZE = 48; // w-12
-const CONTAINER_PADDING = 4; // p-1
+const CONTAINER_PADDING = 4; // p-1 (4px de cada lado)
 
 export const SlideToUnlock = ({ onComplete, resetKey }: SlideToUnlockProps) => {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
 
+  // Largura reativa do container
   const [maxDrag, setMaxDrag] = useState(216);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export const SlideToUnlock = ({ onComplete, resetKey }: SlideToUnlockProps) => {
     return () => ro.disconnect();
   }, []);
 
+  // Reset robusto (mount, resetKey, retorno de aba, foco da janela)
   const reset = useCallback(() => {
     x.stop();
     x.set(0);
@@ -55,17 +57,18 @@ export const SlideToUnlock = ({ onComplete, resetKey }: SlideToUnlockProps) => {
     };
   }, [reset]);
 
+  // Texto some conforme arrasta
   const textOpacity = useTransform(x, [0, 100], [1, 0]);
 
   const handleDragEnd = () => {
     if (x.get() > maxDrag * 0.6) {
       setIsUnlocked(true);
-      // Animação imperativa para garantir a saída suave até o final
-      animate(x, maxDrag, { duration: 0.25, ease: "easeOut" }).then(() => {
-        setTimeout(() => onComplete(), 150);
+      // Move até o final e aguarda a animação terminar
+      animate(x, maxDrag, { duration: 0.2, ease: "easeOut" }).then(() => {
+        setTimeout(() => onComplete(), 100);
       });
     } else {
-      // Volta para o início se não atingiu o limite
+      // Retorna suavemente ao início se não passar de 60%
       animate(x, 0, { type: "spring", stiffness: 400, damping: 30 });
     }
   };
@@ -75,6 +78,7 @@ export const SlideToUnlock = ({ onComplete, resetKey }: SlideToUnlockProps) => {
       ref={containerRef}
       className="relative z-10 w-full max-w-[280px] h-14 bg-secondary/80 backdrop-blur-md border border-border rounded-full flex items-center p-1 overflow-hidden select-none shadow-sm"
     >
+      {/* Texto com Efeito Shimmer */}
       <motion.span
         style={{ opacity: textOpacity }}
         className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -84,17 +88,18 @@ export const SlideToUnlock = ({ onComplete, resetKey }: SlideToUnlockProps) => {
         </span>
       </motion.span>
 
+      {/* Botão Deslizante */}
       <motion.div
         drag={isUnlocked ? false : "x"}
         dragConstraints={{ left: 0, right: maxDrag }}
         dragElastic={0.05}
         dragMomentum={false}
         onDragEnd={handleDragEnd}
-        // AQUI ESTÁ A CORREÇÃO: style={{ x }} para o arraste funcionar
+        // `style={{ x }}` permite o arraste. 
         style={{ x }}
-        // O animate cuida APENAS do estado travado e da opacidade
-        animate={isUnlocked ? { opacity: 0 } : { opacity: 1 }}
-        transition={{ duration: 0.25, ease: "easeOut" }}
+        // O animate cuida do fade out (opacity) ao completar
+        animate={isUnlocked ? { opacity: 0, scale: 0.9 } : { opacity: 1, scale: 1 }}
+        transition={{ duration: 0.2 }}
         className="relative z-20 w-12 h-12 bg-foreground rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing shadow-md"
       >
         <ChevronRight className="w-5 h-5 text-background" strokeWidth={2.5} />
