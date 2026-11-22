@@ -36,6 +36,7 @@ const ProjectDetail = () => {
     <main>
       <section className="section-light pt-28 sm:pt-32 pb-16 sm:pb-20">
         <div className="container-wide">
+          {/* Botão de Voltar */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -50,16 +51,45 @@ const ProjectDetail = () => {
             </TransitionLink>
           </motion.div>
 
+          {/* Header do Projeto (Título + Botão de Demo) */}
           <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-6 lg:gap-10 mb-10 sm:mb-16">
-            <motion.h1
-              initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.8, ease }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight max-w-4xl"
-            >
-              {project.title}
-            </motion.h1>
+            <div className="max-w-4xl">
+              <motion.h1
+                initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.8, ease }}
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight"
+              >
+                {project.title}
+              </motion.h1>
+              
+              {/* BOTÃO DE DEMO EM DESTAQUE (Se existir) */}
+              {project.demoUrl && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2, ease }}
+                  className="mt-6"
+                >
+                  <button
+                    onClick={() => setIsDemoOpen(true)}
+                    className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-all hover:scale-105 shadow-lg shadow-primary/20"
+                  >
+                    <span className="relative flex h-3 w-3">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-foreground opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-primary-foreground"></span>
+                    </span>
+                    <Play className="w-4 h-4 fill-current" />
+                    Testar o Sistema ao Vivo
+                  </button>
+                  <p className="text-xs text-muted-foreground mt-2 ml-2">
+                    Explore as funcionalidades reais em uma nova aba
+                  </p>
+                </motion.div>
+              )}
+            </div>
 
+            {/* Informações Laterais */}
             <motion.div
               initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -83,14 +113,13 @@ const ProjectDetail = () => {
             </motion.div>
           </div>
 
-          {/* HERO SECTION */}
+          {/* HERO SECTION (Vídeo/Mockup) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.97, filter: "blur(10px)" }}
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             transition={{ duration: 1, delay: 0.2, ease }}
             className="mb-16 sm:mb-24 w-full"
           >
-            {/* CONDIÇÃO: Se for o FreteAI, usa o Tablet. Se for Interamed, usa o Carrossel. Senão, imagem padrão. */}
             {project.slug === "frete-ai" && project.videoUrl ? (
               <TabletMockup
                 videoUrl={project.videoUrl}
@@ -137,6 +166,7 @@ const ProjectDetail = () => {
             )}
           </motion.div>
 
+          {/* Detalhes (Descrição, Tecnologias, Desafio, Solução) */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 mb-16 sm:mb-24">
             <motion.div
               initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
@@ -213,24 +243,9 @@ const ProjectDetail = () => {
             )}
           </div>
 
-          {project.demoUrl && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease }}
-              className="mb-16 sm:mb-24 text-center"
-            >
-              <button
-                onClick={() => setIsDemoOpen(true)}
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold hover:scale-105 transition-transform"
-              >
-                <Play className="w-4 h-4 fill-current" />
-                Abrir Demo Interativa
-              </button>
-            </motion.div>
-          )}
+          {/* O botão duplicado no final foi REMOVIDO daqui */}
 
+          {/* Próximo Projeto */}
           {(() => {
             const currentIndex = allProjects.findIndex((p) => p.slug === slug);
             if (currentIndex === allProjects.length - 1) return null;
