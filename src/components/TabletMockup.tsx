@@ -14,12 +14,28 @@ export const TabletMockup = ({
   const [isTyping, setIsTyping] = useState(true);
   const [typedText, setTypedText] = useState("");
   const [hasStarted, setHasStarted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Efeito de digitação na barra de URL
+  // Detecta se é mobile para desativar a animação de digitação
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Efeito de digitação na barra de URL (apenas no desktop)
+  useEffect(() => {
+    if (isMobile) {
+      setIsTyping(false);
+      setTypedText(urlText);
+      return;
+    }
+
     let i = 0;
     setTypedText("");
+    setIsTyping(true);
     const interval = setInterval(() => {
       setTypedText((prev) => urlText.slice(0, i + 1));
       i++;
@@ -30,7 +46,7 @@ export const TabletMockup = ({
     }, 90);
 
     return () => clearInterval(interval);
-  }, [urlText]);
+  }, [urlText, isMobile]);
 
   const handleStart = () => {
     setHasStarted(true);
@@ -38,7 +54,6 @@ export const TabletMockup = ({
     if (video) {
       video.muted = false;
       video.play().catch(() => {
-        // fallback caso o navegador ainda bloqueie
         video.play().catch(() => {});
       });
     }
@@ -46,7 +61,7 @@ export const TabletMockup = ({
 
   return (
     <div className="w-full flex justify-center py-4 sm:py-8">
-      {/* Moldura padronizada com o portfólio: escura, cantos arredondados, sombra */}
+      {/* Moldura padronizada com o portfólio */}
       <div className="relative w-full max-w-5xl flex flex-col items-center justify-end">
         <div className="relative w-full aspect-[4/3] sm:aspect-[16/11] bg-[#1a1a1a] rounded-2xl sm:rounded-3xl p-[10px] sm:p-[14px] pb-[16px] sm:pb-[20px] shadow-2xl border-[2px] border-gray-700">
           {/* Câmera/notch sutil no topo */}
@@ -64,15 +79,16 @@ export const TabletMockup = ({
                 <div className="w-2.5 h-2.5 rounded-full bg-zinc-700/80" />
               </div>
 
-              <div className="flex-1 flex justify-center">
-                <div className="w-full max-w-md bg-white/[0.03] border border-white/10 rounded-lg h-6 sm:h-7 flex items-center justify-center px-3 overflow-hidden transition-colors hover:bg-white/[0.05]">
-                  <span className="text-[10px] sm:text-xs text-zinc-400 font-sans tracking-tight flex items-center gap-1.5">
+              <div className="flex-1 flex justify-center px-2">
+                {/* Barra de URL - Truncada e sem quebra de linha */}
+                <div className="w-full max-w-md bg-white/[0.03] border border-white/10 rounded-lg h-6 sm:h-7 flex items-center justify-start px-2 sm:px-3 overflow-hidden transition-colors hover:bg-white/[0.05]">
+                  <span className="text-[9px] sm:text-xs text-zinc-400 font-sans tracking-tight flex items-center gap-1.5 w-full truncate whitespace-nowrap">
                     <svg className="w-3 h-3 text-zinc-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
 
                     {isTyping ? (
-                      <span>
+                      <span className="truncate">
                         {typedText}
                         <motion.span
                           animate={{ opacity: [1, 0] }}
@@ -81,7 +97,7 @@ export const TabletMockup = ({
                         />
                       </span>
                     ) : (
-                      <span className="text-zinc-300">{urlText}</span>
+                      <span className="truncate">{urlText}</span>
                     )}
                   </span>
                 </div>
@@ -93,7 +109,7 @@ export const TabletMockup = ({
             {/* Área do vídeo */}
             <div className="relative flex-1 bg-black flex items-center justify-center overflow-hidden">
               <AnimatePresence mode="wait">
-                {isTyping ? (
+                {isTyping && !isMobile ? (
                   <motion.div
                     key="loading"
                     initial={{ opacity: 0 }}
@@ -143,8 +159,8 @@ export const TabletMockup = ({
                           </div>
 
                           {/* Aviso de áudio */}
-                          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/70 border border-white/15 text-white text-xs sm:text-sm font-medium">
-                            <Volume2 className="w-4 h-4" />
+                          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/70 border border-white/15 text-white text-[10px] sm:text-sm font-medium">
+                            <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />
                             <span>Clique para ativar o áudio</span>
                           </div>
                         </motion.button>
