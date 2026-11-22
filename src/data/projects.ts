@@ -1,5 +1,4 @@
 import projectFreteAI from "@/assets/project-freteai.jpg";
-import freteAIVideo from "@/assets/freteai-video.mp4"; 
 import mockup1 from "@/assets/interamed-mockup-1.png";
 import mockup2 from "@/assets/interamed-mockup-2.png";
 import mockup3 from "@/assets/interamed-mockup-3.png";
@@ -47,7 +46,7 @@ export const allProjects: Project[] = [
     technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Recharts", "shadcn/ui"],
     result: "Redução de 60% no tempo de resposta a incidentes e 40% menos entregas atrasadas",
     demoUrl: "/dashboard",
-    videoUrl: freteAIVideo,
+    videoUrl: deliveryVideo, // <-- CORRIGIDO AQUI (usando o arquivo que existe)
     deviceType: "desktop",
   },
   {
@@ -69,7 +68,6 @@ export const allProjects: Project[] = [
     videoUrl: interamedVideo,
     deviceType: "mobile",
   },
-  // --- NOVO PROJETO ADICIONADO AQUI ---
   {
     slug: "delivery-insights",
     title: "Dashboard Insights — Análise Logística com IA",
