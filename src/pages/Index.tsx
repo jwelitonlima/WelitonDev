@@ -17,8 +17,6 @@ const greetings = ["Hello", "Hola", "Bonjour", "Olá", "やあ"];
 const heroPortraits = [heroPortrait1, heroPortrait2, heroPortrait3, heroPortrait4];
 const ease = [0.16, 1, 0.3, 1] as const;
 
-const homeProjects = allProjects.slice(0, 4);
-
 const Home = () => {
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [portraitIndex, setPortraitIndex] = useState(0);
@@ -39,7 +37,7 @@ const Home = () => {
 
   return (
     <main>
-      {/* Hero (Mantido como está) */}
+      {/* Hero */}
       <section className="min-h-[100svh] relative flex flex-col justify-end lg:justify-center section-light overflow-hidden">
         <div className="absolute inset-0 lg:hidden">
           <AnimatePresence mode="wait">
@@ -164,7 +162,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* RECENT WORK - Agora idêntico à Imagem 2 */}
+      {/* Recent Work */}
       <section className="section-light py-16 sm:py-20 md:py-28">
         <div className="container-wide">
           
@@ -200,7 +198,7 @@ const Home = () => {
             )}
           </div>
 
-          {/* O Grid Exato da Imagem 2 */}
+          {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10">
             {filtered.map((project, i) => (
               <TransitionLink key={project.slug} to={`/projetos/${project.slug}`} className="group block">
@@ -211,10 +209,10 @@ const Home = () => {
                   transition={{ delay: i * 0.1, duration: 0.6, ease }}
                   className="flex flex-col h-full"
                 >
-                  {/* Moldura do Card (Fundo Cinza Claro, Aspect 4/3) */}
-                  <div className="relative overflow-hidden rounded-2xl bg-[#f4f4f5] p-6 sm:p-8 flex items-center justify-center aspect-[4/3] mb-5 transition-transform duration-500 group-hover:shadow-lg border border-border/50">
+                  {/* Moldura do Card */}
+                  <div className="relative overflow-hidden rounded-2xl bg-[#f4f4f5] p-4 sm:p-8 flex items-center justify-center aspect-[4/3] mb-5 transition-transform duration-500 group-hover:shadow-lg border border-border/50">
                     
-                    {/* Tag Demo Live */}
+                    {/* Tag Demo Live (Padronizada) */}
                     {project.demoUrl && (
                       <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 bg-background rounded-full border border-border shadow-sm text-xs font-medium text-foreground">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -222,7 +220,6 @@ const Home = () => {
                       </div>
                     )}
 
-                    {/* Renderização do Mockup (Agora sim, usando o componente pesado) */}
                     <div className="w-full h-full flex items-center justify-center">
                        <ProjectMockup project={project} isDetail={false} />
                     </div>

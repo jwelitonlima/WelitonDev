@@ -10,10 +10,11 @@ interface ProjectMockupProps {
 export const ProjectMockup = ({ project, isDetail = false }: ProjectMockupProps) => {
   const isDesktop = project.deviceType === "desktop";
 
+  // 1. FreteAI (Notebook)
   if (project.slug === "frete-ai" && project.videoUrl) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="w-full max-w-[110%] scale-[0.85] origin-center">
+      <div className="w-full h-full flex items-center justify-center overflow-hidden">
+        <div className="w-full max-w-[120%] scale-[0.75] sm:scale-[0.85] origin-center">
           <TabletMockup
             videoUrl={project.videoUrl}
             urlText="https://weliton-dev.vercel.app/project/frete-ai"
@@ -23,10 +24,11 @@ export const ProjectMockup = ({ project, isDetail = false }: ProjectMockupProps)
     );
   }
 
+  // 2. InteraMed (Celular com Carrossel/Video)
   if (project.gallery) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="w-full max-w-[110%] scale-[0.85] origin-center">
+      <div className="w-full h-full flex items-center justify-center overflow-hidden">
+        <div className="w-full max-w-[120%] scale-[0.75] sm:scale-[0.85] origin-center">
           <DeviceMockupCarousel
             images={project.gallery}
             videoUrl={project.videoUrl}
@@ -38,10 +40,11 @@ export const ProjectMockup = ({ project, isDetail = false }: ProjectMockupProps)
     );
   }
 
+  // 3. Delivery Insights (Vídeo Desktop)
   if (isDesktop && project.videoUrl) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="w-full max-w-5xl flex flex-col items-center justify-end scale-[0.85] origin-center">
+      <div className="w-full h-full flex items-center justify-center overflow-hidden">
+        <div className="w-full max-w-5xl flex flex-col items-center justify-end scale-[0.75] sm:scale-[0.85] origin-center">
           <div className="relative w-full aspect-video bg-[#1a1a1a] rounded-t-2xl p-[14px] pb-[20px] shadow-2xl border-[2px] border-gray-700">
             <div className="relative w-full h-full bg-black rounded-lg overflow-hidden">
               <div className="absolute top-2 inset-x-0 h-3 flex justify-center z-20">
@@ -67,6 +70,7 @@ export const ProjectMockup = ({ project, isDetail = false }: ProjectMockupProps)
     );
   }
 
+  // 4. Fallback (Imagem Estática) - Só cai aqui se não tiver vídeo
   return (
     <div className="w-full h-full flex items-center justify-center p-4">
       <img
