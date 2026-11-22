@@ -1,9 +1,9 @@
 // EspIAn 🕵️ — telemetria própria. Sem IP, sem fingerprint, sem dado pessoal.
 export const ENDPOINT = "/api/track";
-const SID_KEY = "pf_sid"; // sessão (some ao fechar a aba)
-const VID_KEY = "pf_vid"; // visitante (ID aleatório)
+const SID_KEY = "pf_sid";
+const VID_KEY = "pf_vid";
 const OWNER_KEY = "pf_owner";
-const MAX_EVENTS_PER_SESSION = 400; // trava anti-loop
+const MAX_EVENTS_PER_SESSION = 400;
 
 export type EventType =
   | "session_start"
@@ -44,7 +44,6 @@ const write = (s: Storage, k: string, v: string) => {
   try { s.setItem(k, v); } catch { /* ignora */ }
 };
 
-/** Abra o site com ?owner=1 para NÃO contar suas visitas (?owner=0 volta a contar). */
 function checkOwner() {
   const p = new URLSearchParams(window.location.search).get("owner");
   if (p === "1") write(localStorage, OWNER_KEY, "1");
@@ -98,10 +97,6 @@ export function track(type: EventType, path: string, extra: Extra = {}) {
   }).catch(() => {});
 }
 
-/**
- * Envolve uma função para registrar sucesso, falha e duração.
- * Exemplo: const analisar = tracked("analisar_fretes", analisarFretes);
- */
 export function tracked<A extends unknown[], R>(name: string, fn: (...args: A) => Promise<R>) {
   return async (...args: A): Promise<R> => {
     const start = performance.now();

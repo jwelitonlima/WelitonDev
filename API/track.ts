@@ -4,7 +4,6 @@ const TYPES = new Set([
   "session_start", "page_view", "page_leave", "click", "rage_click", "scroll_depth",
   "vital", "video", "fetch", "resource_error", "copy", "error", "function",
 ]);
-// Se um dia usar domínio próprio, adicione-o aqui.
 const ALLOWED_HOSTS = new Set(["weliton-dev.vercel.app", "localhost"]);
 const BOT = /bot|crawl|spider|slurp|headless|lighthouse|preview|facebookexternalhit|whatsapp|telegram|vercel/i;
 const META_KEYS = [
@@ -65,7 +64,6 @@ async function telegram(text: string) {
   }).catch(() => {});
 }
 
-/** Anti-spam: não alerta o mesmo evento/label mais de 1x a cada 10 minutos. */
 async function seenRecently(type: string, label: string) {
   try {
     const since = new Date(Date.now() - 10 * 60 * 1000).toISOString();
@@ -84,24 +82,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") return res.status(405).end();
 
   try {
-    // 1) Só aceita quem vem do seu site
     const origin = (req.headers.origin as string) || (req.headers.referer as string) || "";
     let host = "";
     try { host = new URL(origin).hostname; } catch { /* ignora */ }
     if (!ALLOWED_HOSTS.has(host)) return res.status(403).end();
 
-    // 2) Ignora robôs
     const ua = String(req.headers["user-agent"] || "");
     if (!ua || BOT.test(ua)) return res.status(204).end();
     const { browser, os } = parseUA(ua);
 
-    // 3) Valida o corpo
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
     const sid = body?.sid;
     const vid = body?.vid;
     if (!ID_RE.test(sid) || !ID_RE.test(vid) || !Array.isArray(body?.events)) return res.status(400).end();
 
-    // 4) Cidade e estado vêm dos cabeçalhos da Vercel. O IP não é lido nem guardado.
     let city = "";
     try { city = decodeURIComponent(String(req.headers["x-vercel-ip-city"] || "")); } catch { /* ignora */ }
     const country = String(req.headers["x-vercel-ip-country"] || "");
@@ -135,7 +129,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (rows.length === 0) return res.status(204).end();
 
-    // 5) Decide os alertas ANTES de gravar (para o anti-spam funcionar)
     const alerts: string[] = [];
     let errorAlerted = false;
     for (const r of rows) {
@@ -158,18 +151,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    // 6) Grava no caderninho
     await fetch(`${SB_URL}/rest/v1/events`, {
       method: "POST",
       headers: { ...sbHeaders, "Content-Type": "application/json", Prefer: "return=minimal" },
       body: JSON.stringify(rows),
     });
 
-    // 7) Manda os alertas
     await Promise.allSettled(alerts.slice(0, 3).map(telegram));
 
     return res.status(204).end();
   } catch {
-    return res.status(204).end(); // métrica nunca derruba o site
+    return res.status(204).end();
   }
 }

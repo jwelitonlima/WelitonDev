@@ -16,7 +16,6 @@ const labelOf = (el: HTMLElement) => {
   );
 };
 
-/** EspIAn 🕵️ — liga toda a coleta. Chamar UMA vez, dentro do BrowserRouter. */
 export function useAnalytics() {
   const location = useLocation();
   const page = useRef({ path: "", activeMs: 0, resumedAt: null as number | null, maxScroll: 0 });
@@ -34,12 +33,10 @@ export function useAnalytics() {
     p.activeMs = 0;
   };
 
-  // ---------- Liga uma única vez ----------
   useEffect(() => {
     const { isNewSession, isReturning } = initSession();
     if (!isTrackingEnabled()) return;
 
-    // 1) Início de sessão: contexto do visitante
     if (isNewSession) {
       let referrer = "";
       try { referrer = document.referrer ? new URL(document.referrer).hostname : ""; } catch { /* ignora */ }
@@ -62,7 +59,6 @@ export function useAnalytics() {
       });
     }
 
-    // 2) Cliques + cliques de raiva
     const recent: { t: number; x: number; y: number }[] = [];
     let lastRage = 0;
 
@@ -100,7 +96,6 @@ export function useAnalytics() {
       });
     };
 
-    // 3) Rolagem
     const onScroll = () => {
       const h = document.documentElement;
       const pct = ((window.scrollY + window.innerHeight) / Math.max(h.scrollHeight, 1)) * 100;
@@ -108,7 +103,6 @@ export function useAnalytics() {
       if (step > page.current.maxScroll) page.current.maxScroll = step;
     };
 
-    // 4) Core Web Vitals (sem biblioteca)
     let lcp = 0, cls = 0, inp = 0, vitalsSent = false;
     const observe = (type: string, cb: (e: PE) => void, extra: object = {}) => {
       try {
@@ -131,7 +125,6 @@ export function useAnalytics() {
       if (inp) track("vital", path, { label: "INP", value: Math.round(inp) });
     };
 
-    // 5) Visibilidade da aba
     const onVisibility = () => {
       if (document.visibilityState === "hidden") {
         sendVitals();
@@ -142,7 +135,6 @@ export function useAnalytics() {
     };
     const onPageHide = () => { sendVitals(); flush(); };
 
-    // 6) Erros de JS, recursos que falharam (img/video/script) e promises rejeitadas
     const onError = (e: Event) => {
       const t = e.target as HTMLElement | null;
       if (t && t !== (window as unknown as HTMLElement) && t.tagName) {
@@ -166,7 +158,6 @@ export function useAnalytics() {
       track("error", window.location.pathname, { label: `Promise: ${msg}`.slice(0, 200) });
     };
 
-    // 7) Requisições lentas (>2s) ou com falha (inclui o webhook do FreteAI)
     const origFetch = window.fetch.bind(window);
     window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
       const start = performance.now();
@@ -194,7 +185,6 @@ export function useAnalytics() {
       }
     };
 
-    // 8) Vídeos com controles (página de detalhe): quantos segundos assistiu
     const playing = new WeakMap<HTMLVideoElement, number>();
     const onPlay = (e: Event) => {
       const v = e.target as HTMLVideoElement;
@@ -209,7 +199,6 @@ export function useAnalytics() {
       if (s >= 1) track("video", window.location.pathname, { label: (v.currentSrc || "").split("/").pop()?.slice(0, 60), value: s });
     };
 
-    // 9) Cópia (só o tipo; nunca o conteúdo)
     const onCopy = () => {
       const t = (window.getSelection()?.toString() || "").trim();
       if (!t) return;
@@ -246,7 +235,6 @@ export function useAnalytics() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ---------- A cada troca de página ----------
   useEffect(() => {
     if (!isTrackingEnabled()) return;
     flush();

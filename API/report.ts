@@ -57,14 +57,12 @@ const pageName = (p: string) =>
   : p === "/contato" || p === "/contact" ? "Contato"
   : p === "/sobre" || p === "/about" ? "Sobre" : p;
 
-/** TODOS os números saem daqui (código puro). A IA só recebe o resultado pronto. */
 function aggregate(ev: Ev[]) {
   const starts = ev.filter((e) => e.type === "session_start");
   const views = ev.filter((e) => e.type === "page_view");
   const clicks = ev.filter((e) => e.type === "click");
   const sessions = new Set(ev.map((e) => e.session_id));
 
-  // Tempo ativo por página
   const timeBy = new Map<string, { sum: number; s: Set<string> }>();
   ev.filter((e) => e.type === "page_leave").forEach((e) => {
     const t = timeBy.get(e.path) ?? { sum: 0, s: new Set<string>() };
@@ -77,7 +75,6 @@ function aggregate(ev: Ev[]) {
     .sort((a, b) => b.visits - a.visits)
     .slice(0, 6);
 
-  // Rolagem média
   const sc = new Map<string, number>();
   ev.filter((e) => e.type === "scroll_depth").forEach((e) => {
     const k = `${e.session_id}|${e.path}`;
@@ -90,7 +87,6 @@ function aggregate(ev: Ev[]) {
     avg_percent: Math.round(a.reduce((x, y) => x + y, 0) / a.length),
   }));
 
-  // Voltou na mesma página
   const pv = new Map<string, number>();
   views.forEach((e) => {
     const k = `${e.session_id}|${e.path}`;
@@ -100,7 +96,6 @@ function aggregate(ev: Ev[]) {
   pv.forEach((n, k) => { if (n >= 2) rv.set(after(k), (rv.get(after(k)) || 0) + 1); });
   const revisited_pages = [...rv.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
 
-  // Mapa de calor em grade 3x3
   const row = (y: number) => (y < 33 ? "topo" : y < 66 ? "meio" : "fim");
   const col = (x: number) => (x < 33 ? "esquerda" : x < 66 ? "centro" : "direita");
   const heatmap = top(
@@ -110,7 +105,6 @@ function aggregate(ev: Ev[]) {
     5
   );
 
-  // Funil e rejeição
   const pagesBySession = new Map<string, Set<string>>();
   views.forEach((e) => {
     const s = pagesBySession.get(e.session_id) ?? new Set<string>();
@@ -126,7 +120,6 @@ function aggregate(ev: Ev[]) {
   const bounced = [...viewsPerSession.values()].filter((n) => n === 1).length;
   const bounce_rate_percent = viewsPerSession.size ? Math.round((bounced / viewsPerSession.size) * 100) : 0;
 
-  // Web Vitals (percentil 75)
   const vit = (label: string) =>
     ev.filter((e) => e.type === "vital" && e.label === label).map((e) => Number(e.value || 0));
   const web_vitals = {
@@ -135,7 +128,6 @@ function aggregate(ev: Ev[]) {
     cls_p75: Number((p75(vit("CLS")) / 1000).toFixed(3)),
   };
 
-  // Funções monitoradas e requisições
   const fn = new Map<string, { calls: number; fails: number; ms: number }>();
   ev.filter((e) => e.type === "function").forEach((e) => {
     const k = e.label || "?";
@@ -262,7 +254,6 @@ async function telegram(text: string) {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Só o cron da Vercel (ou você, com a senha) consegue disparar
   if (!CRON_SECRET || req.headers.authorization !== `Bearer ${CRON_SECRET}`) {
     return res.status(401).json({ error: "não autorizado" });
   }
