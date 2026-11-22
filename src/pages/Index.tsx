@@ -39,7 +39,7 @@ const Home = () => {
 
   return (
     <main>
-      {/* Hero */}
+      {/* Hero (Mantido como está) */}
       <section className="min-h-[100svh] relative flex flex-col justify-end lg:justify-center section-light overflow-hidden">
         <div className="absolute inset-0 lg:hidden">
           <AnimatePresence mode="wait">
@@ -164,7 +164,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Recent Work - Agora com layout idêntico ao da imagem */}
+      {/* RECENT WORK - Agora idêntico à Imagem 2 */}
       <section className="section-light py-16 sm:py-20 md:py-28">
         <div className="container-wide">
           
@@ -182,7 +182,7 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Filtros (restaurados) */}
+          {/* Filtros */}
           <div className="flex gap-4 mb-8 border-b border-border pb-4">
             {([["all", "Todos"], ["development", `Dev (${devCount})`], ["data", `Data (${dataCount})`], ["ai", `AI (${aiCount})`]] as const).map(
               ([key, label]) => (
@@ -200,7 +200,7 @@ const Home = () => {
             )}
           </div>
 
-          {/* Grid Principal */}
+          {/* O Grid Exato da Imagem 2 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10">
             {filtered.map((project, i) => (
               <TransitionLink key={project.slug} to={`/projetos/${project.slug}`} className="group block">
@@ -211,8 +211,8 @@ const Home = () => {
                   transition={{ delay: i * 0.1, duration: 0.6, ease }}
                   className="flex flex-col h-full"
                 >
-                  {/* Moldura do Card */}
-                  <div className="relative overflow-hidden rounded-2xl bg-[#f4f4f5] p-4 sm:p-8 flex items-center justify-center aspect-[4/3] mb-5 transition-transform duration-500 group-hover:shadow-lg border border-border/50">
+                  {/* Moldura do Card (Fundo Cinza Claro, Aspect 4/3) */}
+                  <div className="relative overflow-hidden rounded-2xl bg-[#f4f4f5] p-6 sm:p-8 flex items-center justify-center aspect-[4/3] mb-5 transition-transform duration-500 group-hover:shadow-lg border border-border/50">
                     
                     {/* Tag Demo Live */}
                     {project.demoUrl && (
@@ -222,12 +222,13 @@ const Home = () => {
                       </div>
                     )}
 
-                    <div className="w-full h-full flex items-center justify-center transform group-hover:scale-[1.03] transition-transform duration-500">
+                    {/* Renderização do Mockup (Agora sim, usando o componente pesado) */}
+                    <div className="w-full h-full flex items-center justify-center">
                        <ProjectMockup project={project} isDetail={false} />
                     </div>
                   </div>
 
-                  {/* Informações do Projeto */}
+                  {/* Informações */}
                   <div className="flex flex-col gap-2 px-1">
                     <div className="flex justify-between items-start gap-4">
                       <h3 className="font-bold text-lg sm:text-xl text-foreground leading-tight group-hover:text-primary transition-colors">
