@@ -31,20 +31,20 @@ export const SlideToUnlock = ({ onComplete }: SlideToUnlockProps) => {
   return (
     <div 
       ref={containerRef}
-      // EFEITO GLASSMORPHISM AQUI: backdrop-blur, fundo branco translúcido e borda suave
-      className="relative w-full sm:w-[280px] h-14 bg-white/5 backdrop-blur-md border border-white/20 rounded-full flex items-center p-1 overflow-hidden select-none shadow-[inset_0_2px_4px_rgba(0,0,0,0.1),0_4px_12px_rgba(0,0,0,0.05)]"
+      // Fundo escuro translúcido com borda sutil (Estilo Apple Dark)
+      className="relative w-full sm:w-[280px] h-14 bg-foreground/[0.03] backdrop-blur-xl border border-foreground/10 rounded-full flex items-center p-1 overflow-hidden select-none shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]"
     >
-      {/* Texto com Efeito Shimmer */}
+      {/* Texto com Efeito Shimmer (Agora usando variáveis do tema para o brilho) */}
       <motion.span 
         style={{ opacity: textOpacity }}
         className="absolute inset-0 flex items-center justify-center pointer-events-none"
       >
-        <span className="shimmer-text text-[10px] sm:text-xs font-semibold tracking-widest uppercase drop-shadow-sm">
+        <span className="shimmer-text text-[10px] sm:text-xs font-semibold tracking-widest uppercase">
           Deslize para acessar o app
         </span>
       </motion.span>
 
-      {/* Botão Deslizante em Estilo Vidro (Glass) */}
+      {/* Botão Deslizante - Preto Premium com leve efeito Glass */}
       <motion.div
         drag="x"
         dragConstraints={{ left: 0, right: containerRef.current ? containerRef.current.offsetWidth - 64 : 216 }}
@@ -53,17 +53,17 @@ export const SlideToUnlock = ({ onComplete }: SlideToUnlockProps) => {
         onDragEnd={handleDragEnd}
         style={{ x }}
         animate={isUnlocked ? { x: 300 } : {}}
-        // Botão de vidro: fundo branco semi-transparente, borda branca e sombra suave
-        className="relative z-10 w-12 h-12 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
+        // Fundo quase preto, com leve transparência e borda fina para dar volume
+        className="relative z-10 w-12 h-12 bg-foreground/90 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing shadow-lg"
       >
-        {/* Ícone escuro para contrastar com o vidro branco */}
-        <ChevronRight className="w-5 h-5 text-foreground/70" strokeWidth={2.5} />
+        {/* Ícone branco para alto contraste */}
+        <ChevronRight className="w-5 h-5 text-background" strokeWidth={2.5} />
       </motion.div>
 
       {/* Fundo que preenche ao arrastar (Efeito de "luz" que acompanha o dedo) */}
       <motion.div 
         style={{ width: useTransform(x, (val) => `${val + 56}px`) }}
-        className="absolute left-0 top-0 bottom-0 bg-white/10 pointer-events-none"
+        className="absolute left-0 top-0 bottom-0 bg-foreground/5 pointer-events-none"
       />
     </div>
   );
