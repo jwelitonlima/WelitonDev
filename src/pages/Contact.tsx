@@ -126,24 +126,30 @@ const ContactPage = () => {
             className="space-y-8 sm:space-y-10 pt-4 border-t border-dark-fg/10 lg:border-t-0 mt-4 lg:mt-0"
           >
             <div>
-              <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-3">Detalhes de Contato</p>
+              <p className="text-xs uppercase tracking-widest text-dark-fg/40 mb-4">Detalhes de Contato</p>
               
               {/* E-mail */}
-              <a href="mailto:devweliton7@gmail.com" className="group flex items-center gap-2 text-sm text-dark-fg/80 hover:text-dark-fg transition-colors w-fit mb-2">
-                <Mail className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
-                <span className="link-underline">devweliton7@gmail.com</span>
-              </a>
+              <div className="flex flex-col gap-1 mb-4">
+                <span className="text-xs text-dark-fg/50 font-medium">E-mail:</span>
+                <a href="mailto:devweliton7@gmail.com" className="group flex items-center gap-2 text-sm text-dark-fg/80 hover:text-dark-fg transition-colors w-fit">
+                  <Mail className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
+                  <span className="link-underline">devweliton7@gmail.com</span>
+                </a>
+              </div>
               
-              {/* WhatsApp - Apenas Ícone (Atualizado com o novo número) */}
-              <a 
-                href="https://wa.me/5575983422981" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                title="Chamar no WhatsApp: +55 (75) 9 8342-2981"
-                className="group inline-flex items-center justify-center w-8 h-8 rounded-full border border-dark-fg/20 text-dark-fg/70 hover:text-primary hover:border-primary/50 transition-all mt-1"
-              >
-                <MessageCircle className="w-4 h-4" />
-              </a>
+              {/* WhatsApp com Texto e Ícone Minimalista */}
+              <div className="flex flex-col gap-1">
+                <span className="text-xs text-dark-fg/50 font-medium">WhatsApp:</span>
+                <a 
+                  href="https://wa.me/5575983422981" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  title="Chamar no WhatsApp"
+                  className="group inline-flex items-center justify-center w-10 h-10 rounded-xl bg-dark-fg/5 border border-dark-fg/10 text-dark-fg/70 hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-all duration-300 mt-1"
+                >
+                  <MessageCircle className="w-5 h-5" strokeWidth={1.5} />
+                </a>
+              </div>
             </div>
             
             <div>
