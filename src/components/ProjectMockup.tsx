@@ -1,4 +1,5 @@
 import { TabletMockup } from "./TabletMockup";
+import { PhoneFrame } from "./PhoneFrame";
 import { Project } from "@/data/projects";
 
 interface ProjectMockupProps {
@@ -23,35 +24,15 @@ export const ProjectMockup = ({ project, isDetail = false }: ProjectMockupProps)
     );
   }
 
-  // 2. Celular (InteraMed): vídeo único, sem carrossel e sem imagens extras
+  // 2. Celular (InteraMed): mesmo PhoneFrame do card
   if (project.deviceType === "mobile" && project.videoUrl) {
     return (
       <div className="w-full h-full flex items-center justify-center py-4">
-        <div className="relative h-full max-h-[640px] aspect-[9/19.5] bg-[#1a1a1a] rounded-[3rem] p-[10px] shadow-2xl border-[2px] border-gray-700">
-          {/* Botões laterais */}
-          <div className="absolute top-[15%] -left-[4px] w-[4px] h-[30px] bg-gray-600 rounded-l-md" />
-          <div className="absolute top-[25%] -left-[4px] w-[4px] h-[50px] bg-gray-600 rounded-l-md" />
-          <div className="absolute top-[35%] -left-[4px] w-[4px] h-[50px] bg-gray-600 rounded-l-md" />
-          <div className="absolute top-[25%] -right-[4px] w-[4px] h-[70px] bg-gray-600 rounded-r-md" />
-
-          <div className="relative w-full h-full bg-black rounded-[2.5rem] overflow-hidden">
-            <div className="absolute top-2 inset-x-0 h-7 flex justify-center z-20">
-              <div className="w-28 h-7 bg-black rounded-full flex items-center justify-end px-3">
-                <div className="w-3 h-3 bg-[#111] rounded-full border border-gray-800 shadow-inner" />
-              </div>
-            </div>
-            <video
-              src={project.videoUrl}
-              autoPlay
-              muted={!isDetail}
-              loop
-              controls={isDetail}
-              playsInline
-              className="w-full h-full object-cover rounded-[2.5rem]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/10 pointer-events-none rounded-[2.5rem]" />
-          </div>
-        </div>
+        <PhoneFrame
+          videoUrl={project.videoUrl}
+          isDetail={isDetail}
+          className="h-full max-h-[640px]"
+        />
       </div>
     );
   }

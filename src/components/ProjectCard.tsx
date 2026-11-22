@@ -1,72 +1,89 @@
 import { motion } from "framer-motion";
-import TransitionLink from "./TransitionLink";
+import TransitionLink from "@/components/TransitionLink";
+import { PhoneFrame } from "@/components/PhoneFrame";
+import { Project } from "@/data/projects";
 
 interface ProjectCardProps {
-  title: string;
-  category: string;
-  image: string;
-  slug: string;
+  project: Project;
   index: number;
 }
 
-const ProjectCard = ({ title, category, image, slug, index }: ProjectCardProps) => {
-  // Diferencia os projetos Mobile dos projetos Desktop/Apresentação
-  const isMobileMockup = slug === "interamed";
+const ease = [0.16, 1, 0.3, 1] as const;
+
+const CardMedia = ({ project }: { project: Project }) => {
+  if (project.videoUrl) {
+    if (project.deviceType === "desktop") {
+      return (
+        <div className="relative w-[85%] flex flex-col items-center justify-center">
+          <div className="relative w-full aspect-video bg-[#1a1a1a] rounded-t-lg p-[4px] pb-[6px] shadow-lg border border-gray-700">
+            <div className="relative w-full h-full bg-black rounded-sm overflow-hidden">
+              <video
+                src={project.videoUrl}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          <div className="relative w-[110%] h-2 bg-gradient-to-b from-gray-400 to-gray-600 rounded-b-lg shadow-md">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-0.5 bg-gray-700 rounded-b-sm" />
+          </div>
+        </div>
+      );
+    }
+
+    // Celular: mesmo componente da página de detalhe, só menor
+    return <PhoneFrame videoUrl={project.videoUrl} className="h-[92%]" />;
+  }
 
   return (
-    <TransitionLink to={`/projetos/${slug}`}>
+    <img
+      src={project.image}
+      alt={project.title}
+      loading="lazy"
+      className="w-full h-full object-contain"
+    />
+  );
+};
+
+const ProjectCard = ({ project, index }: ProjectCardProps) => {
+  return (
+    <TransitionLink to={`/projetos/${project.slug}`} className="group block">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-        className="group flex flex-col cursor-pointer"
+        transition={{ delay: index * 0.1, duration: 0.6, ease }}
+        className="flex flex-col h-full"
       >
-        {/* Fundo do Card com gradiente sutil (padrão do portfólio) */}
-        <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-secondary to-secondary/30 border border-border transition-all duration-500 group-hover:border-primary/30 group-hover:shadow-lg flex items-center justify-center p-6 sm:p-8">
-          
-          {/* Lógica de Mockup */}
-          {isMobileMockup ? (
-            /* Mockup Mobile (Celular) - InteraMed */
-            <img
-              src={image}
-              alt={title}
-              className="w-auto h-full max-h-[110%] object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
-              loading="lazy"
-            />
-          ) : (
-            /* Mockup de Apresentação (Monitor/TV) - FreteAI e Delivery */
-            <div className="relative w-full h-full flex flex-col items-center justify-center">
-              {/* Corpo da TV/Monitor */}
-              <div className="relative w-full h-full max-h-[85%] aspect-video bg-[#111] rounded-lg border-[6px] sm:border-[8px] border-[#222] shadow-2xl overflow-hidden transition-transform duration-700 group-hover:scale-105">
-                {/* Tela do Monitor */}
-                <img
-                  src={image}
-                  alt={title}
-                  className="w-full h-full object-cover object-top"
-                  loading="lazy"
-                />
-                {/* Reflexo sutil na tela */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/10 pointer-events-none" />
-              </div>
-              
-              {/* Base/Suporte do Monitor */}
-              <div className="absolute -bottom-2 w-1/3 h-3 bg-[#222] rounded-b-md shadow-lg" />
-              <div className="absolute -bottom-4 w-1/2 h-1.5 bg-[#111] rounded-full shadow-md" />
+        <div className="relative overflow-hidden rounded-2xl bg-[#f4f4f5] aspect-[4/3] mb-5 border border-border/50 transition-shadow duration-500 group-hover:shadow-lg">
+          {project.demoUrl && (
+            <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 bg-background rounded-full border border-border shadow-sm text-xs font-medium text-foreground">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              Demo Live
             </div>
           )}
 
+          <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6">
+            <CardMedia project={project} />
+          </div>
         </div>
 
-        {/* Textos (Título e Categoria) */}
-        <div className="mt-4 flex flex-col gap-1 px-1">
-          <div className="flex items-center justify-between gap-4">
-            <h3 className="text-lg font-bold text-foreground truncate group-hover:text-primary transition-colors">
-              {title}
+        <div className="flex flex-col gap-2 px-1 mt-auto">
+          <div className="flex justify-between items-start gap-4">
+            <h3 className="font-bold text-lg sm:text-xl text-foreground leading-tight group-hover:text-primary transition-colors">
+              {project.title}
             </h3>
+            {project.services && (
+              <span className="hidden sm:inline-block px-3 py-1 rounded-full bg-secondary text-muted-foreground text-[10px] font-medium whitespace-nowrap">
+                {project.services}
+              </span>
+            )}
           </div>
-          <p className="text-sm text-muted-foreground truncate font-medium">
-            {category}
+          <p className="text-sm text-muted-foreground leading-snug">
+            {project.client} · {project.location}
           </p>
         </div>
       </motion.div>
