@@ -4,9 +4,10 @@ import mockup2 from "@/assets/interamed-mockup-2.png";
 import mockup3 from "@/assets/interamed-mockup-3.png";
 import mockup4 from "@/assets/interamed-mockup-4.png";
 import interamedVideo from "@/assets/interamed-video.mp4";
-// --- IMPORTS DO NOVO PROJETO ---
+// --- IMPORTS DOS VÍDEOS CORRIGIDOS ---
 import projectDelivery from "@/assets/delivery-dashboard.jpg"; 
-import deliveryVideo from "@/assets/delivery-dashboard-video.mp4";
+import deliveryVideo from "@/assets/delivery-dashboard-video.mp4"; // Lembre-se de converter o .mkv para .mp4
+import freteAiVideo from "@/assets/frete-ai.mp4"; // NOVO: Vídeo exclusivo do FreteAI
 
 const projectInteraMed = mockup1;
 
@@ -46,7 +47,7 @@ export const allProjects: Project[] = [
     technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Recharts", "shadcn/ui"],
     result: "Redução de 60% no tempo de resposta a incidentes e 40% menos entregas atrasadas",
     demoUrl: "/dashboard",
-    videoUrl: deliveryVideo, // <-- CORRIGIDO AQUI (usando o arquivo que existe)
+    videoUrl: freteAiVideo, // <-- CORRIGIDO: Agora aponta para o vídeo do FreteAI
     deviceType: "desktop",
   },
   {
@@ -83,7 +84,7 @@ export const allProjects: Project[] = [
     technologies: ["Python", "Streamlit", "Pandas", "Plotly", "Groq API"],
     result: "Dashboard 100% funcional que transforma dados brutos em um plano de ação executivo em segundos. Simula com perfeição a rotina de um Analista de Dados focado em otimização logística.",
     demoUrl: "https://projeto-delivery-data-gbbnwmrsymsjc8ev2hjudc.streamlit.app/?embed=true",
-    videoUrl: deliveryVideo,
+    videoUrl: deliveryVideo, // <-- CORRIGIDO: Mantido o vídeo do dashboard
     deviceType: "desktop",
   },
 ];
