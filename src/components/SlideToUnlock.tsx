@@ -78,15 +78,19 @@ export const SlideToUnlock = ({ onComplete, resetKey }: SlideToUnlockProps) => {
       ref={containerRef}
       className="relative z-10 w-full max-w-[280px] h-14 bg-secondary/80 backdrop-blur-md border border-border rounded-full flex items-center p-1 overflow-hidden select-none shadow-sm"
     >
-      {/* Texto com Efeito Shimmer */}
-      <motion.span
+      {/* 
+        CORREÇÃO DE UI: 
+        - pl-14 (padding-left) empurra o texto para a direita, tirando de baixo do botão.
+        - A opacidade continua reagindo ao arraste.
+      */}
+      <motion.div
         style={{ opacity: textOpacity }}
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        className="absolute inset-0 flex items-center justify-center pl-14 pr-4 pointer-events-none"
       >
-        <span className="shimmer-text text-[10px] sm:text-xs font-semibold tracking-widest uppercase">
+        <span className="shimmer-text text-[10px] sm:text-xs font-semibold tracking-widest uppercase text-muted-foreground truncate">
           Deslize para acessar o app
         </span>
-      </motion.span>
+      </motion.div>
 
       {/* Botão Deslizante */}
       <motion.div
@@ -95,12 +99,10 @@ export const SlideToUnlock = ({ onComplete, resetKey }: SlideToUnlockProps) => {
         dragElastic={0.05}
         dragMomentum={false}
         onDragEnd={handleDragEnd}
-        // `style={{ x }}` permite o arraste. 
         style={{ x }}
-        // O animate cuida do fade out (opacity) ao completar
         animate={isUnlocked ? { opacity: 0, scale: 0.9 } : { opacity: 1, scale: 1 }}
         transition={{ duration: 0.2 }}
-        className="relative z-20 w-12 h-12 bg-foreground rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing shadow-md"
+        className="relative z-20 w-12 h-12 bg-foreground rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing shadow-md shrink-0"
       >
         <ChevronRight className="w-5 h-5 text-background" strokeWidth={2.5} />
       </motion.div>
