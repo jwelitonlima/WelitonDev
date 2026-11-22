@@ -10,7 +10,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ title, category, image, slug, index }: ProjectCardProps) => {
-  // Verifica se é o InteraMed (device mobile) para ajustar a imagem
+  // Diferencia os projetos Mobile dos projetos Desktop/Apresentação
   const isMobileMockup = slug === "interamed";
 
   return (
@@ -22,21 +22,40 @@ const ProjectCard = ({ title, category, image, slug, index }: ProjectCardProps) 
         transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
         className="group flex flex-col cursor-pointer"
       >
-        {/* Container do Mockup no padrão do portfólio */}
-        <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-secondary/50 border border-border transition-all duration-500 group-hover:border-primary/30 group-hover:shadow-lg">
+        {/* Fundo do Card com gradiente sutil (padrão do portfólio) */}
+        <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-secondary to-secondary/30 border border-border transition-all duration-500 group-hover:border-primary/30 group-hover:shadow-lg flex items-center justify-center p-6 sm:p-8">
           
-          {/* Imagem */}
-          <img
-            src={image}
-            alt={title}
-            className={`w-full h-full drop-shadow-xl transition-transform duration-700 group-hover:scale-105 ${
-              isMobileMockup ? "object-contain p-4" : "object-cover object-top"
-            }`}
-            loading="lazy"
-          />
+          {/* Lógica de Mockup */}
+          {isMobileMockup ? (
+            /* Mockup Mobile (Celular) - InteraMed */
+            <img
+              src={image}
+              alt={title}
+              className="w-auto h-full max-h-[110%] object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+            />
+          ) : (
+            /* Mockup de Apresentação (Monitor/TV) - FreteAI e Delivery */
+            <div className="relative w-full h-full flex flex-col items-center justify-center">
+              {/* Corpo da TV/Monitor */}
+              <div className="relative w-full h-full max-h-[85%] aspect-video bg-[#111] rounded-lg border-[6px] sm:border-[8px] border-[#222] shadow-2xl overflow-hidden transition-transform duration-700 group-hover:scale-105">
+                {/* Tela do Monitor */}
+                <img
+                  src={image}
+                  alt={title}
+                  className="w-full h-full object-cover object-top"
+                  loading="lazy"
+                />
+                {/* Reflexo sutil na tela */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/10 pointer-events-none" />
+              </div>
+              
+              {/* Base/Suporte do Monitor */}
+              <div className="absolute -bottom-2 w-1/3 h-3 bg-[#222] rounded-b-md shadow-lg" />
+              <div className="absolute -bottom-4 w-1/2 h-1.5 bg-[#111] rounded-full shadow-md" />
+            </div>
+          )}
 
-          {/* Overlay de gradiente sutil apenas no hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
         </div>
 
         {/* Textos (Título e Categoria) */}
