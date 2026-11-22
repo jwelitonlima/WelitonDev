@@ -14,28 +14,14 @@ export const TabletMockup = ({
   const [isTyping, setIsTyping] = useState(true);
   const [typedText, setTypedText] = useState("");
   const [hasStarted, setHasStarted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Detecta se é mobile para desativar a animação de digitação
+  // Efeito de digitação na barra de URL (mantido no mobile e desktop)
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 640);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  // Efeito de digitação na barra de URL (apenas no desktop)
-  useEffect(() => {
-    if (isMobile) {
-      setIsTyping(false);
-      setTypedText(urlText);
-      return;
-    }
-
     let i = 0;
     setTypedText("");
     setIsTyping(true);
+    
     const interval = setInterval(() => {
       setTypedText((prev) => urlText.slice(0, i + 1));
       i++;
@@ -46,7 +32,7 @@ export const TabletMockup = ({
     }, 90);
 
     return () => clearInterval(interval);
-  }, [urlText, isMobile]);
+  }, [urlText]);
 
   const handleStart = () => {
     setHasStarted(true);
@@ -80,7 +66,7 @@ export const TabletMockup = ({
               </div>
 
               <div className="flex-1 flex justify-center px-2">
-                {/* Barra de URL - Truncada e sem quebra de linha */}
+                {/* Barra de URL - Truncada, sem quebra de linha e com animação de digitação */}
                 <div className="w-full max-w-md bg-white/[0.03] border border-white/10 rounded-lg h-6 sm:h-7 flex items-center justify-start px-2 sm:px-3 overflow-hidden transition-colors hover:bg-white/[0.05]">
                   <span className="text-[9px] sm:text-xs text-zinc-400 font-sans tracking-tight flex items-center gap-1.5 w-full truncate whitespace-nowrap">
                     <svg className="w-3 h-3 text-zinc-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -109,7 +95,7 @@ export const TabletMockup = ({
             {/* Área do vídeo */}
             <div className="relative flex-1 bg-black flex items-center justify-center overflow-hidden">
               <AnimatePresence mode="wait">
-                {isTyping && !isMobile ? (
+                {isTyping ? (
                   <motion.div
                     key="loading"
                     initial={{ opacity: 0 }}
@@ -158,11 +144,28 @@ export const TabletMockup = ({
                             <Play className="w-7 h-7 sm:w-8 sm:h-8 fill-current ml-1" />
                           </div>
 
-                          {/* Aviso de áudio */}
-                          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/70 border border-white/15 text-white text-[10px] sm:text-sm font-medium">
-                            <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                            <span>Clique para ativar o áudio</span>
-                          </div>
+                          {/* Aviso de áudio pulsante */}
+                          <motion.div 
+                            animate={{ 
+                              scale: [1, 1.05, 1],
+                              boxShadow: [
+                                "0px 0px 0px 0px rgba(16, 185, 129, 0)",
+                                "0px 0px 0px 4px rgba(16, 185, 129, 0.15)",
+                                "0px 0px 0px 0px rgba(16, 185, 129, 0)"
+                              ]
+                            }}
+                            transition={{ 
+                              repeat: Infinity, 
+                              duration: 2,
+                              ease: "easeInOut"
+                            }}
+                            className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/80 border border-primary/30 text-white text-[10px] sm:text-sm font-medium"
+                          >
+                            <Volume2 className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
+                            <span className="text-primary font-semibold tracking-wide">
+                              Clique para ativar o áudio
+                            </span>
+                          </motion.div>
                         </motion.button>
                       )}
                     </AnimatePresence>
