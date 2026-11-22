@@ -5,33 +5,48 @@ interface ProjectCardProps {
   title: string;
   category: string;
   image: string;
-  index: number;
   slug: string;
+  index: number;
 }
 
-const ProjectCard = ({ title, category, image, index, slug }: ProjectCardProps) => {
+const ProjectCard = ({ title, category, image, slug, index }: ProjectCardProps) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-    >
-      <TransitionLink to={`/project/${slug}`} className="group cursor-pointer block">
-        <div className="relative overflow-hidden rounded-lg mb-3 sm:mb-4 aspect-[4/3] bg-secondary">
+    <TransitionLink to={`/projetos/${slug}`}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+        className="group flex flex-col cursor-pointer"
+      >
+        {/* Container da Imagem (Mockup) */}
+        <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-[#111] border border-white/5 transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.15)]">
+          
+          {/* Imagem do Projeto */}
           <img
             src={image}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
           />
+
+          {/* Overlay sutil de gradiente no hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
         </div>
-        <div className="flex justify-between items-baseline gap-2">
-          <h3 className="font-semibold text-base sm:text-lg truncate">{title}</h3>
-          <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">{category}</span>
+
+        {/* Textos (Título e Categoria) */}
+        <div className="mt-4 flex flex-col gap-1 px-1">
+          <div className="flex items-center justify-between gap-4">
+            <h3 className="text-lg font-bold text-foreground truncate group-hover:text-primary transition-colors">
+              {title}
+            </h3>
+          </div>
+          <p className="text-sm text-muted-foreground truncate font-medium">
+            {category}
+          </p>
         </div>
-      </TransitionLink>
-    </motion.div>
+      </motion.div>
+    </TransitionLink>
   );
 };
 
