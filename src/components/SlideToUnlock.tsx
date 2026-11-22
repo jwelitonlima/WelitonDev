@@ -31,10 +31,10 @@ export const SlideToUnlock = ({ onComplete }: SlideToUnlockProps) => {
   return (
     <div 
       ref={containerRef}
-      // Fundo escuro translúcido com borda sutil (Estilo Apple Dark)
-      className="relative w-full sm:w-[280px] h-14 bg-foreground/[0.03] backdrop-blur-xl border border-foreground/10 rounded-full flex items-center p-1 overflow-hidden select-none shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]"
+      // Fundo cinza bem sutil, borda mais visível no modo claro, efeito de vidro no escuro
+      className="relative w-full sm:w-[280px] h-14 bg-secondary/80 backdrop-blur-md border border-border rounded-full flex items-center p-1 overflow-hidden select-none shadow-sm"
     >
-      {/* Texto com Efeito Shimmer (Agora usando variáveis do tema para o brilho) */}
+      {/* Texto com Efeito Shimmer */}
       <motion.span 
         style={{ opacity: textOpacity }}
         className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -44,7 +44,7 @@ export const SlideToUnlock = ({ onComplete }: SlideToUnlockProps) => {
         </span>
       </motion.span>
 
-      {/* Botão Deslizante - Preto Premium com leve efeito Glass */}
+      {/* Botão Deslizante - Sólido e de Alto Contraste */}
       <motion.div
         drag="x"
         dragConstraints={{ left: 0, right: containerRef.current ? containerRef.current.offsetWidth - 64 : 216 }}
@@ -53,18 +53,13 @@ export const SlideToUnlock = ({ onComplete }: SlideToUnlockProps) => {
         onDragEnd={handleDragEnd}
         style={{ x }}
         animate={isUnlocked ? { x: 300 } : {}}
-        // Fundo quase preto, com leve transparência e borda fina para dar volume
-        className="relative z-10 w-12 h-12 bg-foreground/90 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing shadow-lg"
+        className="relative z-10 w-12 h-12 bg-foreground rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing shadow-md"
       >
-        {/* Ícone branco para alto contraste */}
+        {/* Ícone da seta */}
         <ChevronRight className="w-5 h-5 text-background" strokeWidth={2.5} />
       </motion.div>
 
-      {/* Fundo que preenche ao arrastar (Efeito de "luz" que acompanha o dedo) */}
-      <motion.div 
-        style={{ width: useTransform(x, (val) => `${val + 56}px`) }}
-        className="absolute left-0 top-0 bottom-0 bg-foreground/5 pointer-events-none"
-      />
+      {/* REMOVIDO: A barra que preenchia com fundo azul/cinza ao arrastar */}
     </div>
   );
 };
