@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Play } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import TransitionLink from "@/components/TransitionLink";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
@@ -53,63 +53,49 @@ const ProjectDetail = () => {
 
           {/* Header do Projeto (Título + Botão de Demo) */}
           <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-6 lg:gap-10 mb-10 sm:mb-16">
-            <div className="max-w-4xl">
-              <motion.h1
-                initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ duration: 0.8, ease }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight"
-              >
-                {project.title}
-              </motion.h1>
-              
-              {/* BOTÃO DE DEMO EM DESTAQUE (Se existir) */}
-              {project.demoUrl && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2, ease }}
-                  className="mt-6"
-                >
-                  <button
-                    onClick={() => setIsDemoOpen(true)}
-                    className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-all hover:scale-105 shadow-lg shadow-primary/20"
-                  >
-                    <span className="relative flex h-3 w-3">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-foreground opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-3 w-3 bg-primary-foreground"></span>
-                    </span>
-                    <Play className="w-4 h-4 fill-current" />
-                    Testar o Sistema ao Vivo
-                  </button>
-                  <p className="text-xs text-muted-foreground mt-2 ml-2">
-                    Explore as funcionalidades reais em uma nova aba
-                  </p>
-                </motion.div>
-              )}
-            </div>
+            <motion.h1
+              initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, ease }}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight max-w-4xl"
+            >
+              {project.title}
+            </motion.h1>
 
-            {/* Informações Laterais */}
             <motion.div
               initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.6, delay: 0.15, ease }}
-              className="flex flex-col sm:flex-row flex-wrap gap-x-8 gap-y-4 text-sm shrink-0 w-full xl:w-auto"
+              className="flex flex-col sm:flex-row flex-wrap items-start xl:items-end gap-6 shrink-0 w-full xl:w-auto"
             >
-              <div className="w-full xl:w-auto">
-                <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Cliente / Origem</p>
-                <p className="text-foreground font-medium sm:whitespace-nowrap">{project.client}</p>
-              </div>
-              <div className="flex gap-8">
-                <div>
-                  <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Local</p>
-                  <p className="text-foreground font-medium">{project.location}</p>
+              {/* Informações Laterais */}
+              <div className="flex flex-col sm:flex-row gap-x-8 gap-y-4 text-sm">
+                <div className="w-full sm:w-auto">
+                  <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Cliente / Origem</p>
+                  <p className="text-foreground font-medium sm:whitespace-nowrap">{project.client}</p>
                 </div>
-                <div>
-                  <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Ano</p>
-                  <p className="text-foreground font-medium">{project.year}</p>
+                <div className="flex gap-8">
+                  <div>
+                    <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Local</p>
+                    <p className="text-foreground font-medium">{project.location}</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground text-xs uppercase tracking-widest mb-1">Ano</p>
+                    <p className="text-foreground font-medium">{project.year}</p>
+                  </div>
                 </div>
               </div>
+
+              {/* Botão de Demo Minimalista e com Destaque */}
+              {project.demoUrl && (
+                <button
+                  onClick={() => setIsDemoOpen(true)}
+                  className="group flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-foreground text-background font-semibold text-sm transition-all hover:bg-foreground/90 hover:scale-[1.02] w-full sm:w-auto mt-4 sm:mt-0"
+                >
+                  Ver Demo Interativa
+                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </button>
+              )}
             </motion.div>
           </div>
 
@@ -242,8 +228,6 @@ const ProjectDetail = () => {
               </motion.div>
             )}
           </div>
-
-          {/* O botão duplicado no final foi REMOVIDO daqui */}
 
           {/* Próximo Projeto */}
           {(() => {
