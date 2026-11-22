@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 
@@ -11,13 +11,19 @@ export const SlideToUnlock = ({ onComplete }: SlideToUnlockProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
 
+  // GARANTIA DE RESET: Se o componente remontar, o X volta para 0 e o estado destrava
+  useEffect(() => {
+    x.set(0);
+    setIsUnlocked(false);
+  }, [x]);
+
   // Opacidade do texto some conforme você arrasta
   const textOpacity = useTransform(x, [0, 100], [1, 0]);
 
   const handleDragEnd = () => {
     if (!containerRef.current) return;
     const containerWidth = containerRef.current.offsetWidth;
-    const buttonWidth = 56; // Largura do botão (w-14)
+    const buttonWidth = 56; // w-14 = 56px
     const maxDrag = containerWidth - buttonWidth - 8; // 8px de padding
 
     if (x.get() > maxDrag * 0.6) {
@@ -31,8 +37,8 @@ export const SlideToUnlock = ({ onComplete }: SlideToUnlockProps) => {
   return (
     <div 
       ref={containerRef}
-      // Fundo cinza bem sutil, borda mais visível no modo claro, efeito de vidro no escuro
-      className="relative w-full sm:w-[280px] h-14 bg-secondary/80 backdrop-blur-md border border-border rounded-full flex items-center p-1 overflow-hidden select-none shadow-sm"
+      // Adicionado z-10 e relative para não ser cortado pela imagem do notebook
+      className="relative z-10 w-full max-w-[280px] h-14 bg-secondary/80 backdrop-blur-md border border-border rounded-full flex items-center p-1 overflow-hidden select-none shadow-sm"
     >
       {/* Texto com Efeito Shimmer */}
       <motion.span 
@@ -44,7 +50,7 @@ export const SlideToUnlock = ({ onComplete }: SlideToUnlockProps) => {
         </span>
       </motion.span>
 
-      {/* Botão Deslizante - Sólido e de Alto Contraste */}
+      {/* Botão Deslizante */}
       <motion.div
         drag="x"
         dragConstraints={{ left: 0, right: containerRef.current ? containerRef.current.offsetWidth - 64 : 216 }}
@@ -52,14 +58,12 @@ export const SlideToUnlock = ({ onComplete }: SlideToUnlockProps) => {
         dragMomentum={false}
         onDragEnd={handleDragEnd}
         style={{ x }}
-        animate={isUnlocked ? { x: 300 } : {}}
-        className="relative z-10 w-12 h-12 bg-foreground rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing shadow-md"
+        // Se destravado, esconde o botão animando ele para o final
+        animate={isUnlocked ? { x: 300, opacity: 0 } : { x: 0, opacity: 1 }}
+        className="relative z-20 w-12 h-12 bg-foreground rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing shadow-md"
       >
-        {/* Ícone da seta */}
         <ChevronRight className="w-5 h-5 text-background" strokeWidth={2.5} />
       </motion.div>
-
-      {/* REMOVIDO: A barra que preenchia com fundo azul/cinza ao arrastar */}
     </div>
   );
 };

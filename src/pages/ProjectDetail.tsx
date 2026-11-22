@@ -53,7 +53,7 @@ const ProjectDetail = () => {
           </motion.div>
 
           {/* Header do Projeto */}
-          <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-6 lg:gap-10 mb-10 sm:mb-16">
+          <div className="flex flex-col xl:flex-row xl:items-start justify-between gap-6 lg:gap-10 mb-10 sm:mb-16">
             <motion.h1
               initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -67,7 +67,7 @@ const ProjectDetail = () => {
               initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.6, delay: 0.15, ease }}
-              className="flex flex-col sm:flex-row flex-wrap items-start xl:items-end gap-6 xl:gap-10 shrink-0 w-full xl:w-auto"
+              className="flex flex-col gap-6 shrink-0 w-full xl:w-auto mt-4 xl:mt-0"
             >
               {/* Informações Laterais */}
               <div className="flex flex-col sm:flex-row gap-x-8 gap-y-4 text-sm">
@@ -87,10 +87,9 @@ const ProjectDetail = () => {
                 </div>
               </div>
 
-              {/* Slider posicionado na barra lateral no Desktop */}
+              {/* Slider movido para baixo das informações, mantendo destaque sem sobrepor */}
               {project.demoUrl && (
-                <div className="w-full sm:w-auto mt-2 sm:mt-0 xl:ml-4">
-                  {/* Adicionamos a prop 'key' para forçar o componente a resetar quando a página mudar */}
+                <div className="mt-2">
                   <SlideToUnlock key={project.slug} onComplete={() => setIsDemoOpen(true)} />
                 </div>
               )}
@@ -227,14 +226,10 @@ const ProjectDetail = () => {
             )}
           </div>
 
-          {/* Próximo Projeto (CORRIGIDO) */}
+          {/* Próximo Projeto */}
           {(() => {
             const currentIndex = allProjects.findIndex((p) => p.slug === slug);
-            
-            // Pega o próximo projeto. Se for o último, volta para o primeiro (índice 0)
             const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
-
-            // Se por acaso só existir 1 projeto no total, não mostra o botão
             if (allProjects.length <= 1) return null;
 
             return (
