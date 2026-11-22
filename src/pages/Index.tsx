@@ -85,14 +85,23 @@ const Home = () => {
               </AnimatePresence>
             </div>
 
-            <p className="text-lg sm:text-xl md:text-2xl text-foreground font-medium mb-2">
-              Front-end Developer Data Analyst & AI/LLM Engineer
-            </p>
+            {/* 👇 AQUI ESTÁ A MUDANÇA PARA AI BUILDER 👇 */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-6">
+              <span className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs sm:text-sm font-semibold tracking-wide">
+                AI Builder
+              </span>
+              <span className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-foreground/5 text-foreground/80 border border-border text-xs sm:text-sm font-medium">
+                Full-Stack Dev
+              </span>
+              <span className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-foreground/5 text-foreground/80 border border-border text-xs sm:text-sm font-medium">
+                Data Analyst
+              </span>
+            </div>
+
             <p className="text-base sm:text-lg text-foreground/80 max-w-md mb-8 lg:mb-10 leading-relaxed">
-              Desenvolvo experiências web modernas com JavaScript e frameworks, 
-              análise de dados e IA generativa. Transformando dados complexos 
-              em interfaces inteligentes e intuitivas.
+              Construo produtos digitais inteligentes unindo interfaces modernas, arquitetura de software e o poder da Inteligência Artificial Generativa.
             </p>
+            {/* 👆 FIM DA MUDANÇA 👆 */}
 
             <TransitionLink
               to="/sobre"
@@ -197,7 +206,7 @@ const Home = () => {
               )}
             </div>
 
-            {/* Grid - Atualizado para Mockups Premium (Apple/Nike style) */}
+            {/* Grid */}
             <div className="grid grid-cols-1 gap-6">
               {filtered.map((project, i) => (
                 <TransitionLink key={project.slug} to={`/projetos/${project.slug}`}>
@@ -207,7 +216,6 @@ const Home = () => {
                     transition={{ delay: i * 0.06, duration: 0.5, ease }}
                     className="group cursor-pointer flex flex-col"
                   >
-                    {/* Container do Mockup */}
                     <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-secondary/80 to-secondary/30 p-6 flex items-center justify-center aspect-[4/3] mb-4 transition-transform duration-500 group-hover:scale-[1.02]">
                       <img
                         src={project.image}
@@ -217,7 +225,6 @@ const Home = () => {
                       />
                     </div>
                     
-                    {/* Textos do Card */}
                     <div className="px-1">
                       <h3 className="font-bold text-lg text-foreground mb-1 leading-tight">{project.title}</h3>
                       <p className="text-sm text-muted-foreground leading-snug">
