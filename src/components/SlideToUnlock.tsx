@@ -4,7 +4,6 @@ import { ChevronRight } from "lucide-react";
 
 interface SlideToUnlockProps {
   onComplete: () => void;
-  /** Muda esse valor para forçar o reset externo (ex.: location.key). */
   resetKey?: string | number;
 }
 
@@ -16,12 +15,11 @@ export const SlideToUnlock = ({ onComplete, resetKey }: SlideToUnlockProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
 
-  // Largura reativa do container (não confiar em ref no primeiro render)
   const [maxDrag, setMaxDrag] = useState(216);
 
   useEffect(() => {
-    if (!containerRef.current) return;
     const el = containerRef.current;
+    if (!el) return;
 
     const measure = () => {
       setMaxDrag(Math.max(0, el.offsetWidth - BUTTON_SIZE - CONTAINER_PADDING * 2));
@@ -33,7 +31,6 @@ export const SlideToUnlock = ({ onComplete, resetKey }: SlideToUnlockProps) => {
     return () => ro.disconnect();
   }, []);
 
-  // RESET ROBUSTO: mount, troca de resetKey, retorno de aba e foco da janela.
   const reset = useCallback(() => {
     x.stop();
     x.set(0);
@@ -58,18 +55,17 @@ export const SlideToUnlock = ({ onComplete, resetKey }: SlideToUnlockProps) => {
     };
   }, [reset]);
 
-  // Texto some conforme arrasta
   const textOpacity = useTransform(x, [0, 100], [1, 0]);
 
   const handleDragEnd = () => {
     if (x.get() > maxDrag * 0.6) {
       setIsUnlocked(true);
-      // Anima até o fim e some; só então dispara onComplete
+      // Animação imperativa para garantir a saída suave até o final
       animate(x, maxDrag, { duration: 0.25, ease: "easeOut" }).then(() => {
-        // pequeno delay para o fade terminar visualmente
         setTimeout(() => onComplete(), 150);
       });
     } else {
+      // Volta para o início se não atingiu o limite
       animate(x, 0, { type: "spring", stiffness: 400, damping: 30 });
     }
   };
@@ -94,12 +90,10 @@ export const SlideToUnlock = ({ onComplete, resetKey }: SlideToUnlockProps) => {
         dragElastic={0.05}
         dragMomentum={false}
         onDragEnd={handleDragEnd}
-        // Só `animate` controla x e opacity — sem style.x para evitar conflito.
-        animate={
-          isUnlocked
-            ? { x: maxDrag, opacity: 0 }
-            : { x: 0, opacity: 1 }
-        }
+        // AQUI ESTÁ A CORREÇÃO: style={{ x }} para o arraste funcionar
+        style={{ x }}
+        // O animate cuida APENAS do estado travado e da opacidade
+        animate={isUnlocked ? { opacity: 0 } : { opacity: 1 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
         className="relative z-20 w-12 h-12 bg-foreground rounded-full flex items-center justify-center cursor-grab active:cursor-grabbing shadow-md"
       >
