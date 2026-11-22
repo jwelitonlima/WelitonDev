@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { PageTransitionProvider } from "@/components/PageTransition";
 import Header from "@/components/Header";
 import BackToTop from "@/components/BackToTop";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import { lazy, Suspense } from "react";
 
 const Index = lazy(() => import("./pages/Index"));
@@ -32,16 +33,19 @@ const AppContent = () => {
   const location = useLocation();
   const isFreightApp = freightRoutes.some((r) => location.pathname.startsWith(r)) || location.pathname.startsWith("/frete/");
 
+  // EspIAn 🕵️ — telemetria anônima (cidade/estado, cliques, tempo, erros)
+  useAnalytics();
+
   return (
     <PageTransitionProvider>
       {/* O Suspense engloba o Header e as Rotas para evitar tela branca no refresh */}
       <Suspense fallback={<PageLoader />}>
         {!isFreightApp && <Header />}
         {!isFreightApp && <BackToTop />}
-        
+
         <Routes>
           <Route path="/" element={<Index />} />
-          
+
           {/* Rotas traduzidas */}
           <Route path="/projetos" element={<Work />} />
           <Route path="/projetos/:slug" element={<ProjectDetail />} />
@@ -59,7 +63,7 @@ const AppContent = () => {
           <Route path="/rastreamento" element={<FreightTracking />} />
           <Route path="/frete/:id" element={<FreightDetailPage />} />
           <Route path="/configuracoes" element={<FreightSettings />} />
-          
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
