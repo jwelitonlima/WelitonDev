@@ -90,7 +90,8 @@ const ProjectDetail = () => {
               {/* Slider posicionado na barra lateral no Desktop */}
               {project.demoUrl && (
                 <div className="w-full sm:w-auto mt-2 sm:mt-0 xl:ml-4">
-                  <SlideToUnlock onComplete={() => setIsDemoOpen(true)} />
+                  {/* Adicionamos a prop 'key' para forçar o componente a resetar quando a página mudar */}
+                  <SlideToUnlock key={project.slug} onComplete={() => setIsDemoOpen(true)} />
                 </div>
               )}
             </motion.div>
@@ -226,19 +227,23 @@ const ProjectDetail = () => {
             )}
           </div>
 
-          {/* Próximo Projeto */}
+          {/* Próximo Projeto (CORRIGIDO) */}
           {(() => {
             const currentIndex = allProjects.findIndex((p) => p.slug === slug);
-            if (currentIndex === allProjects.length - 1) return null;
-
+            
+            // Pega o próximo projeto. Se for o último, volta para o primeiro (índice 0)
             const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
+
+            // Se por acaso só existir 1 projeto no total, não mostra o botão
+            if (allProjects.length <= 1) return null;
+
             return (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, ease }}
-                className="text-center"
+                className="text-center mt-16"
               >
                 <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Próximo projeto</p>
                 <TransitionLink
