@@ -7,9 +7,8 @@ import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
 import { allProjects } from "@/data/projects";
 import { DemoModal } from "@/components/DemoModal";
-import { DeviceMockupCarousel } from "@/components/DeviceMockupCarousel";
-import { TabletMockup } from "@/components/TabletMockup";
 import { SlideToUnlock } from "@/components/SlideToUnlock";
+import { ProjectMockup } from "@/components/ProjectMockup";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -31,8 +30,6 @@ const ProjectDetail = () => {
       </main>
     );
   }
-
-  const isDesktop = project.deviceType === "desktop";
 
   return (
     <main>
@@ -100,9 +97,7 @@ const ProjectDetail = () => {
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2 }}
                       >
-                        <SlideToUnlock
-                          onComplete={() => setIsDemoOpen(true)}
-                        />
+                        <SlideToUnlock onComplete={() => setIsDemoOpen(true)} />
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -111,60 +106,21 @@ const ProjectDetail = () => {
             </motion.div>
           </div>
 
-          {/* HERO SECTION (Vídeo/Mockup) */}
+          {/* HERO SECTION (Visual Premium) */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.97, filter: "blur(10px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            transition={{ duration: 1, delay: 0.2, ease }}
+            initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, delay: 0.2, ease }}
             className="mb-16 sm:mb-24 w-full"
           >
-            {project.slug === "frete-ai" && project.videoUrl ? (
-              <TabletMockup
-                videoUrl={project.videoUrl}
-                urlText="https://weliton-dev.vercel.app/project/frete-ai"
-              />
-            ) : project.gallery ? (
-              <DeviceMockupCarousel
-                images={project.gallery}
-                videoUrl={project.videoUrl}
-                title={project.title}
-                deviceType={project.deviceType}
-              />
-            ) : isDesktop && project.videoUrl ? (
-              <div className="w-full flex justify-center py-4">
-                <div className="relative w-full max-w-5xl flex flex-col items-center justify-end">
-                  <div className="relative w-full aspect-video bg-[#1a1a1a] rounded-t-2xl p-[14px] pb-[20px] shadow-2xl border-[2px] border-gray-700">
-                    <div className="relative w-full h-full bg-black rounded-lg overflow-hidden">
-                      <div className="absolute top-2 inset-x-0 h-3 flex justify-center z-20">
-                        <div className="w-3 h-3 bg-[#111] rounded-full border border-gray-800 shadow-inner"></div>
-                      </div>
-                      <video
-                        src={project.videoUrl}
-                        autoPlay
-                        controls
-                        playsInline
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/10 pointer-events-none" />
-                    </div>
-                  </div>
-                  <div className="relative w-[112%] h-5 sm:h-6 bg-gradient-to-b from-gray-400 to-gray-600 rounded-b-2xl shadow-[0_15px_30px_rgba(0,0,0,0.4)]">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1.5 bg-gray-700 rounded-b-md"></div>
-                  </div>
-                </div>
+            <div className="relative w-full overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-b from-secondary/80 to-secondary/30 p-4 sm:p-8 lg:p-12 flex items-center justify-center shadow-xl border border-border/50">
+              <div className="w-full relative z-10 flex justify-center">
+                <ProjectMockup project={project} isDetail={true} />
               </div>
-            ) : (
-              <div className="rounded-2xl overflow-hidden aspect-[16/9] bg-secondary">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            )}
+            </div>
           </motion.div>
 
-          {/* Detalhes (Descrição, Tecnologias, Desafio, Solução) */}
+          {/* Detalhes */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 mb-16 sm:mb-24">
             <motion.div
               initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}

@@ -6,10 +6,10 @@ import heroPortrait1 from "@/assets/optimized/hero-memoji.webp";
 import heroPortrait2 from "@/assets/optimized/hero-memoji-2.webp";
 import heroPortrait3 from "@/assets/optimized/hero-memoji-3.webp";
 import heroPortrait4 from "@/assets/optimized/hero-memoji-4.webp";
-import ProjectCard from "@/components/ProjectCard";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
 import { allProjects } from "@/data/projects";
+import { ProjectMockup } from "@/components/ProjectMockup";
 
 type Filter = "all" | "development" | "data" | "ai";
 
@@ -85,7 +85,6 @@ const Home = () => {
               </AnimatePresence>
             </div>
 
-            {/* 👇 AQUI ESTÁ A MUDANÇA PARA AI BUILDER 👇 */}
             <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-6">
               <span className="px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs sm:text-sm font-semibold tracking-wide">
                 AI Builder
@@ -101,7 +100,6 @@ const Home = () => {
             <p className="text-base sm:text-lg text-foreground/80 max-w-md mb-8 lg:mb-10 leading-relaxed">
               Construo produtos digitais inteligentes unindo interfaces modernas, arquitetura de software e o poder da Inteligência Artificial Generativa.
             </p>
-            {/* 👆 FIM DA MUDANÇA 👆 */}
 
             <TransitionLink
               to="/sobre"
@@ -150,7 +148,7 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Description section (mobile Snellenberg style) */}
+      {/* Description section */}
       <section className="section-light py-16 sm:py-20 md:py-28">
         <div className="container-wide">
           <motion.div
@@ -206,7 +204,7 @@ const Home = () => {
               )}
             </div>
 
-            {/* Grid */}
+            {/* Grid Mobile */}
             <div className="grid grid-cols-1 gap-6">
               {filtered.map((project, i) => (
                 <TransitionLink key={project.slug} to={`/projetos/${project.slug}`}>
@@ -255,9 +253,34 @@ const Home = () => {
               </TransitionLink>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
+            {/* Grid com os mockups premium */}
+            <div className="grid sm:grid-cols-2 gap-8">
               {homeProjects.map((project, i) => (
-                <ProjectCard key={project.slug} title={project.title} category={project.services} image={project.image} slug={project.slug} index={i} />
+                <TransitionLink key={project.slug} to={`/projetos/${project.slug}`} className="group block">
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1, duration: 0.6, ease }}
+                    className="flex flex-col h-full"
+                  >
+                    {/* A Moldura Premium */}
+                    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-secondary/80 to-secondary/30 p-6 sm:p-8 flex items-center justify-center aspect-[4/3] mb-4 transition-transform duration-500 group-hover:scale-[1.02] border border-border/50 shadow-sm">
+                      <div className="w-full flex items-center justify-center transform scale-90 group-hover:scale-100 transition-transform duration-500">
+                         <ProjectMockup project={project} isDetail={false} />
+                      </div>
+                    </div>
+
+                    <div className="px-1">
+                      <h3 className="font-bold text-lg text-foreground mb-1 leading-tight group-hover:text-primary transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-snug">
+                        {project.client} · {project.year}
+                      </p>
+                    </div>
+                  </motion.div>
+                </TransitionLink>
               ))}
             </div>
           </div>
