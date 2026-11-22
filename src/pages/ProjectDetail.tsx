@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import TransitionLink from "@/components/TransitionLink";
@@ -15,6 +15,7 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
+  const location = useLocation();
   const project = allProjects.find((p) => p.slug === slug);
   const [isDemoOpen, setIsDemoOpen] = useState(false);
 
@@ -87,10 +88,14 @@ const ProjectDetail = () => {
                 </div>
               </div>
 
-              {/* Slider movido para baixo das informações, mantendo destaque sem sobrepor */}
+              {/* Slider abaixo das informações (Regra de Ouro do Layout) */}
               {project.demoUrl && (
                 <div className="mt-2">
-                  <SlideToUnlock key={project.slug} onComplete={() => setIsDemoOpen(true)} />
+                  <SlideToUnlock
+                    key={`${project.slug}-${location.key}`}
+                    resetKey={location.key}
+                    onComplete={() => setIsDemoOpen(true)}
+                  />
                 </div>
               )}
             </motion.div>
