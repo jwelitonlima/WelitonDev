@@ -4,8 +4,14 @@ import TransitionLink from "./TransitionLink";
 const Footer = ({ variant = "dark" }: { variant?: "dark" | "light" }) => {
   const [time, setTime] = useState("");
   
-  // Puxa a versão injetada pelo Vite. Se falhar, usa '1.0.0' como fallback.
-  const version = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '1.0.0';
+  // Pega a versão do package.json (injetada pelo Vite)
+  const pkgVersion = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '1.0.0';
+  
+  // Pega o ano atual do sistema (ex: 2026)
+  const currentYear = new Date().getFullYear();
+  
+  // Combina os dois (ex: v.2026.1.0.0)
+  const displayVersion = `v.${currentYear}.${pkgVersion}`;
 
   useEffect(() => {
     const update = () => {
@@ -52,7 +58,7 @@ const Footer = ({ variant = "dark" }: { variant?: "dark" | "light" }) => {
         <div className={`border-t ${borderColor} pt-6 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center`}>
           <div className="flex items-center justify-between sm:justify-start gap-6">
             <span className={`text-xs ${textMuted}`}>VERSÃO</span>
-            <span className={`text-xs ${textMain}`}>v.{version}</span>
+            <span className={`text-xs ${textMain}`}>{displayVersion}</span>
           </div>
           <div className="flex items-center justify-between sm:justify-start gap-6">
             <span className={`text-xs ${textMuted}`}>HORA LOCAL</span>
