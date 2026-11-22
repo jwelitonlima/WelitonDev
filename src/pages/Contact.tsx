@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Instagram, Mail, MessageCircle } from "lucide-react";
+import { Send, Instagram, Mail, MessageCircle, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 
@@ -21,9 +21,12 @@ const ContactPage = () => {
     message: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // 1. Valida os campos
     const result = contactSchema.safeParse(form);
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};
@@ -33,9 +36,42 @@ const ContactPage = () => {
       setErrors(fieldErrors);
       return;
     }
+
     setErrors({});
-    toast.success("Mensagem enviada com sucesso!");
-    setForm({ name: "", email: "", organization: "", services: "", message: "" });
+    setIsSubmitting(true);
+
+    try {
+      // 2. Envia os dados para o Web3Forms (que manda pro seu e-mail)
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "587cf765-8058-4861-9712-490a9722b910", // Sua chave inserida aqui
+          name: form.name,
+          email: form.email,
+          organization: form.organization || "Não informado",
+          services: form.services || "Não informado",
+          message: form.message,
+          subject: `Novo contato do Portfólio - ${form.name}`,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success("Mensagem enviada com sucesso! Entrarei em contato em breve.");
+        setForm({ name: "", email: "", organization: "", services: "", message: "" });
+      } else {
+        toast.error("Ocorreu um erro ao enviar. Tente novamente.");
+      }
+    } catch (error) {
+      toast.error("Erro de conexão. Verifique sua internet e tente novamente.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const fields = [
@@ -76,7 +112,8 @@ const ContactPage = () => {
                     value={form[field.key as keyof typeof form]}
                     onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
                     placeholder={field.placeholder}
-                    className="w-full bg-transparent border-b border-dark-fg/20 pb-3 text-dark-fg placeholder:text-dark-fg/30 focus:outline-none focus:border-primary transition-colors text-base"
+                    disabled={isSubmitting}
+                    className="w-full bg-transparent border-b border-dark-fg/20 pb-3 text-dark-fg placeholder:text-dark-fg/30 focus:outline-none focus:border-primary transition-colors text-base disabled:opacity-50"
                   />
                   {errors[field.key] && (
                     <p className="text-xs text-destructive mt-1">{errors[field.key]}</p>
@@ -98,7 +135,8 @@ const ContactPage = () => {
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   placeholder="Olá Weliton, gostaria de..."
                   rows={4}
-                  className="w-full bg-transparent border-b border-dark-fg/20 pb-3 text-dark-fg placeholder:text-dark-fg/30 focus:outline-none focus:border-primary transition-colors resize-none text-base"
+                  disabled={isSubmitting}
+                  className="w-full bg-transparent border-b border-dark-fg/20 pb-3 text-dark-fg placeholder:text-dark-fg/30 focus:outline-none focus:border-primary transition-colors resize-none text-base disabled:opacity-50"
                 />
                 {errors.message && (
                   <p className="text-xs text-destructive mt-1">{errors.message}</p>
@@ -110,10 +148,20 @@ const ContactPage = () => {
                 animate={{ opacity: 1, filter: "blur(0px)" }}
                 transition={{ delay: 0.5, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 type="submit"
-                className="btn-primary-circle w-32 h-32 sm:w-40 sm:h-40 text-xs sm:text-sm font-semibold gap-2"
+                disabled={isSubmitting}
+                className="btn-primary-circle w-32 h-32 sm:w-40 sm:h-40 text-xs sm:text-sm font-semibold gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                <Send className="w-4 h-4" />
-                Enviar!
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    Enviar!
+                  </>
+                )}
               </motion.button>
             </form>
           </div>
@@ -144,7 +192,7 @@ const ContactPage = () => {
                   href="https://wa.me/5575983422981" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  title="Chamar no WhatsApp"
+                  title="Chamar no WhatsApp: +55 (75) 9 8342-2981"
                   className="group inline-flex items-center justify-center w-10 h-10 rounded-xl bg-dark-fg/5 border border-dark-fg/10 text-dark-fg/70 hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-all duration-300 mt-1"
                 >
                   <MessageCircle className="w-5 h-5" strokeWidth={1.5} />
