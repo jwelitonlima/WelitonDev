@@ -4,7 +4,7 @@ const TYPES = new Set([
   "session_start", "page_view", "page_leave", "click", "rage_click", "scroll_depth",
   "vital", "video", "fetch", "resource_error", "copy", "error", "function",
 ]);
-const ALLOWED_HOSTS = new Set(["weliton-dev.vercel.app", "localhost"]);
+const ALLOWED_HOSTS = new Set(["weliton-dev.vercel.app", "welitondev.com", "www.welitondev.com", "localhost"]);
 const BOT = /bot|crawl|spider|slurp|headless|lighthouse|preview|facebookexternalhit|whatsapp|telegram|vercel/i;
 const META_KEYS = [
   "returning", "device", "referrer", "tag", "x", "y", "ok", "src", "line", "screen",
