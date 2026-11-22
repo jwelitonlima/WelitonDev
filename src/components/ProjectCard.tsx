@@ -19,19 +19,19 @@ const ProjectCard = ({ title, category, image, slug, index }: ProjectCardProps) 
         transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
         className="group flex flex-col cursor-pointer"
       >
-        {/* Container da Imagem (Mockup) */}
-        <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-[#111] border border-white/5 transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-[0_0_30px_-5px_rgba(6,182,212,0.15)]">
+        {/* Container do Mockup Premium (Fundo Escuro + Padding Interno) */}
+        <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-[#0a0a0a] border border-white/10 p-6 sm:p-8 flex items-center justify-center transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-[0_0_40px_-10px_rgba(6,182,212,0.15)]">
           
-          {/* Imagem do Projeto */}
+          {/* Imagem com object-contain para não cortar as bordas */}
           <img
             src={image}
             alt={title}
-            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
           />
 
           {/* Overlay sutil de gradiente no hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
         </div>
 
         {/* Textos (Título e Categoria) */}

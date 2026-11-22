@@ -4,10 +4,9 @@ import mockup2 from "@/assets/interamed-mockup-2.png";
 import mockup3 from "@/assets/interamed-mockup-3.png";
 import mockup4 from "@/assets/interamed-mockup-4.png";
 import interamedVideo from "@/assets/interamed-video.mp4";
-// --- IMPORTS DOS VÍDEOS CORRIGIDOS ---
 import projectDelivery from "@/assets/delivery-dashboard.jpg"; 
-import deliveryVideo from "@/assets/delivery-dashboard-video.mp4"; // Lembre-se de converter o .mkv para .mp4
-import freteAiVideo from "@/assets/frete-ai.mp4"; // NOVO: Vídeo exclusivo do FreteAI
+import deliveryVideo from "@/assets/delivery-dashboard-video.mp4";
+import freteAiVideo from "@/assets/frete-ai.mp4"; 
 
 const projectInteraMed = mockup1;
 
@@ -47,7 +46,7 @@ export const allProjects: Project[] = [
     technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Recharts", "shadcn/ui"],
     result: "Redução de 60% no tempo de resposta a incidentes e 40% menos entregas atrasadas",
     demoUrl: "/dashboard",
-    videoUrl: freteAiVideo, // <-- CORRIGIDO: Agora aponta para o vídeo do FreteAI
+    videoUrl: freteAiVideo, 
     deviceType: "desktop",
   },
   {
@@ -58,7 +57,7 @@ export const allProjects: Project[] = [
     services: "Full-Stack Development - IA",
     year: "2026",
     category: "development",
-    image: projectInteraMed,
+    image: projectInteraMed, // <-- Usa o mockup1 como capa
     description: "Ferramenta mobile-first criada para a equipe de enfermagem na linha de frente. Auxilia na checagem rápida de interações medicamentosas complexas, gestão inteligente de horários de administração e leitura de receitas via IA, reduzindo erros graves no ambiente hospitalar.",
     challenge: "No ambiente hospitalar, especialmente no SUS, enfermeiros lidam com prescrições complexas (10 a 29 medicamentos por paciente). A checagem manual é lenta e suscetível a erros. A dor foi mapeada junto ao aluno de enfermagem João Victor Pinheiro UFPI do campus de Picos, unindo a vivência clínica dele com a minha experiência em tecnologia e no setor de saúde laboratorial.",
     solution: "Desenvolvi um MVP funcional com design premium e mobile-first. Utiliza React, TanStack Start e Tailwind. Integra a API da ANVISA, API da Open FDA e o Llama 4 Scout da (Groq) para OCR de receitas médicas. O motor de aprazamento inteligente sugere horários que respeitam a cronobiologia e fogem da passagem de plantão.",
@@ -84,7 +83,7 @@ export const allProjects: Project[] = [
     technologies: ["Python", "Streamlit", "Pandas", "Plotly", "Groq API"],
     result: "Dashboard 100% funcional que transforma dados brutos em um plano de ação executivo em segundos. Simula com perfeição a rotina de um Analista de Dados focado em otimização logística.",
     demoUrl: "https://projeto-delivery-data-gbbnwmrsymsjc8ev2hjudc.streamlit.app/?embed=true",
-    videoUrl: deliveryVideo, // <-- CORRIGIDO: Mantido o vídeo do dashboard
+    videoUrl: deliveryVideo,
     deviceType: "desktop",
   },
 ];
