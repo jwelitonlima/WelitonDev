@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import TransitionLink from "@/components/TransitionLink";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
-import { allProjects } from "@/data/projects";
+import { catalog as allProjects, ESPIAN_SLUG } from "@/data/espian-project";
 import { DemoModal } from "@/components/DemoModal";
 import { SlideToUnlock } from "@/components/SlideToUnlock";
 import { ProjectMockup } from "@/components/ProjectMockup";
+
+// A demonstração do EspIAn é pesada (painel completo): só é baixada quando a página do projeto abre
+const EspianDemo = lazy(() => import("@/components/espian/EspianDemo"));
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -115,7 +118,13 @@ const ProjectDetail = () => {
           >
             <div className="relative w-full overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-b from-secondary/80 to-secondary/30 p-4 sm:p-8 lg:p-12 flex items-center justify-center shadow-xl border border-border/50">
               <div className="w-full relative z-10 flex justify-center">
-                <ProjectMockup project={project} isDetail={true} />
+                {project.slug === ESPIAN_SLUG ? (
+                  <Suspense fallback={<p className="py-24 text-sm text-muted-foreground">Carregando demonstração…</p>}>
+                    <EspianDemo />
+                  </Suspense>
+                ) : (
+                  <ProjectMockup project={project} isDetail={true} />
+                )}
               </div>
             </div>
           </motion.div>

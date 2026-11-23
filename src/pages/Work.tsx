@@ -4,7 +4,9 @@ import { LayoutGrid, List, ArrowUpRight, Play } from "lucide-react";
 import TransitionLink from "@/components/TransitionLink";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
-import { allProjects, Project } from "@/data/projects";
+import type { Project } from "@/data/projects";
+import { catalog, ESPIAN_SLUG } from "@/data/espian-project";
+import { EspianCardPreview } from "@/components/espian/EspianCardPreview";
 
 type Filter = "all" | "development" | "data" | "ai";
 
@@ -12,6 +14,9 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 // Função que renderiza o Mockup no Card
 const renderCardMedia = (project: Project) => {
+  // EspIAn: miniatura do painel (sem vídeo) — a demonstração interativa fica na página do projeto
+  if (project.slug === ESPIAN_SLUG) return <EspianCardPreview />;
+
   const isDesktop = project.deviceType === "desktop";
   
   if (project.videoUrl) {
@@ -56,10 +61,10 @@ const WorkPage = () => {
   const [filter, setFilter] = useState<Filter>("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-  const filtered = filter === "all" ? allProjects : allProjects.filter((p) => p.category === filter);
-  const devCount = allProjects.filter((p) => p.category === "development").length;
-  const dataCount = allProjects.filter((p) => p.category === "data").length;
-  const aiCount = allProjects.filter((p) => p.category === "ai").length;
+  const filtered = filter === "all" ? catalog : catalog.filter((p) => p.category === filter);
+  const devCount = catalog.filter((p) => p.category === "development").length;
+  const dataCount = catalog.filter((p) => p.category === "data").length;
+  const aiCount = catalog.filter((p) => p.category === "ai").length;
 
   return (
     <main>
@@ -122,7 +127,7 @@ const WorkPage = () => {
                   <div className="relative overflow-hidden rounded-xl bg-secondary mb-4 flex items-center justify-center aspect-[4/3]">
                     {renderCardMedia(project)}
                     
-                    {project.demoUrl && (
+                    {(project.demoUrl || project.slug === ESPIAN_SLUG) && (
                       <div className="absolute top-3 left-3 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm z-20">
                         <span className="relative flex h-2 w-2">
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
@@ -164,7 +169,7 @@ const WorkPage = () => {
                     >
                       <span className="font-medium text-lg text-foreground group-hover:text-primary transition-colors col-span-2 md:col-span-1 truncate flex items-center gap-2">
                         {project.title}
-                        {project.demoUrl && <Play className="w-4 h-4 text-green-500 fill-green-500" />}
+                        {(project.demoUrl || project.slug === ESPIAN_SLUG) && <Play className="w-4 h-4 text-green-500 fill-green-500" />}
                       </span>
                       <span className="text-sm text-muted-foreground hidden md:block truncate">{project.client}</span>
                       <span className="text-sm text-muted-foreground truncate">{project.services}</span>
@@ -187,7 +192,7 @@ const WorkPage = () => {
                       <div className="relative overflow-hidden rounded-2xl mb-5 bg-secondary flex items-center justify-center aspect-[4/3]">
                         {renderCardMedia(project)}
                         
-                        {project.demoUrl && (
+                        {(project.demoUrl || project.slug === ESPIAN_SLUG) && (
                           <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm text-foreground text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm z-20">
                             <span className="relative flex h-2 w-2">
                               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>

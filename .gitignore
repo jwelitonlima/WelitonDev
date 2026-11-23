@@ -36,3 +36,5 @@ pnpm-debug.log*
 HANDOFF.md
 handoff.md
 docs-internos/
+
+*.exe

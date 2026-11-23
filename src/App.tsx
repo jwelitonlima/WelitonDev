@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { PageTransitionProvider } from "@/components/PageTransition";
 import Header from "@/components/Header";
 import BackToTop from "@/components/BackToTop";
-import { useAnalytics } from "@/hooks/useAnalytics";
 import { lazy, Suspense } from "react";
 
 const Index = lazy(() => import("./pages/Index"));
@@ -19,6 +18,7 @@ const FreightDashboard = lazy(() => import("./pages/FreightDashboard"));
 const FreightTracking = lazy(() => import("./pages/FreightTracking"));
 const FreightDetailPage = lazy(() => import("./pages/FreightDetailPage"));
 const FreightSettings = lazy(() => import("./pages/FreightSettings"));
+const Admin = lazy(() => import("./pages/Admin")); // EspIAn 🕵️ — painel
 
 const queryClient = new QueryClient();
 const freightRoutes = ["/dashboard", "/rastreamento", "/configuracoes"];
@@ -32,16 +32,15 @@ const PageLoader = () => (
 const AppContent = () => {
   const location = useLocation();
   const isFreightApp = freightRoutes.some((r) => location.pathname.startsWith(r)) || location.pathname.startsWith("/frete/");
-
-  // EspIAn 🕵️ — telemetria anônima (cidade/estado, cliques, tempo, erros)
-  useAnalytics();
+  const isAdmin = location.pathname.startsWith("/admin");
+  const hideChrome = isFreightApp || isAdmin;
 
   return (
     <PageTransitionProvider>
       {/* O Suspense engloba o Header e as Rotas para evitar tela branca no refresh */}
       <Suspense fallback={<PageLoader />}>
-        {!isFreightApp && <Header />}
-        {!isFreightApp && <BackToTop />}
+        {!hideChrome && <Header />}
+        {!hideChrome && <BackToTop />}
 
         <Routes>
           <Route path="/" element={<Index />} />
@@ -63,6 +62,9 @@ const AppContent = () => {
           <Route path="/rastreamento" element={<FreightTracking />} />
           <Route path="/frete/:id" element={<FreightDetailPage />} />
           <Route path="/configuracoes" element={<FreightSettings />} />
+
+          {/* Painel do EspIAn (login obrigatório; fora do menu e do rastreamento) */}
+          <Route path="/admin" element={<Admin />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
