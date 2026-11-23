@@ -7,8 +7,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { EspianPanel, EspianShell, type Device, type DevicePatch, type Ev, type Session, type Source } from "@/components/espian/EspianPanel";
 
-const SB_URL = ((import.meta as any).env?.VITE_SUPABASE_URL as string | undefined) ?? "";
-const SB_ANON = ((import.meta as any).env?.VITE_SUPABASE_ANON_KEY as string | undefined) ?? "";
+// Aceita a URL com ou sem "/rest/v1/" no final (a tela "Data API" do Supabase mostra com esse sufixo)
+const SB_URL = (((import.meta as any).env?.VITE_SUPABASE_URL as string | undefined) ?? "")
+  .trim().replace(/\/rest\/v1\/?$/, "").replace(/\/+$/, "");
+const SB_ANON = (((import.meta as any).env?.VITE_SUPABASE_ANON_KEY as string | undefined) ?? "").trim();
+// Chave "publishable" (sb_publishable_…) ou "anon" legada (JWT, começa com eyJ). Qualquer outra coisa é engano de colagem.
+const KEY_OK = /^(sb_publishable_|eyJ)/.test(SB_ANON);
 
 /* ───────────────────────── Autenticação (Supabase Auth via REST) ───────────────────────── */
 
@@ -169,12 +173,15 @@ function AdminInner() {
 
   const logout = useCallback(() => setAuthed(false), []);
 
-  if (!SB_URL || !SB_ANON) {
+  if (!SB_URL || !SB_ANON || !KEY_OK) {
     return (
       <div className="flex min-h-[100svh] items-center justify-center px-4 text-foreground">
         <div className="max-w-md ea-glass p-6 text-sm">
           <h1 className="mb-2 text-lg font-semibold">Falta configurar o painel</h1>
-          <p className="text-muted-foreground">Defina na Vercel (e no <code>.env</code> local) e faça um novo deploy:</p>
+          <p className="text-muted-foreground">Defina na Vercel (e no <code>.env.local</code> da raiz do projeto) e faça um novo deploy:</p>
+          {SB_ANON && !KEY_OK && (
+            <p role="alert" className="mt-2">⚠️ O valor de <code>VITE_SUPABASE_ANON_KEY</code> não parece uma chave do Supabase. Use a chave <b>publishable</b> (<code>sb_publishable_…</code>) de Settings → API Keys.</p>
+          )}
           <pre className="mt-2 overflow-x-auto rounded-md bg-muted p-3 text-xs">{"VITE_SUPABASE_URL=https://xxxx.supabase.co\nVITE_SUPABASE_ANON_KEY=<chave anon / publishable>"}</pre>
         </div>
       </div>
