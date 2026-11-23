@@ -7,7 +7,9 @@ const TG_CHAT = process.env.TELEGRAM_CHAT_ID ?? "";
 const GROQ_KEY = process.env.GROQ_API_KEY ?? "";
 const CRON_SECRET = process.env.CRON_SECRET ?? "";
 
-const H = { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` };
+const H: Record<string, string> = SB_KEY.startsWith("sb_")
+  ? { apikey: SB_KEY }
+  : { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` };
 
 type Ev = {
   session_id: string;

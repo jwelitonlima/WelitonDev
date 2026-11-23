@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { ENDPOINT, initSession, isTrackingEnabled, track, trackMany } from "@/lib/analytics";
-import type { PageEvent } from "@/lib/analytics";
+import { ENDPOINT, initSession, isTrackingEnabled, track } from "@/lib/analytics";
 
 type PE = PerformanceEntry & { value?: number; hadRecentInput?: boolean };
 
@@ -17,33 +16,40 @@ const labelOf = (el: HTMLElement) => {
   );
 };
 
-/** EspIAn 🕵️ — liga toda a coleta. Chamar UMA vez, dentro do BrowserRouter. */
 export function useAnalytics() {
   const location = useLocation();
   const page = useRef({ path: "", activeMs: 0, resumedAt: null as number | null, maxScroll: 0 });
+  const lastActivity = useRef(Date.now());
+  const sessionEnded = useRef(false);
 
-  /** Fecha a página atual e devolve os eventos de tempo ativo e rolagem (sem enviar). */
-  const collectPage = (): PageEvent[] => {
+  const flush = () => {
     const p = page.current;
-    const out: PageEvent[] = [];
-    if (!p.path) return out;
+    if (!p.path) return;
     if (p.resumedAt !== null) {
       p.activeMs += Date.now() - p.resumedAt;
       p.resumedAt = null;
     }
     const seconds = Math.round(p.activeMs / 1000);
-    if (seconds > 0) out.push({ type: "page_leave", path: p.path, value: seconds });
-    if (p.maxScroll > 0) out.push({ type: "scroll_depth", path: p.path, value: p.maxScroll });
+    if (seconds > 0) track("page_leave", p.path, { value: seconds });
+    if (p.maxScroll > 0) track("scroll_depth", p.path, { value: p.maxScroll });
     p.activeMs = 0;
-    return out;
   };
 
-  // ---------- Liga uma única vez ----------
+  // Função para finalizar a sessão (manda o evento que o servidor espera)
+  const endSession = () => {
+    if (sessionEnded.current) return;
+    flush(); 
+    sessionEnded.current = true;
+    track("session_end", page.current.path || window.location.pathname);
+  };
+
   useEffect(() => {
     const { isNewSession, isReturning } = initSession();
     if (!isTrackingEnabled()) return;
 
-    // 1) Início de sessão: contexto do visitante
+    sessionEnded.current = false;
+    lastActivity.current = Date.now();
+
     if (isNewSession) {
       let referrer = "";
       try { referrer = document.referrer ? new URL(document.referrer).hostname : ""; } catch { /* ignora */ }
@@ -66,11 +72,21 @@ export function useAnalytics() {
       });
     }
 
-    // 2) Cliques + cliques de raiva
     const recent: { t: number; x: number; y: number }[] = [];
     let lastRage = 0;
+    let inactivityTimer: ReturnType<typeof setTimeout>;
+
+    const resetInactivity = () => {
+      lastActivity.current = Date.now();
+      if (inactivityTimer) clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(() => {
+        endSession(); // Se ficar 5 minutos sem mexer, finaliza a sessão
+      }, 5 * 60 * 1000); 
+    };
+    resetInactivity();
 
     const onClick = (e: MouseEvent) => {
+      resetInactivity();
       const now = Date.now();
       recent.push({ t: now, x: e.clientX, y: e.clientY });
       while (recent.length && now - recent[0].t > 1000) recent.shift();
@@ -104,15 +120,14 @@ export function useAnalytics() {
       });
     };
 
-    // 3) Rolagem
     const onScroll = () => {
+      resetInactivity();
       const h = document.documentElement;
       const pct = ((window.scrollY + window.innerHeight) / Math.max(h.scrollHeight, 1)) * 100;
       const step = Math.min(100, Math.round(pct / 10) * 10);
       if (step > page.current.maxScroll) page.current.maxScroll = step;
     };
 
-    // 4) Core Web Vitals (sem biblioteca)
     let lcp = 0, cls = 0, inp = 0, vitalsSent = false;
     const observe = (type: string, cb: (e: PE) => void, extra: object = {}) => {
       try {
@@ -126,40 +141,32 @@ export function useAnalytics() {
       observe("layout-shift", (e) => { if (!e.hadRecentInput) cls += e.value || 0; }),
       observe("event", (e) => { if (e.duration > inp) inp = e.duration; }, { durationThreshold: 40 }),
     ];
-    const vitalEvents = (): PageEvent[] => {
-      if (vitalsSent) return [];
+    const sendVitals = () => {
+      if (vitalsSent) return;
       vitalsSent = true;
       const path = window.location.pathname;
-      const out: PageEvent[] = [];
-      if (lcp) out.push({ type: "vital", path, label: "LCP", value: Math.round(lcp) });
-      out.push({ type: "vital", path, label: "CLS", value: Math.round(cls * 1000) });
-      if (inp) out.push({ type: "vital", path, label: "INP", value: Math.round(inp) });
-      return out;
+      if (lcp) track("vital", path, { label: "LCP", value: Math.round(lcp) });
+      track("vital", path, { label: "CLS", value: Math.round(cls * 1000) });
+      if (inp) track("vital", path, { label: "INP", value: Math.round(inp) });
     };
 
-    // 5) Saída da visita: tempo, rolagem e vitais saem JUNTOS com o "session_end"
-    //    (o servidor monta o resumo da visita e manda no Telegram)
-    let ended = false;
-    const endSession = () => {
-      if (ended) return;
-      ended = true;
-      trackMany([
-        ...collectPage(),
-        ...vitalEvents(),
-        { type: "session_end", path: window.location.pathname },
-      ]);
-    };
     const onVisibility = () => {
       if (document.visibilityState === "hidden") {
+        sendVitals();
         endSession();
       } else {
-        ended = false;
-        page.current.resumedAt = Date.now();
+        resetInactivity();
+        if (!sessionEnded.current) {
+          page.current.resumedAt = Date.now();
+        }
       }
     };
-    const onPageHide = () => endSession();
+    
+    const onPageHide = () => {
+      sendVitals();
+      endSession();
+    };
 
-    // 6) Erros de JS, recursos que falharam (img/video/script) e promises rejeitadas
     const onError = (e: Event) => {
       const t = e.target as HTMLElement | null;
       if (t && t !== (window as unknown as HTMLElement) && t.tagName) {
@@ -183,7 +190,6 @@ export function useAnalytics() {
       track("error", window.location.pathname, { label: `Promise: ${msg}`.slice(0, 200) });
     };
 
-    // 7) Requisições lentas (>2s) ou com falha (inclui o webhook do FreteAI)
     const origFetch = window.fetch.bind(window);
     window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
       const start = performance.now();
@@ -211,13 +217,14 @@ export function useAnalytics() {
       }
     };
 
-    // 8) Vídeos com controles (página de detalhe): quantos segundos assistiu
     const playing = new WeakMap<HTMLVideoElement, number>();
     const onPlay = (e: Event) => {
+      resetInactivity();
       const v = e.target as HTMLVideoElement;
       if (v?.tagName === "VIDEO" && v.controls) playing.set(v, Date.now());
     };
     const onStop = (e: Event) => {
+      resetInactivity();
       const v = e.target as HTMLVideoElement;
       const start = v?.tagName === "VIDEO" ? playing.get(v) : undefined;
       if (!start) return;
@@ -226,8 +233,8 @@ export function useAnalytics() {
       if (s >= 1) track("video", window.location.pathname, { label: (v.currentSrc || "").split("/").pop()?.slice(0, 60), value: s });
     };
 
-    // 9) Cópia (só o tipo; nunca o conteúdo)
     const onCopy = () => {
+      resetInactivity();
       const t = (window.getSelection()?.toString() || "").trim();
       if (!t) return;
       track("copy", window.location.pathname, {
@@ -245,8 +252,11 @@ export function useAnalytics() {
     document.addEventListener("pause", onStop, true);
     document.addEventListener("ended", onStop, true);
     document.addEventListener("copy", onCopy);
+    window.addEventListener("mousemove", resetInactivity);
+    window.addEventListener("keydown", resetInactivity);
 
     return () => {
+      if (inactivityTimer) clearTimeout(inactivityTimer);
       document.removeEventListener("click", onClick, true);
       window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibility);
@@ -257,16 +267,17 @@ export function useAnalytics() {
       document.removeEventListener("pause", onStop, true);
       document.removeEventListener("ended", onStop, true);
       document.removeEventListener("copy", onCopy);
+      window.removeEventListener("mousemove", resetInactivity);
+      window.removeEventListener("keydown", resetInactivity);
       window.fetch = origFetch;
       observers.forEach((o) => o?.disconnect());
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ---------- A cada troca de página: fecha a anterior e abre a nova ----------
   useEffect(() => {
     if (!isTrackingEnabled()) return;
-    trackMany(collectPage());
+    flush();
     page.current = {
       path: location.pathname,
       activeMs: 0,
