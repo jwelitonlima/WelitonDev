@@ -12,7 +12,8 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 export const config = { maxDuration: 30 };
 
-const SB_URL = process.env.SUPABASE_URL ?? "";
+// Aceita a URL com ou sem "/rest/v1/" no final (a tela "Data API" do Supabase mostra com esse sufixo)
+const SB_URL = (process.env.SUPABASE_URL ?? "").trim().replace(/\/rest\/v1\/?$/, "").replace(/\/+$/, "");
 const SB_KEY = process.env.SUPABASE_SERVICE_KEY ?? "";
 const TG_TOKEN = process.env.TELEGRAM_BOT_TOKEN ?? "";
 const TG_CHAT = process.env.TELEGRAM_CHAT_ID ?? "";
