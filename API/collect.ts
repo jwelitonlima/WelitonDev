@@ -10,30 +10,24 @@ const sbHeaders = SB_KEY.startsWith("sb_") ? { apikey: SB_KEY } : { apikey: SB_K
 
 async function telegram(text: string) {
   if (!TG_TOKEN || !TG_CHAT) {
-    console.error("❌ ERRO CRÍTICO: Variáveis do Telegram não configuradas na Vercel!");
+    console.error("❌ Variáveis do Telegram ausentes!");
     return;
   }
-  console.log(`📤 Enviando para o Telegram: ${text.substring(0, 20)}...`);
   try {
     const res = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
-      method: "POST", 
-      headers: { "Content-Type": "application/json" },
+      method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ chat_id: TG_CHAT, text: text.slice(0, 4000) }),
     });
-    const data = await res.json();
-    if (!data.ok) console.error("❌ Telegram recusou a mensagem:", data);
-    else console.log("✅ Telegram enviado com sucesso!");
-  } catch (err) {
-    console.error("❌ Falha na rede ao chamar Telegram:", err);
-  }
+    if (!res.ok) console.error("❌ Telegram recusou:", await res.text());
+    else console.log("✅ Telegram enviado!");
+  } catch (err) { console.error("❌ Erro Telegram:", err); }
 }
 
 async function summarySeenRecently(sid: string) {
   try {
     const since = new Date(Date.now() - 2 * 60 * 1000).toISOString();
     const r = await fetch(`${SB_URL}/rest/v1/events?type=eq.session_end&session_id=eq.${sid}&created_at=gte.${since}&select=id&limit=1`, { headers: sbHeaders });
-    const d = await r.json();
-    return Array.isArray(d) && d.length > 0;
+    return (await r.json()).length > 0;
   } catch { return false; }
 }
 
@@ -62,56 +56,60 @@ async function getSessionSummary(sid: string) {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  console.log("--- 🔔 NOVA REQUISIÇÃO RECEBIDA ---");
   if (req.method !== "POST") return res.status(405).end();
 
   try {
     const origin = (req.headers.origin as string) || (req.headers.referer as string) || "";
     let host = ""; try { host = new URL(origin).hostname; } catch {}
-    if (!ALLOWED_HOSTS.has(host)) {
-      console.warn(`🚫 Bloqueado por Host: ${host}`);
-      return res.status(403).end();
-    }
+    if (!ALLOWED_HOSTS.has(host)) return res.status(403).end();
 
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-    if (!body || !body.events) {
-      console.warn("⚠️ Corpo da requisição inválido.");
-      return res.status(400).end();
-    }
+    if (!body || !body.events) return res.status(400).end();
 
+    // CORREÇÃO CRÍTICA: Garantir que TODAS as chaves existem em TODOS os objetos
     const rows = body.events.map((e: any) => ({
-      session_id: body.sid, visitor_id: body.vid, type: e.type, path: e.path,
-      label: e.label, value: e.value, meta: e.meta || {},
+      session_id: body.sid,
+      visitor_id: body.vid,
+      type: e.type || null,
+      path: e.path || null,
+      label: e.label ?? null, // força null se undefined
+      value: (typeof e.value === "number") ? e.value : null,
+      meta: e.meta || {},
     }));
-    
-    console.log(`📦 Eventos recebidos:`, rows.map((r:any) => r.type).join(", "));
 
-    // 1) Grava imediatamente no Supabase
+    // 1) Grava no Supabase (com tratamento de erro)
     const dbRes = await fetch(`${SB_URL}/rest/v1/events`, {
-      method: "POST", headers: { ...sbHeaders, "Content-Type": "application/json", Prefer: "return=minimal" },
+      method: "POST", 
+      headers: { ...sbHeaders, "Content-Type": "application/json", Prefer: "return=minimal" },
       body: JSON.stringify(rows),
     });
-    if (!dbRes.ok) console.error("❌ Falha no Supabase:", await dbRes.text());
+    
+    if (!dbRes.ok) {
+      const errText = await dbRes.text();
+      console.error("❌ Supabase:", errText);
+      // Retorna 500 mas AINDA TENTA MANDAR O TELEGRAM PARA NÃO PERDER ALERTA
+    } else {
+      console.log("✅ Gravado no Supabase:", rows.length, "eventos");
+    }
 
-    // 2) Dispara alertas
-    const hasSessionStart = rows.some((r: any) => r.type === "session_start");
+    // 2) Lógica de alerta no Telegram
     const hasSessionEnd = rows.some((r: any) => r.type === "session_end");
-
+    
     if (hasSessionEnd && !(await summarySeenRecently(body.sid))) {
-      console.log("🕵️ Gerando resumo de fim de sessão...");
+      console.log("🕵️ Gerando resumo...");
       const summary = await getSessionSummary(body.sid);
       if (summary) await telegram(summary);
-    } 
-    else if (hasSessionStart) {
-      // Fallback para garantir que o alerta volte imediatamente
-      console.log("👀 Novo visitante detectado, enviando alerta...");
-      const start = rows.find((r:any) => r.type === "session_start");
-      await telegram(`👀 Novo visitante!\nOrigem: ${start?.meta?.referrer || 'Direto'}\nDispositivo: ${start?.meta?.device || '?'}\nPágina: ${start?.path}`);
+    }
+
+    // 3) Alerta de erro imediato (se houver)
+    const errors = rows.filter((r: any) => r.type === "error" || r.type === "rage_click");
+    for (const err of errors) {
+      await telegram(`🚨 Alerta: ${err.label || 'Erro'} em ${err.path}`);
     }
 
     return res.status(204).end();
   } catch (e) {
-    console.error("❌ Erro fatal no handler:", e);
+    console.error("❌ Erro fatal:", e);
     return res.status(204).end();
   }
 }
