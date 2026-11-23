@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, createContext, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { allProjects } from "@/data/projects";
+import { catalog as allProjects } from "@/data/espian-project"; // inclui o EspIAn no título da transição
 
 // Dicionário atualizado com as rotas em português
 const pageNames: Record<string, string> = {

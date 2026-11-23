@@ -8,8 +8,9 @@ import heroPortrait3 from "@/assets/optimized/hero-memoji-3.webp";
 import heroPortrait4 from "@/assets/optimized/hero-memoji-4.webp";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
-import { allProjects } from "@/data/projects";
+import { catalog, ESPIAN_SLUG } from "@/data/espian-project";
 import { ProjectMockup } from "@/components/ProjectMockup";
+import { EspianCardPreview } from "@/components/espian/EspianCardPreview";
 
 type Filter = "all" | "development" | "data" | "ai";
 
@@ -22,10 +23,11 @@ const Home = () => {
   const [portraitIndex, setPortraitIndex] = useState(0);
   const [filter, setFilter] = useState<Filter>("all");
 
-  const filtered = filter === "all" ? allProjects : allProjects.filter((p) => p.category === filter);
-  const devCount = allProjects.filter((p) => p.category === "development").length;
-  const dataCount = allProjects.filter((p) => p.category === "data").length;
-  const aiCount = allProjects.filter((p) => p.category === "ai").length;
+  // `catalog` = EspIAn + seus projetos (src/data/espian-project.ts)
+  const filtered = filter === "all" ? catalog : catalog.filter((p) => p.category === filter);
+  const devCount = catalog.filter((p) => p.category === "development").length;
+  const dataCount = catalog.filter((p) => p.category === "data").length;
+  const aiCount = catalog.filter((p) => p.category === "ai").length;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -213,7 +215,7 @@ const Home = () => {
                   <div className="relative overflow-hidden rounded-2xl bg-[#f4f4f5] p-4 sm:p-8 flex items-center justify-center aspect-[4/3] mb-5 transition-transform duration-500 group-hover:shadow-lg border border-border/50">
                     
                     {/* Tag Demo Live */}
-                    {project.demoUrl && (
+                    {(project.demoUrl || project.slug === ESPIAN_SLUG) && (
                       <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 bg-background rounded-full border border-border shadow-sm text-xs font-medium text-foreground">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                         Demo Live
@@ -221,7 +223,11 @@ const Home = () => {
                     )}
 
                     <div className="w-full h-full flex items-center justify-center">
-                       <ProjectMockup project={project} isDetail={false} />
+                       {project.slug === ESPIAN_SLUG ? (
+                         <EspianCardPreview />
+                       ) : (
+                         <ProjectMockup project={project} isDetail={false} />
+                       )}
                     </div>
                   </div>
 
