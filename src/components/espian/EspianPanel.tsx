@@ -213,8 +213,7 @@ export const CSS = `
 .ea.ea-embedded{min-height:0;border-radius:20px;overflow:hidden;border:1px solid var(--ea-line);text-align:left}
 .ea.ea-embedded .ea-header{position:static}
 .ea.ea-portal{min-height:0;background:none;display:contents}
-.ea .ea-badge{font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;color:#ffd9c9;background:rgba(217,89,38,.18);border:1px solid rgba(217,89,38,.45)}
-.ea .ea-note{font-size:13px;color:var(--ea-muted);padding:10px 14px;border-radius:12px;border:1px dashed var(--ea-line);background:rgba(255,255,255,.025)}
+.ea .ea-badge{font-size:12px;line-height:1.35;padding:4px 11px;max-width:100%;border-radius:999px;color:#ffd9c9;background:rgba(217,89,38,.18);border:1px solid rgba(217,89,38,.45)}
 
 /* Gráficos */
 .ea .gl{stroke:rgba(255,255,255,.08);stroke-width:1}
@@ -479,7 +478,7 @@ function Overview({ rows, devMap, days }: { rows: Session[]; devMap: Map<string,
         <ChartCard title="Visitas por dia" sub="Cada coluna é um dia" table={s.series.map((c) => [c.label, String(c.value)])}>
           <Columns data={s.series} aria="Visitas por dia" />
         </ChartCard>
-        <ChartCard title="Horário das visitas" sub="Horário de Teresina" table={s.hours.map((c) => [c.label, String(c.value)])}>
+        <ChartCard title="Horário das visitas" sub="Horário de Brasília" table={s.hours.map((c) => [c.label, String(c.value)])}>
           <Columns data={s.hours} aria="Visitas por hora do dia" />
         </ChartCard>
         <ChartCard title="Celular × computador" table={[["Celular", String(s.mobile)], ["Computador", String(s.desktop)]]}>
@@ -848,7 +847,7 @@ export function EspianPanel({ source, onUnauthorized, actions, demo = false, dee
       <header className="ea-header">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3">
           <h1 className="text-lg font-semibold">🕵️ EspIAn <span className="text-sm font-normal text-muted-foreground">painel</span></h1>
-          {demo && <span className="ea-badge" title="Todos os números e visitantes desta tela são inventados">Dados fictícios</span>}
+          {demo && <span className="ea-badge">🔒 Dados artificiais para preservar os verdadeiros visitantes do site</span>}
           <div className="ml-auto flex flex-wrap items-center gap-2 text-sm">
             <button type="button" onClick={load} className="rounded-md border border-border px-2 py-1 hover:bg-muted">↻ Atualizar</button>
             {actions}
@@ -857,12 +856,6 @@ export function EspianPanel({ source, onUnauthorized, actions, demo = false, dee
       </header>
 
       <main className="mx-auto max-w-6xl space-y-4 px-4 py-5">
-        {demo && (
-          <p className="ea-note">
-            🔒 Demonstração interativa: tudo aqui é simulado. O painel real fica atrás de login e nenhum dado de visitante é exibido publicamente.
-          </p>
-        )}
-
         {/* Filtros: uma linha só, acima de tudo; valem para todas as abas */}
         <div className="flex flex-wrap items-center gap-2">
           <select aria-label="Período" value={period} onChange={(e: any) => setPeriod(e.target.value)} className={sel}>

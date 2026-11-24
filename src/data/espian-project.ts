@@ -12,7 +12,7 @@ export const espianProject = {
   slug: ESPIAN_SLUG,
   title: "EspIAn — Telemetria e Alertas do Portfólio",
   client: "Projeto próprio",
-  location: "Teresina, PI",
+  location: "Picos, PI",
   year: "2026",
   services: "Automação & Dados",
   category: "data",

@@ -1,12 +1,11 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import TransitionLink from "@/components/TransitionLink";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
 import { catalog as allProjects, ESPIAN_SLUG } from "@/data/espian-project";
-import { DemoModal } from "@/components/DemoModal";
 import { SlideToUnlock } from "@/components/SlideToUnlock";
 import { ProjectMockup } from "@/components/ProjectMockup";
 
@@ -19,7 +18,6 @@ const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const location = useLocation();
   const project = allProjects.find((p) => p.slug === slug);
-  const [isDemoOpen, setIsDemoOpen] = useState(false);
 
   if (!project) {
     return (
@@ -91,19 +89,11 @@ const ProjectDetail = () => {
               {/* Slider abaixo das informações */}
               {project.demoUrl && (
                 <div className="mt-2 min-h-[56px]">
-                  <AnimatePresence mode="wait">
-                    {!isDemoOpen && (
-                      <motion.div
-                        key={`slider-${project.slug}-${location.key}`}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <SlideToUnlock onComplete={() => setIsDemoOpen(true)} />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  {/* Ao deslizar, a demo abre direto em nova aba (sem janela intermediária) */}
+                  <SlideToUnlock
+                    key={`slider-${project.slug}-${location.key}`}
+                    onComplete={() => window.open(project.demoUrl, "_blank", "noopener,noreferrer")}
+                  />
                 </div>
               )}
             </motion.div>
@@ -235,15 +225,6 @@ const ProjectDetail = () => {
 
       <WavyDivider direction="light-to-dark" />
       <Footer variant="dark" />
-
-      {project.demoUrl && (
-        <DemoModal
-          isOpen={isDemoOpen}
-          onClose={() => setIsDemoOpen(false)}
-          url={project.demoUrl}
-          title={project.title}
-        />
-      )}
     </main>
   );
 };
