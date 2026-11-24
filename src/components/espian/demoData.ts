@@ -31,12 +31,12 @@ type DevSpec = {
 
 // Aparelhos inventados. O #1 faz o papel de "meu aparelho" (some do painel com "Ocultar meus aparelhos").
 const DEVICES: DevSpec[] = [
-  { kind: "desktop", model: "PC", os: "Windows 11", browser: "Chrome 131", screen: "1920x1080@1", gpu: "NVIDIA GeForce RTX 3060", city: "Teresina", region: "Piauí", alias: "Meu notebook", owner: true, weight: 3 },
+  { kind: "desktop", model: "PC", os: "Windows 11", browser: "Chrome 131", screen: "1920x1080@1", gpu: "NVIDIA GeForce RTX 3060", city: "Picos", region: "Piauí", alias: "Meu notebook", owner: true, weight: 3 },
   { kind: "mobile", model: "Samsung Galaxy S23", os: "Android 14", browser: "Chrome 131", screen: "385x854@2.8", gpu: "Adreno 740", city: "São Paulo", region: "São Paulo", alias: "Recrutadora (exemplo)", weight: 6 },
   { kind: "desktop", model: "Mac", os: "macOS 14", browser: "Safari 17", screen: "1512x982@2", gpu: "Apple M2", city: "São Paulo", region: "São Paulo", alias: "Gestor de TI (exemplo)", weight: 4 },
   { kind: "mobile", model: "iPhone", os: "iOS 17", browser: "Safari 17", screen: "390x844@3", gpu: "Apple GPU", city: "Fortaleza", region: "Ceará", weight: 4 },
   { kind: "desktop", model: "PC", os: "Windows 10", browser: "Edge 130", screen: "1366x768@1", gpu: "Intel UHD Graphics 620", city: "Recife", region: "Pernambuco", weight: 2 },
-  { kind: "mobile", model: "Motorola Moto G84", os: "Android 14", browser: "Chrome 131", screen: "393x873@2.75", gpu: "Adreno 619", city: "Teresina", region: "Piauí", alias: "Colega da faculdade (exemplo)", weight: 5 },
+  { kind: "mobile", model: "Motorola Moto G84", os: "Android 14", browser: "Chrome 131", screen: "393x873@2.75", gpu: "Adreno 619", city: "Picos", region: "Piauí", alias: "Colega da faculdade (exemplo)", weight: 5 },
   { kind: "desktop", model: "PC", os: "Windows 11", browser: "Chrome 131", screen: "2560x1440@1", gpu: "NVIDIA GeForce RTX 4070", city: "Belo Horizonte", region: "Minas Gerais", weight: 2 },
   { kind: "mobile", model: "Xiaomi Redmi Note 12", os: "Android 13", browser: "Chrome 130", screen: "393x851@2.75", gpu: "Adreno 610", city: "Salvador", region: "Bahia", weight: 3 },
   { kind: "mobile", model: "iPhone", os: "iOS 18", browser: "Safari 18", screen: "393x852@3", gpu: "Apple GPU", city: "Rio de Janeiro", region: "Rio de Janeiro", weight: 3 },
@@ -250,36 +250,94 @@ export function createDemoSource(now = Date.now()): Source {
 }
 
 /* ───────────────────────── Mensagens de exemplo do Telegram ───────────────────────── */
-// Mesmo formato das mensagens reais (api/collect.ts), com personagens inventados.
-// Marcação aceita: <b>negrito</b> e <i>itálico</i>.
+// Mesmo texto e mesma ordem das mensagens reais (api/collect.ts), com um visitante inventado.
+// Marcação aceita: <b>, <i>, <pre> e <a>.
 
-export const DEMO_TELEGRAM: { hora: string; texto: string }[] = [
-  {
-    hora: "14:02",
-    texto: [
-      "🌐 <b>NOVO ACESSO</b> — 🆕 <b>aparelho novo</b>", "",
-      "📱 <b>#2</b> · Samsung Galaxy S23", "     Android 14 · Chrome 131 · 385x854",
-      "📍 São Paulo — São Paulo · BR", "✅ Primeiro registro deste aparelho",
-      "🔗 Origem: linkedin.com", "", "<i>#A2 · sessão demo-041</i>",
-    ].join("\n"),
-  },
-  {
-    hora: "14:03",
-    texto: [
-      "🎯 <b>AÇÃO DE INTERESSE</b> — nova janela", "",
-      "📱 Aparelho #2 · “Recrutadora (exemplo)” · 1ª visita",
-      "📄 Página: /project/painel-de-vendas", "🎯 Elemento: \"Abrir demo\" (Painel de Vendas)",
-      "📍 São Paulo — São Paulo · BR", "", "<i>#A2 · sessão demo-041</i>",
-    ].join("\n"),
-  },
-  {
-    hora: "14:06",
-    texto: [
-      "📋 <b>RELATÓRIO DA VISITA</b>", "",
-      "📱 Aparelho #2 · “Recrutadora (exemplo)”", "⏱ 3min 48s no site · 🔥 interesse alto",
-      "📄 / (24s) → /projetos (41s) → /project/painel-de-vendas (2min 10s)",
-      "✨ Abriu a demo do Painel de Vendas em nova janela", "",
-      "<i>#A2 · sessão demo-041</i>",
-    ].join("\n"),
-  },
-];
+const TG_TZ = "America/Fortaleza";
+const clock = (t: number, sec = false) =>
+  new Intl.DateTimeFormat("pt-BR", { timeZone: TG_TZ, hour: "2-digit", minute: "2-digit", ...(sec ? { second: "2-digit" } : {}), hour12: false }).format(new Date(t));
+const dayShort = (t: number) =>
+  new Intl.DateTimeFormat("pt-BR", { timeZone: TG_TZ, day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(t));
+const dayMonth = (t: number) =>
+  new Intl.DateTimeFormat("pt-BR", { timeZone: TG_TZ, day: "2-digit", month: "2-digit" }).format(new Date(t));
+
+export function buildDemoTelegram(now = Date.now()): { hora: string; texto: string }[] {
+  // A visita termina há ~2 minutos; a linha do tempo é calculada a partir dela
+  const dur = 228;
+  const t0 = Math.floor((now - 2 * 60000 - dur * 1000) / 1000) * 1000;
+  const at = (s: number) => t0 + s * 1000;
+
+  const tag = "#A2";
+  const sess = "sessão 7f3a91c2";
+  const lugar = "São Paulo — São Paulo · BR";
+  const nome = "Aparelho #2";
+  const alias = "Recrutadora (exemplo)";
+  const specs = "Samsung Galaxy S23 · Android 14 · Chrome 131 · 385x854@2.8";
+
+  const alerta1 = [
+    "🌐 <b>NOVO ACESSO</b> — 🆕 <b>aparelho novo</b>", "",
+    `📱 <b>${nome}</b>`, `     ${specs}`,
+    `📍 ${lugar}`, "🆕 Primeiro registro deste aparelho",
+    "🔗 Origem: linkedin.com", "", `<i>${tag} · ${sess}</i>`,
+  ].join("\n");
+
+  const alerta2 = [
+    "🪟 <b>Nova janela aberta</b>", "",
+    `📱 ${nome} · “${alias}” · 1ª visita`,
+    "📄 Página: /project/painel-de-vendas",
+    "🎯 Elemento: \"Abrir demo\" (Painel de Vendas)",
+    "🌐 Destino: /demo/painel-de-vendas",
+    `📍 ${lugar}`, "", `<i>${tag} · ${sess}</i>`,
+  ].join("\n");
+
+  const pad = (x: string, n: number) => (x.length > n ? x.slice(0, n - 1) + "…" : x.padEnd(n));
+  const fmt = (sec: number) => (sec < 60 ? `${sec}s` : `${Math.floor(sec / 60)}min ${sec % 60 ? (sec % 60) + "s" : ""}`.trim());
+  const tabela = [
+    "Página".padEnd(20) + "Tempo".padStart(9) + "  Rolagem",
+    pad("/", 20) + fmt(24).padStart(9) + "  60%",
+    pad("/projetos", 20) + fmt(41).padStart(9) + "  —",
+    pad("/project/painel-de-vendas", 20) + fmt(155).padStart(9) + "  92%",
+  ].join("\n");
+
+  const linha: [number, string][] = [
+    [0, "Sessão iniciada"], [0, "Abriu a página /"], [9, "Rolou até 60% de /"],
+    [24, "Clicou em \"Projetos\" (Menu)"], [24, "Abriu a página /projetos"],
+    [65, "Clicou em \"Painel de Vendas\" (Trabalhos Recentes)"], [65, "Abriu a página /project/painel-de-vendas"],
+    [98, "Passou o mouse em \"Abrir demo\" por 2,1s"], [101, "Clicou em \"Abrir demo\" (Painel de Vendas)"],
+    [102, "Abriu nova janela \"Abrir demo\" (Painel de Vendas) → /demo/painel-de-vendas"],
+    [190, "Rolou até 92% de /project/painel-de-vendas"],
+    [dur, "Sessão encerrada"], [dur, "Deixou a aba (outra janela ou segundo plano)"],
+  ];
+  const timeline = linha.map(([s, d]) => `${clock(at(s), true)}  ${d}`).join("\n");
+
+  const relatorio = [
+    `📊 <b>RELATÓRIO DE VISITA</b>  ${tag}`,
+    "🆕 Primeira visita · 🔥 Interesse alto",
+    `<i>${dayShort(t0)} · ${clock(t0)} → ${clock(at(dur))}</i>`, "",
+    "<b>APARELHO</b>",
+    `📱 <b>${nome}</b> · “${alias}”`, `⚙️ ${specs}`,
+    `🕓 1ª visita ${dayMonth(t0)}`, "🆕 Aparelho novo",
+    `📍 ${lugar}`, "🔗 Origem: linkedin.com", "",
+    "<b>RESUMO</b>",
+    `⏱ Duração da sessão: ${fmt(dur)}`,
+    "👁 Tempo ativo nas páginas: 3min 40s",
+    "📄 Páginas distintas: 3",
+    "🖱 Cliques: 3 · Foco do mouse: 4",
+    "📜 Rolagem máxima: 92%",
+    "🎯 Ações de interesse: 1", "",
+    "<b>NAVEGAÇÃO</b>", `<pre>${tabela}</pre>`, "",
+    "<b>AÇÕES DE INTERESSE</b>",
+    `• ${clock(at(102))} — Abriu nova janela "Abrir demo" (Painel de Vendas) → /demo/painel-de-vendas`, "",
+    "<b>MAIORES INTERESSES</b>",
+    "• Abrir demo — 2,1s de foco · 1 clique",
+    "• Trabalhos Recentes › Painel de Vendas — 1 clique", "",
+    "🔎 <a>Abrir no painel</a>", "",
+    "🕒 <b>LINHA DO TEMPO</b>", `<pre>${timeline}</pre>`,
+  ].join("\n");
+
+  return [
+    { hora: clock(at(0)), texto: alerta1 },
+    { hora: clock(at(102)), texto: alerta2 },
+    { hora: clock(at(dur) + 20000), texto: relatorio },
+  ];
+}
