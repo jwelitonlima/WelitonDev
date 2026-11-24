@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { LayoutGrid, List, ArrowUpRight, Play } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { ViewToggle, ProjectList } from "@/components/ProjectViews";
 import TransitionLink from "@/components/TransitionLink";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
@@ -96,24 +97,13 @@ const WorkPage = () => {
                 )
               )}
             </div>
-            <div className="hidden sm:flex gap-1 flex-shrink-0">
-              <button
-                onClick={() => setViewMode("list")}
-                className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded ${viewMode === "list" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"}`}
-              >
-                <List className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setViewMode("grid")}
-                className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded ${viewMode === "grid" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"}`}
-              >
-                <LayoutGrid className="w-4 h-4" />
-              </button>
+            <div className="flex-shrink-0">
+              <ViewToggle value={viewMode} onChange={setViewMode} />
             </div>
           </div>
 
           {/* Mobile: always card view */}
-          <div className="sm:hidden flex flex-col gap-8">
+          <div className={`${viewMode === "grid" ? "flex" : "hidden"} sm:hidden flex-col gap-8`}>
             {filtered.map((project, i) => (
               <TransitionLink key={project.slug} to={`/project/${project.slug}`}>
                 <motion.div
@@ -155,28 +145,9 @@ const WorkPage = () => {
           </div>
 
           {/* Desktop: Grid/List */}
-          <div className="hidden sm:block">
+          <div className={viewMode === "list" ? "block" : "hidden sm:block"}>
             {viewMode === "list" ? (
-              <div className="divide-y divide-border">
-                {filtered.map((project, i) => (
-                  <TransitionLink key={project.slug} to={`/project/${project.slug}`}>
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.05 }}
-                      className="grid grid-cols-4 md:grid-cols-5 py-6 items-center group cursor-pointer hover:bg-secondary/50 transition-colors -mx-4 px-4 rounded gap-4"
-                    >
-                      <span className="font-medium text-lg text-foreground group-hover:text-primary transition-colors col-span-2 md:col-span-1 truncate flex items-center gap-2">
-                        {project.title}
-                        {(project.demoUrl || project.slug === ESPIAN_SLUG) && <Play className="w-4 h-4 text-green-500 fill-green-500" />}
-                      </span>
-                      <span className="text-sm text-muted-foreground hidden md:block truncate">{project.client}</span>
-                      <span className="text-sm text-muted-foreground truncate">{project.services}</span>
-                      <span className="text-sm text-muted-foreground text-right">{project.year}</span>
-                    </motion.div>
-                  </TransitionLink>
-                ))}
-              </div>
+              <ProjectList projects={filtered} />
             ) : (
               <div className="grid sm:grid-cols-2 gap-8 lg:gap-12">
                 {filtered.map((project, i) => (

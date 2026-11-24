@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import TransitionLink from "@/components/TransitionLink";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowDown, LayoutGrid, List } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import heroPortrait1 from "@/assets/optimized/hero-memoji.webp";
 import heroPortrait2 from "@/assets/optimized/hero-memoji-2.webp";
 import heroPortrait3 from "@/assets/optimized/hero-memoji-3.webp";
@@ -11,6 +11,7 @@ import Footer from "@/components/Footer";
 import { catalog, ESPIAN_SLUG } from "@/data/espian-project";
 import { ProjectMockup } from "@/components/ProjectMockup";
 import { EspianCardPreview } from "@/components/espian/EspianCardPreview";
+import { ViewToggle, ProjectList, type ViewMode } from "@/components/ProjectViews";
 
 type Filter = "all" | "development" | "data" | "ai";
 
@@ -22,6 +23,7 @@ const Home = () => {
   const [greetingIndex, setGreetingIndex] = useState(0);
   const [portraitIndex, setPortraitIndex] = useState(0);
   const [filter, setFilter] = useState<Filter>("all");
+  const [view, setView] = useState<ViewMode>("grid");
 
   // `catalog` = EspIAn + seus projetos (src/data/espian-project.ts)
   const filtered = filter === "all" ? catalog : catalog.filter((p) => p.category === filter);
@@ -174,12 +176,7 @@ const Home = () => {
               <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold tracking-[-0.035em] text-foreground">Trabalhos Recentes</h2>
             </div>
             
-            <div className="flex items-center gap-4">
-              <div className="flex bg-secondary rounded-lg p-1">
-                 <button className="p-2 text-muted-foreground hover:text-foreground transition-colors"><List className="w-4 h-4" /></button>
-                 <button className="p-2 bg-foreground text-background rounded-md shadow-sm"><LayoutGrid className="w-4 h-4" /></button>
-              </div>
-            </div>
+            <ViewToggle value={view} onChange={setView} />
           </div>
 
           {/* Filtros */}
@@ -199,7 +196,10 @@ const Home = () => {
             )}
           </div>
 
-          {/* Grid */}
+          {/* Grade ou lista */}
+          {view === "list" ? (
+            <ProjectList projects={filtered} />
+          ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10">
             {filtered.map((project, i) => (
               <TransitionLink key={project.slug} to={`/projetos/${project.slug}`} className="group block">
@@ -250,6 +250,7 @@ const Home = () => {
               </TransitionLink>
             ))}
           </div>
+          )}
         </div>
       </section>
 

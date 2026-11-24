@@ -187,7 +187,7 @@ const Header = () => {
               </div>
               <div className="border-t border-dark-fg/10 pt-4 flex justify-between items-center">
                 <span className="text-xs text-dark-fg/40">{versao}</span>
-                <span className="text-xs text-dark-fg/40">contato@welitondev.com</span>
+                <a href="mailto:devweliton7@gmail.com" className="text-xs text-dark-fg/40 hover:text-dark-fg transition-colors duration-300">devweliton7@gmail.com</a>
               </div>
             </motion.div>
           </motion.div>
