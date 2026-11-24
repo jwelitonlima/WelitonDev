@@ -92,7 +92,12 @@ const ProjectDetail = () => {
                   {/* Ao deslizar, a demo abre direto em nova aba (sem janela intermediária) */}
                   <SlideToUnlock
                     key={`slider-${project.slug}-${location.key}`}
-                    onComplete={() => window.open(project.demoUrl, "_blank", "noopener,noreferrer")}
+                    onComplete={() => {
+                      // Demo do próprio site (/dashboard): mantém o vínculo com esta aba, assim a visita continua
+                      // sendo UMA só (um relatório único). Site externo: sem vínculo, por segurança.
+                      const interno = !!project.demoUrl && project.demoUrl.startsWith("/");
+                      window.open(project.demoUrl, "_blank", interno ? undefined : "noopener,noreferrer");
+                    }}
                   />
                 </div>
               )}

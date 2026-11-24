@@ -8,6 +8,7 @@ const MAX_EVENTS = 500; // limite por sessão
 const FLUSH_MS = 3000;
 const HOVER_MIN_MS = 700;
 const FP_WAIT_MS = 1500; // espera máxima pela impressão digital antes de iniciar a sessão
+const HIDE_END_MS = 25000; // computador: tempo com a aba escondida até considerar a visita encerrada
 
 type Ev = {
   type: string;
@@ -179,7 +180,7 @@ export function initEspian() {
   try { isNewSession = !sessionStorage.getItem("espian_sid"); } catch {}
   const vid = getId(localStorage, "espian_vid");
   const sid = getId(sessionStorage, "espian_sid");
-  // Janela aberta pelo próprio site (ex.: demo): herda a sessão e não encerra o relatório
+  // Janela aberta pelo próprio site (ex.: demo): herda a sessão e entra no mesmo relatório
   const secondary = !!window.opener && !isNewSession;
 
   /* ── Fila de envio ── */
@@ -476,17 +477,28 @@ export function initEspian() {
     if (!anyPushed) return; // visita só no /admin: nada a relatar
     pushStart(true); // saída muito rápida: garante que o início exista
     leavePage();
-    if (!secondary) push({ type: "session_end", meta: { reason } });
+    // Toda aba avisa que parou (a janela da demo vai com a marca "nova janela"). O servidor espera e só
+    // gera o relatório quando NENHUMA aba da visita está ativa, então a ordem em que as abas fecham não importa.
+    push({ type: "session_end", meta: { reason } });
     flush(true);
   }
+
+  // Computador: quem troca de aba pode voltar logo, então espera um pouco antes de encerrar.
+  // Sem isso, quem deixa a aba aberta em segundo plano nunca geraria o relatório.
+  let hideTimer: ReturnType<typeof setTimeout> | undefined;
 
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "hidden") {
       hiddenAt = now();
       push({ type: "tab_hidden" });
       if (isTouch) endSession("hidden"); // celular: pagehide não é confiável
-      else flush(true);
+      else {
+        flush(true);
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(() => endSession("hidden"), HIDE_END_MS);
+      }
     } else {
+      clearTimeout(hideTimer); // voltou antes do prazo: a visita continua
       if (hiddenAt) {
         const away = now() - hiddenAt;
         hiddenMs += away;

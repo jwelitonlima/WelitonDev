@@ -271,7 +271,7 @@ export function buildDemoTelegram(now = Date.now()): { hora: string; texto: stri
   const sess = "sessão 7f3a91c2";
   const lugar = "São Paulo — São Paulo · BR";
   const nome = "Aparelho #2";
-  const alias = "Recrutadora (exemplo)";
+  const alias = "Gestor de TI";
   const specs = "Samsung Galaxy S23 · Android 14 · Chrome 131 · 385x854@2.8";
 
   const alerta1 = [

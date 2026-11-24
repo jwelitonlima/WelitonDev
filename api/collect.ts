@@ -523,6 +523,16 @@ async function hasActivityAfter(sid: string, endTs: number): Promise<boolean> {
   return !!rows && rows.length > 0;
 }
 
+// Existe um encerramento MAIS NOVO nesta sessão? (várias abas terminam em momentos diferentes:
+// só o último encerramento gera o relatório, e assim nunca saem dois relatórios iguais)
+async function hasLaterEnd(sid: string, endTs: number): Promise<boolean> {
+  const rows = await sbGet(
+    `events?session_id=eq.${enc(sid)}&type=eq.session_end` +
+      `&${enc("meta->>ts")}=gt.${Math.round(endTs)}&select=id&limit=1`
+  );
+  return !!rows && rows.length > 0;
+}
+
 async function getSessionEvents(sid: string): Promise<any[]> {
   const rows = await sbGet(
     `events?session_id=eq.${enc(sid)}` +
@@ -886,7 +896,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // 4) Fim de sessão: espera e só gera o relatório se o visitante não voltou
     if (endRow && dbOk) {
       await sleep(GRACE_MS);
-      if (await hasActivityAfter(sid, Number(endRow.meta.ts))) {
+      if (await hasLaterEnd(sid, Number(endRow.meta.ts))) {
+        console.log("⏭️ Outra aba encerrou depois; ela gera o relatório");
+      } else if (await hasActivityAfter(sid, Number(endRow.meta.ts))) {
         console.log("⏭️ Visitante voltou; relatório adiado para o próximo encerramento");
       } else {
         console.log("🕵️ Gerando relatório...");
