@@ -75,7 +75,7 @@ const Home = () => {
                     ease: [0.16, 1, 0.3, 1],
                     opacity: { duration: 0.5 },
                   }}
-                  className="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-semibold tracking-[-0.045em] leading-[1.05] text-foreground"
+                  className="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-semibold tracking-[-0.035em] leading-[1.05] text-foreground"
                 >
                   {greetings[greetingIndex]}
                 </motion.span>

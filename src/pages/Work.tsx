@@ -74,7 +74,7 @@ const WorkPage = () => {
             initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.8, ease }}
-            className="text-3xl sm:text-4xl md:text-6xl font-bold max-w-3xl mb-10 sm:mb-16 text-foreground"
+            className="text-3xl sm:text-4xl md:text-6xl font-semibold leading-[1.1] max-w-3xl mb-10 sm:mb-16 text-foreground"
           >
             Projetos que combinam código, dados e IA
           </motion.h1>

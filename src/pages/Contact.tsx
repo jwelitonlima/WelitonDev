@@ -91,7 +91,7 @@ const ContactPage = () => {
               initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-dark-fg mb-10 sm:mb-16"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-dark-fg mb-10 sm:mb-16"
             >
               Vamos iniciar um projeto juntos
             </motion.h1>

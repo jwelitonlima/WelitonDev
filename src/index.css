@@ -102,11 +102,11 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, "Segoe UI", sans-serif;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.018em;
   }
 
   h1, h2 {
-    letter-spacing: -0.035em;
+    letter-spacing: -0.028em;
   }
 
   ::selection {

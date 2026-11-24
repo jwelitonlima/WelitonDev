@@ -76,7 +76,7 @@ export const SlideToUnlock = ({ onComplete, resetKey }: SlideToUnlockProps) => {
   return (
     <div
       ref={containerRef}
-      className="relative z-10 w-full max-w-[280px] h-14 bg-secondary/80 backdrop-blur-md border border-border rounded-full flex items-center p-1 overflow-hidden select-none shadow-sm"
+      className="relative z-10 w-full max-w-[320px] h-14 bg-secondary/80 backdrop-blur-md border border-border rounded-full flex items-center p-1 overflow-hidden select-none shadow-sm"
     >
       {/* 
         CORREÇÃO DE UI: 
@@ -87,7 +87,7 @@ export const SlideToUnlock = ({ onComplete, resetKey }: SlideToUnlockProps) => {
         style={{ opacity: textOpacity }}
         className="absolute inset-0 flex items-center justify-center pl-14 pr-4 pointer-events-none"
       >
-        <span className="shimmer-text text-[10px] sm:text-xs font-semibold tracking-widest uppercase text-muted-foreground truncate">
+        <span className="shimmer-text text-[10px] sm:text-[11px] font-semibold tracking-wider uppercase text-muted-foreground whitespace-nowrap">
           Deslize para acessar o app
         </span>
       </motion.div>

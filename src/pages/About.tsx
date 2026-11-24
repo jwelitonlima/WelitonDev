@@ -50,7 +50,7 @@ const AboutPage = () => {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
               <p className="text-xs sm:text-sm uppercase tracking-widest text-muted-foreground mb-4">Sobre mim</p>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-foreground leading-[1.1] mb-6">
                 Sou Weliton,<br />
                 <span className="text-primary">AI Builder</span> & Dev.
               </h1>
