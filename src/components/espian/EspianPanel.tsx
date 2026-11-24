@@ -5,6 +5,7 @@
 
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { Emoji, withEmoji } from "../Emoji";
 
 const TZ = "America/Fortaleza";
 
@@ -80,7 +81,8 @@ const place = (x: { city: string | null; region: string | null; country: string 
   [[x.city, x.region].filter(Boolean).join(" — "), x.country].filter(Boolean).join(" · ") || "—";
 const devName = (d: Device | undefined | null) =>
   d ? `#${d.num}${d.alias ? ` · ${d.alias}` : ""}` : "—";
-const kindIcon = (k: string | null | undefined) => (k === "mobile" ? "📱" : "💻");
+const kindChar = (k: string | null | undefined) => (k === "mobile" ? "📱" : "💻"); // texto puro (usado em <option>)
+const kindIcon = (k: string | null | undefined) => <Emoji char={kindChar(k)} />;
 
 type Eng = "alto" | "médio" | "baixo";
 const engOf = (s: Session): Eng =>
@@ -544,7 +546,7 @@ function VisitDrawer({ s, dev, source, onClose, onOpenDevice }: { s: Session; de
           </div>
           <p className="text-muted-foreground">{[dev?.model, dev?.os ?? s.os, dev?.browser ?? s.browser, dev?.screen].filter(Boolean).join(" · ")}</p>
           <p className="mt-1">
-            {CONF_LABEL[s.match_confidence ?? ""] ?? "❔"}
+            {withEmoji(CONF_LABEL[s.match_confidence ?? ""] ?? "❔")}
             {s.match_reason ? <span className="text-muted-foreground"> · reconhecido por {s.match_reason}</span> : null}
           </p>
           <p className="text-muted-foreground">Origem: {s.referrer || "Direto"}{s.utm ? ` (utm: ${s.utm})` : ""}</p>
@@ -557,7 +559,7 @@ function VisitDrawer({ s, dev, source, onClose, onOpenDevice }: { s: Session; de
           ].map(([k, v]) => (
             <div key={k} className="rounded-lg border border-border bg-card p-2">
               <div className="text-xs text-muted-foreground">{k}</div>
-              <div className="font-semibold">{v}</div>
+              <div className="font-semibold">{withEmoji(v)}</div>
             </div>
           ))}
         </div>
@@ -601,7 +603,7 @@ function VisitDrawer({ s, dev, source, onClose, onOpenDevice }: { s: Session; de
           {timeline.map((t, i) => (
             <li key={i} className={`flex gap-3 ${t.important ? "font-medium" : ""}`}>
               <span className="w-16 shrink-0 font-mono text-xs text-muted-foreground">{F.time.format(new Date(t.t))}</span>
-              <span>{t.important ? "🎯 " : ""}{t.text}</span>
+              <span>{t.important ? <><Emoji char="🎯" />{" "}</> : null}{t.text}</span>
             </li>
           ))}
         </ol>
@@ -639,8 +641,8 @@ function VisitsTab({ rows, devMap, onOpen }: { rows: Session[]; devMap: Map<stri
                   <td className="text-right">{s.ended_at ? fmtDur(s.duration_s) : "—"}</td>
                   <td className="text-right">{s.pages ?? "—"}</td>
                   <td className="text-right">{s.actions ?? "—"}</td>
-                  <td className="whitespace-nowrap">{s.ended_at ? ENG_LABEL[engOf(s)] : "—"}</td>
-                  <td className="whitespace-nowrap pr-3">{CONF_LABEL[s.match_confidence ?? ""] ?? "—"}</td>
+                  <td className="whitespace-nowrap">{s.ended_at ? withEmoji(ENG_LABEL[engOf(s)]) : "—"}</td>
+                  <td className="whitespace-nowrap pr-3">{withEmoji(CONF_LABEL[s.match_confidence ?? ""] ?? "—")}</td>
                 </tr>
               );
             })}
@@ -722,7 +724,7 @@ function DeviceRow({ d, source, onSave, onOpenSession, focus }: { d: Device; sou
                       <span>{F.full.format(new Date(s.started_at))}</span>
                       <span className="text-muted-foreground">{place(s)}</span>
                       <span className="ml-auto text-muted-foreground">{s.ended_at ? `${fmtDur(s.duration_s)} · ${s.pages ?? 0} págs. · ${s.actions ?? 0} ações` : "em andamento"}</span>
-                      <span>{CONF_LABEL[s.match_confidence ?? ""] ?? ""}</span>
+                      <span>{withEmoji(CONF_LABEL[s.match_confidence ?? ""] ?? "")}</span>
                     </button>
                   </li>
                 ))}
@@ -846,8 +848,8 @@ export function EspianPanel({ source, onUnauthorized, actions, demo = false, dee
     <div className="text-foreground">
       <header className="ea-header">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-3">
-          <h1 className="text-lg font-semibold">🕵️ EspIAn <span className="text-sm font-normal text-muted-foreground">painel</span></h1>
-          {demo && <span className="ea-badge">🔒 Dados artificiais para preservar os verdadeiros visitantes do site</span>}
+          <h1 className="text-lg font-semibold"><Emoji char="🕵️" /> EspIAn <span className="text-sm font-normal text-muted-foreground">painel</span></h1>
+          {demo && <span className="ea-badge"><Emoji char="🔒" /> Dados artificiais para preservar os verdadeiros visitantes do site</span>}
           <div className="ml-auto flex flex-wrap items-center gap-2 text-sm">
             <button type="button" onClick={load} className="rounded-md border border-border px-2 py-1 hover:bg-muted">↻ Atualizar</button>
             {actions}
@@ -863,7 +865,7 @@ export function EspianPanel({ source, onUnauthorized, actions, demo = false, dee
           </select>
           <select aria-label="Aparelho" value={deviceId} onChange={(e: any) => setDeviceId(e.target.value)} className={sel}>
             <option value="all">Todos os aparelhos</option>
-            {devices.map((d) => <option key={d.id} value={d.id}>{kindIcon(d.device_kind)} {devName(d)} — {d.model ?? ""}</option>)}
+            {devices.map((d) => <option key={d.id} value={d.id}>{kindChar(d.device_kind)} {devName(d)} — {d.model ?? ""}</option>)}
           </select>
           <select aria-label="Tipo" value={kind} onChange={(e: any) => setKind(e.target.value)} className={sel}>
             <option value="all">Celular e computador</option>
@@ -884,7 +886,7 @@ export function EspianPanel({ source, onUnauthorized, actions, demo = false, dee
           ))}
         </nav>
 
-        {error && <p role="alert" className="rounded-md border border-border bg-card p-3 text-sm">⚠️ {error}</p>}
+        {error && <p role="alert" className="rounded-md border border-border bg-card p-3 text-sm"><Emoji char="⚠️" /> {error}</p>}
         {!demo && !loading && !error && !sessions.length && !devices.length && (
           <p className="rounded-md border border-border bg-card p-3 text-sm text-muted-foreground">
             Nenhum dado ainda. Se já houve visitas, confira se o e-mail da função <code>is_espian_admin()</code> no Supabase é o mesmo deste login.

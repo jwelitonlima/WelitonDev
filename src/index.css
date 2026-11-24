@@ -1,59 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+/* Fonte: Inter (parecida com a SF Pro da Apple). Em iPhone/Mac o sistema usa a própria SF Pro. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
+    /* Paleta estilo Apple: branco, cinza-gelo, texto #1d1d1f e azul #0071e3 */
     --background: 0 0% 100%;
-    --foreground: 0 0% 10%;
+    --foreground: 240 3% 12%;
 
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 10%;
+    --card: 240 20% 99%;
+    --card-foreground: 240 3% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
+    --popover-foreground: 240 3% 12%;
 
-    --primary: 240 100% 67%;
+    --primary: 211 100% 45%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 10%;
+    --secondary: 240 11% 96%;
+    --secondary-foreground: 240 3% 12%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 240 11% 96%;
+    --muted-foreground: 240 2% 43%; /* #6e6e73: contraste 5:1 sobre branco (o cinza antigo dava 2,8:1) */
 
-    --accent: 180 100% 43%;
+    --accent: 211 100% 45%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 240 100% 67%;
+    --border: 240 5% 90%;
+    --input: 240 5% 90%;
+    --ring: 211 100% 45%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --dark-bg: 0 0% 10%;
-    --dark-fg: 0 0% 95%;
+    --dark-bg: 240 4% 7%;
+    --dark-fg: 0 0% 96%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 10%;
-    --sidebar-primary: 240 100% 67%;
+    --sidebar-background: 240 20% 99%;
+    --sidebar-foreground: 240 3% 12%;
+    --sidebar-primary: 211 100% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 10%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 240 100% 67%;
+    --sidebar-accent: 240 11% 96%;
+    --sidebar-accent-foreground: 240 3% 12%;
+    --sidebar-border: 240 5% 90%;
+    --sidebar-ring: 211 100% 45%;
 
     --freight-primary: 217 91% 60%;
     --freight-success: 160 84% 39%;
@@ -93,14 +88,36 @@
     @apply border-border;
   }
 
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Manrope', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, "Segoe UI", sans-serif;
+    font-feature-settings: "cv11", "ss01";
+    text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Manrope', sans-serif;
-    letter-spacing: -0.02em;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, "Segoe UI", sans-serif;
+    letter-spacing: -0.025em;
+  }
+
+  h1, h2 {
+    letter-spacing: -0.035em;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.18);
+  }
+
+  /* Foco visível e consistente para quem navega pelo teclado */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 }
 
@@ -133,11 +150,40 @@
   }
 
   .btn-circle {
-    @apply inline-flex items-center justify-center rounded-full font-medium transition-transform duration-300 hover:scale-105;
+    @apply inline-flex items-center justify-center rounded-full font-medium transition-all duration-300 hover:scale-105;
   }
 
   .btn-primary-circle {
     @apply btn-circle bg-primary text-primary-foreground;
+    box-shadow: 0 14px 34px -12px hsl(var(--primary) / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.22);
+  }
+
+  .btn-primary-circle:hover {
+    box-shadow: 0 20px 44px -12px hsl(var(--primary) / 0.65), inset 0 1px 0 rgb(255 255 255 / 0.22);
+  }
+
+  .btn-primary-circle:active {
+    transform: scale(0.97);
+  }
+
+  /* Vidro fosco (header, tags, menus) */
+  .glass {
+    background: hsl(var(--background) / 0.72);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  /* Moldura de card de projeto: cinza-gelo, cantos grandes, sombra suave que sobe no hover */
+  .project-frame {
+    background: hsl(var(--secondary));
+    border-radius: 28px;
+    box-shadow: 0 0 0 1px hsl(var(--foreground) / 0.04), 0 1px 2px hsl(var(--foreground) / 0.04);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .group:hover .project-frame {
+    transform: translateY(-4px);
+    box-shadow: 0 0 0 1px hsl(var(--foreground) / 0.05), 0 30px 60px -24px hsl(var(--foreground) / 0.28);
   }
 
   .wavy-divider {

@@ -1,6 +1,8 @@
 // src/components/espian/EspianCardPreview.tsx — miniatura do painel para o card do catálogo (Work.tsx)
 // Só estilos inline e SVG: não depende de Tailwind nem carrega o painel completo (fica leve na listagem).
 
+import { Emoji } from "../Emoji";
+
 const COLS = [3, 5, 4, 7, 6, 9, 5, 8, 11, 7, 10, 13, 9, 12];
 
 export function EspianCardPreview() {
@@ -16,7 +18,7 @@ export function EspianCardPreview() {
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-        <span style={{ fontSize: 12, fontWeight: 600 }}>🕵️ EspIAn</span>
+        <span style={{ fontSize: 12, fontWeight: 600 }}><Emoji char="🕵️" /> EspIAn</span>
         <span style={{ fontSize: 9, letterSpacing: ".05em", textTransform: "uppercase", padding: "2px 7px", borderRadius: 999, color: "#ffd9c9", background: "rgba(217,89,38,.18)", border: "1px solid rgba(217,89,38,.45)" }}>
           Demo
         </span>

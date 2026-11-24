@@ -80,18 +80,17 @@ const WorkPage = () => {
           </motion.h1>
 
           {/* Filters & View Toggle */}
-          <div className="flex items-center justify-between gap-4 mb-8 sm:mb-10 border-b border-border pb-4">
+          <div className="flex items-center justify-between gap-4 mb-8 sm:mb-10">
             <div className="flex gap-3 sm:gap-6 overflow-x-auto pb-1 -mb-1 scrollbar-none flex-1">
               {([["all", `Todos`], ["development", `Dev (${devCount})`], ["data", `Data (${dataCount})`], ["ai", `AI (${aiCount})`]] as const).map(
                 ([key, label]) => (
                   <button
                     key={key}
                     onClick={() => setFilter(key)}
-                    className={`text-sm font-medium transition-colors whitespace-nowrap py-1.5 min-h-[44px] flex items-center ${
-                      filter === key ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                    className={`text-sm font-medium transition-all duration-300 whitespace-nowrap rounded-full px-4 py-1.5 min-h-[40px] flex items-center ${
+                      filter === key ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                     }`}
                   >
-                    {filter === key && <span className="inline-block w-2 h-2 rounded-full bg-accent mr-2" />}
                     {label}
                   </button>
                 )

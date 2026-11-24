@@ -5,6 +5,7 @@
 import { useMemo, type ReactNode } from "react";
 import { EspianPanel, EspianShell } from "./EspianPanel";
 import { createDemoSource, buildDemoTelegram } from "./demoData";
+import { withEmoji } from "../Emoji";
 
 const TG_CSS = `
 .ea .tg-wrap{padding:22px;display:grid;gap:22px;grid-template-columns:1fr;align-items:start}
@@ -25,10 +26,10 @@ function Inline({ text }: { text: string }) {
   return (
     <>
       {parts.map((p, i): ReactNode => {
-        if (p.startsWith("<b>")) return <b key={i}>{p.slice(3, -4)}</b>;
-        if (p.startsWith("<i>")) return <i key={i} style={{ color: "#8fa3b8" }}>{p.slice(3, -4)}</i>;
-        if (p.startsWith("<a>")) return <a key={i} href="#" onClick={(e) => e.preventDefault()}>{p.slice(3, -4)}</a>;
-        return <span key={i}>{p}</span>;
+        if (p.startsWith("<b>")) return <b key={i}>{withEmoji(p.slice(3, -4))}</b>;
+        if (p.startsWith("<i>")) return <i key={i} style={{ color: "#8fa3b8" }}>{withEmoji(p.slice(3, -4))}</i>;
+        if (p.startsWith("<a>")) return <a key={i} href="#" onClick={(e) => e.preventDefault()}>{withEmoji(p.slice(3, -4))}</a>;
+        return <span key={i}>{withEmoji(p)}</span>;
       })}
     </>
   );
@@ -83,6 +84,7 @@ export default function EspianDemo() {
         <style>{TG_CSS}</style>
         <TelegramExamples />
       </EspianShell>
+      <p className="px-1 text-[11px] text-muted-foreground">Emojis: Twemoji (CC-BY 4.0)</p>
     </div>
   );
 }

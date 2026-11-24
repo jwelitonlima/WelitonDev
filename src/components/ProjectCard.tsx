@@ -58,9 +58,9 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
         transition={{ delay: index * 0.1, duration: 0.6, ease }}
         className="flex flex-col h-full"
       >
-        <div className="relative overflow-hidden rounded-2xl bg-[#f4f4f5] aspect-[4/3] mb-5 border border-border/50 transition-shadow duration-500 group-hover:shadow-lg">
+        <div className="project-frame relative overflow-hidden aspect-[4/3] mb-5">
           {project.demoUrl && (
-            <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 bg-background rounded-full border border-border shadow-sm text-xs font-medium text-foreground">
+            <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 glass rounded-full border border-border/70 shadow-sm text-xs font-medium text-foreground">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               Demo Live
             </div>

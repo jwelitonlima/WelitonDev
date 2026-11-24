@@ -5,6 +5,7 @@
 // A segurança está no banco: só o e-mail definido em public.is_espian_admin() enxerga os dados (RLS).
 
 import { useCallback, useEffect, useState } from "react";
+import { Emoji } from "@/components/Emoji";
 import { EspianPanel, EspianShell, type Device, type DevicePatch, type Ev, type Session, type Source } from "@/components/espian/EspianPanel";
 
 // Aceita a URL com ou sem "/rest/v1/" no final (a tela "Data API" do Supabase mostra com esse sufixo)
@@ -122,7 +123,7 @@ function Login({ onDone }: { onDone: () => void }) {
     <div className="flex min-h-[100svh] items-center justify-center px-4 text-foreground">
       <form onSubmit={submit} className="w-full max-w-sm space-y-4 ea-glass p-6">
         <div>
-          <h1 className="text-lg font-semibold">🕵️ EspIAn</h1>
+          <h1 className="text-lg font-semibold"><Emoji char="🕵️" /> EspIAn</h1>
           <p className="text-sm text-muted-foreground">Acesso restrito ao painel.</p>
         </div>
         <label className="block text-sm">E-mail
@@ -131,7 +132,7 @@ function Login({ onDone }: { onDone: () => void }) {
         <label className="block text-sm">Senha
           <input type="password" required autoComplete="current-password" value={password} onChange={(e: any) => setPassword(e.target.value)} className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2" />
         </label>
-        {err && <p role="alert" className="text-sm">⚠️ {err}</p>}
+        {err && <p role="alert" className="text-sm"><Emoji char="⚠️" /> {err}</p>}
         <button type="submit" disabled={busy} className="w-full rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground disabled:opacity-60">{busy ? "Entrando…" : "Entrar"}</button>
       </form>
     </div>
@@ -149,7 +150,7 @@ function AdminActions({ onLogout }: { onLogout: () => void }) {
   return (
     <>
       <button type="button" onClick={toggleIgnore} className="rounded-md border border-border px-2 py-1 hover:bg-muted" title="Quando ligado, este navegador não gera visitas nem mensagens">
-        {ignoring ? "✅ Este navegador é ignorado" : "Ignorar este navegador"}
+        {ignoring ? <><Emoji char="✅" /> Este navegador é ignorado</> : "Ignorar este navegador"}
       </button>
       <span className="hidden text-muted-foreground sm:inline">{auth?.email}</span>
       <button type="button" onClick={() => { saveAuth(null); onLogout(); }} className="rounded-md border border-border px-2 py-1 hover:bg-muted">Sair</button>
@@ -180,7 +181,7 @@ function AdminInner() {
           <h1 className="mb-2 text-lg font-semibold">Falta configurar o painel</h1>
           <p className="text-muted-foreground">Defina na Vercel (e no <code>.env.local</code> da raiz do projeto) e faça um novo deploy:</p>
           {SB_ANON && !KEY_OK && (
-            <p role="alert" className="mt-2">⚠️ O valor de <code>VITE_SUPABASE_ANON_KEY</code> não parece uma chave do Supabase. Use a chave <b>publishable</b> (<code>sb_publishable_…</code>) de Settings → API Keys.</p>
+            <p role="alert" className="mt-2"><Emoji char="⚠️" /> O valor de <code>VITE_SUPABASE_ANON_KEY</code> não parece uma chave do Supabase. Use a chave <b>publishable</b> (<code>sb_publishable_…</code>) de Settings → API Keys.</p>
           )}
           <pre className="mt-2 overflow-x-auto rounded-md bg-muted p-3 text-xs">{"VITE_SUPABASE_URL=https://xxxx.supabase.co\nVITE_SUPABASE_ANON_KEY=<chave anon / publishable>"}</pre>
         </div>

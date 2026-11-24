@@ -15,6 +15,7 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const versao = `v.${new Date().getFullYear()}.${typeof __APP_VERSION__ !== "undefined" ? __APP_VERSION__ : "1.0.0"}`;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -44,7 +45,7 @@ const Header = () => {
           scrolled
             ? isDarkPage
               ? "bg-dark-bg/80 backdrop-blur-2xl shadow-[0_1px_0_rgba(255,255,255,0.05)]"
-              : "bg-background/80 backdrop-blur-2xl shadow-[0_1px_0_rgba(0,0,0,0.05)]"
+              : "glass shadow-[0_1px_0_rgba(0,0,0,0.06)]"
             : ""
         }`}
       >
@@ -64,7 +65,7 @@ const Header = () => {
               <TransitionLink
                 key={link.path}
                 to={link.path}
-                className={`text-sm link-underline flex items-center gap-2 ${
+                className={`text-[13px] font-medium tracking-tight link-underline flex items-center gap-2 ${
                   isDarkPage ? "text-dark-fg/70 hover:text-dark-fg" : "text-muted-foreground hover:text-foreground"
                 } transition-colors`}
               >
@@ -185,8 +186,8 @@ const Header = () => {
                 </a>
               </div>
               <div className="border-t border-dark-fg/10 pt-4 flex justify-between items-center">
-                <span className="text-xs text-dark-fg/25">v.2025.1</span>
-                <span className="text-xs text-dark-fg/25">contato@welitondev.com</span>
+                <span className="text-xs text-dark-fg/40">{versao}</span>
+                <span className="text-xs text-dark-fg/40">contato@welitondev.com</span>
               </div>
             </motion.div>
           </motion.div>

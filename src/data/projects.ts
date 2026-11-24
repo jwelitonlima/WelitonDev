@@ -1,12 +1,12 @@
 import projectFreteAI from "@/assets/project-freteai.jpg";
-import mockup1 from "@/assets/interamed-mockup-1.png";
-import mockup2 from "@/assets/interamed-mockup-2.png";
-import mockup3 from "@/assets/interamed-mockup-3.png";
-import mockup4 from "@/assets/interamed-mockup-4.png";
-import interamedVideo from "@/assets/interamed-video.mp4";
+import mockup1 from "@/assets/optimized/interamed-mockup-1.webp";
+import mockup2 from "@/assets/optimized/interamed-mockup-2.webp";
+import mockup3 from "@/assets/optimized/interamed-mockup-3.webp";
+import mockup4 from "@/assets/optimized/interamed-mockup-4.webp";
+import interamedVideo from "@/assets/optimized/interamed-video-web.mp4";
 import projectDelivery from "@/assets/delivery-dashboard.jpg"; 
-import deliveryVideo from "@/assets/delivery-dashboard-video.mp4";
-import freteAiVideo from "@/assets/frete-ai.mp4"; 
+import deliveryVideo from "@/assets/optimized/delivery-dashboard-video-web.mp4";
+import freteAiVideo from "@/assets/optimized/frete-ai-web.mp4"; 
 
 const projectInteraMed = mockup1;
 

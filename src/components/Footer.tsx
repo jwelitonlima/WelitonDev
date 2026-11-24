@@ -43,7 +43,7 @@ const Footer = ({ variant = "dark" }: { variant?: "dark" | "light" }) => {
           <p className={`text-sm uppercase tracking-widest mb-4 sm:mb-6 ${textMuted}`}>
             Próximo passo
           </p>
-          <h2 className={`text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-8 sm:mb-10 ${textMain}`}>
+          <h2 className={`text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.04em] mb-8 sm:mb-10 ${textMain}`}>
             Vamos construir<br />algo incrível?
           </h2>
           <TransitionLink

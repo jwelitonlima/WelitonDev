@@ -75,7 +75,7 @@ const Home = () => {
                     ease: [0.16, 1, 0.3, 1],
                     opacity: { duration: 0.5 },
                   }}
-                  className="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-foreground"
+                  className="block text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-semibold tracking-[-0.045em] leading-[1.05] text-foreground"
                 >
                   {greetings[greetingIndex]}
                 </motion.span>
@@ -94,7 +94,7 @@ const Home = () => {
               </span>
             </div>
 
-            <p className="text-base sm:text-lg text-foreground/80 max-w-md mb-8 lg:mb-10 leading-relaxed">
+            <p className="text-base sm:text-lg text-muted-foreground max-w-md mb-8 lg:mb-10 leading-relaxed">
               Construo produtos digitais inteligentes unindo interfaces modernas, arquitetura de software e o poder da Inteligência Artificial Generativa.
             </p>
 
@@ -112,7 +112,7 @@ const Home = () => {
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative hidden lg:block"
           >
-            <div className="relative rounded-2xl overflow-hidden aspect-[3/4] max-w-md ml-auto shadow-2xl">
+            <div className="relative rounded-[32px] overflow-hidden aspect-[3/4] max-w-md ml-auto shadow-[0_40px_80px_-30px_rgba(0,0,0,0.35)] ring-1 ring-black/5">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={portraitIndex}
@@ -152,7 +152,7 @@ const Home = () => {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-3xl"
           >
-            <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium text-foreground leading-relaxed mb-6">
+            <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold tracking-[-0.025em] text-foreground leading-[1.25] text-balance mb-6">
               A combinação da minha paixão por código, dados e inteligência artificial
               me permite criar soluções digitais que unem tecnologia de ponta a
               experiências intuitivas e impactantes.
@@ -171,7 +171,7 @@ const Home = () => {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8">
             <div>
               <p className="text-xs sm:text-sm uppercase tracking-widest text-muted-foreground mb-2">Portfólio</p>
-              <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-foreground">Trabalhos Recentes</h2>
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold tracking-[-0.035em] text-foreground">Trabalhos Recentes</h2>
             </div>
             
             <div className="flex items-center gap-4">
@@ -183,17 +183,16 @@ const Home = () => {
           </div>
 
           {/* Filtros */}
-          <div className="flex gap-4 mb-8 border-b border-border pb-4">
+          <div className="flex flex-wrap gap-2 mb-10">
             {([["all", "Todos"], ["development", `Dev (${devCount})`], ["data", `Data (${dataCount})`], ["ai", `AI (${aiCount})`]] as const).map(
               ([key, label]) => (
                 <button
                   key={key}
                   onClick={() => setFilter(key)}
-                  className={`text-sm font-medium transition-colors flex items-center gap-2 ${
-                    filter === key ? "text-foreground" : "text-muted-foreground hover:text-foreground/80"
+                  className={`text-sm font-medium transition-all duration-300 rounded-full px-4 py-1.5 ${
+                    filter === key ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                   }`}
                 >
-                  {filter === key && <span className="w-1.5 h-1.5 rounded-full bg-accent" />}
                   {label}
                 </button>
               )
@@ -212,11 +211,11 @@ const Home = () => {
                   className="flex flex-col h-full"
                 >
                   {/* Moldura do Card */}
-                  <div className="relative overflow-hidden rounded-2xl bg-[#f4f4f5] p-4 sm:p-8 flex items-center justify-center aspect-[4/3] mb-5 transition-transform duration-500 group-hover:shadow-lg border border-border/50">
+                  <div className="project-frame relative overflow-hidden p-4 sm:p-8 flex items-center justify-center aspect-[4/3] mb-5">
                     
                     {/* Tag Demo Live */}
                     {(project.demoUrl || project.slug === ESPIAN_SLUG) && (
-                      <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 bg-background rounded-full border border-border shadow-sm text-xs font-medium text-foreground">
+                      <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 glass rounded-full border border-border/70 shadow-sm text-xs font-medium text-foreground">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                         Demo Live
                       </div>
@@ -234,7 +233,7 @@ const Home = () => {
                   {/* Informações */}
                   <div className="flex flex-col gap-2 px-1">
                     <div className="flex justify-between items-start gap-4">
-                      <h3 className="font-bold text-lg sm:text-xl text-foreground leading-tight group-hover:text-primary transition-colors">
+                      <h3 className="font-semibold tracking-tight text-lg sm:text-xl text-foreground leading-tight group-hover:text-primary transition-colors">
                         {project.title}
                       </h3>
                       {project.services && (
