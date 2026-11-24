@@ -14,14 +14,16 @@ export const espianProject = {
   client: "Projeto próprio",
   location: "Picos, PI",
   year: "2026",
-  services: "Automação & Dados",
+  services: "Automação, Dados & Painel",
+  repoUrl: "https://github.com/jwelitonlima/WelitonDev",
   category: "data",
   deviceType: "desktop",
   image: "",
   description:
     "Sistema de monitoramento que eu mesmo construí para saber quem visita o meu portfólio e o que a pessoa fez lá. " +
     "Cada visita vira um relatório único no Telegram e fica registrada em um painel privado, com reconhecimento de aparelhos que voltam, " +
-    "linha do tempo de ações e gráficos de visitas.",
+    "linha do tempo de ações e gráficos de visitas. Todo dia de manhã, um resumo automático compara o dia anterior com o que veio antes. " +
+    "Roda em infraestrutura própria e fica no ar o tempo todo, sem depender de plano de teste de nenhuma ferramenta.",
   challenge:
     "Ferramentas prontas de métricas mostram números agregados, mas não respondem perguntas práticas: esse aparelho já esteve aqui antes? " +
     "Quem abriu a demonstração de um projeto? Ao mesmo tempo, o portfólio é público, então o painel real precisa ficar trancado " +
@@ -31,9 +33,10 @@ export const espianProject = {
     "e avisa pelo Telegram em tempo real. O reconhecimento de aparelhos combina cookie assinado, identificação do navegador e rede, " +
     "guardando o IP apenas como hash. O painel usa login do Supabase Auth; a demonstração desta página roda o mesmo painel com dados 100% fictícios.",
   result:
-    "Cada visita gera um único relatório no Telegram, editado no mesmo balão, e o painel privado mostra o histórico por aparelho. " +
+    "Está no ar recebendo as visitas reais deste portfólio: cada visita gera um único relatório no Telegram, editado no mesmo balão, " +
+    "e o resumo diário chega sozinho às 8h. O painel privado mostra o histórico por aparelho. " +
     "Esta página exibe a versão pública, com dados inventados e nenhum visitante real.",
-  technologies: ["React", "TypeScript", "Vercel Functions", "Supabase", "PostgreSQL", "Telegram Bot API", "Tailwind CSS", "Framer Motion"],
+  technologies: ["React", "TypeScript", "Vercel Functions", "Cron", "Supabase", "PostgreSQL", "Telegram Bot API", "Tailwind CSS"],
 } as unknown as Project;
 
 /** Catálogo completo: EspIAn primeiro, depois os projetos já existentes (sem duplicar o slug). */

@@ -12,18 +12,18 @@ const aboutPhotos = [aboutPhoto1, aboutPhoto2, aboutPhoto3, aboutPhoto4];
 
 const services = [
   {
-    title: "AI Engineering & LLMs",
-    description: "Construção de agentes autônomos, integração de modelos de linguagem (Groq, OpenAI) e automações inteligentes (n8n) para resolver problemas reais de negócio.",
+    title: "Agentes e Automações com IA",
+    description: "Fluxos no n8n e agentes com LLMs (Groq, Llama) que analisam dados, tomam uma decisão e avisam as pessoas, como o alerta no Telegram do FreteAI.",
     icon: BrainCircuit,
   },
   {
     title: "Desenvolvimento de Produto",
-    description: "Desenvolvimento de aplicações web ponta a ponta com React, TypeScript e Vite. Interfaces modernas e arquitetura focada em performance e UX.",
+    description: "Aplicações web de ponta a ponta com React, TypeScript e Vite, com funções serverless na Vercel e banco no Supabase. Interfaces pensadas para o uso no dia a dia.",
     icon: Code,
   },
   {
-    title: "Data Analytics",
-    description: "Extração de insights e criação de dashboards interativos com Python, SQL, Streamlit e Power BI para embasar tomadas de decisão.",
+    title: "Dados e Dashboards",
+    description: "Pipelines em Python e Pandas, SQL e dashboards com Streamlit, Plotly e React para transformar dado bruto em decisão.",
     icon: Database,
   },
 ];
@@ -62,17 +62,13 @@ const AboutPage = () => {
               className="space-y-4"
             >
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                Sou um construtor de soluções digitais focado na interseção entre Inteligência Artificial, Dados e Interfaces Modernas. Minha especialidade é transformar modelos complexos e dados brutos em produtos reais e utilizáveis.
-              </p>
+                Sou de Picos, no Piauí, e construo automações e agentes com IA. Comecei em suporte técnico no Grupo Meddi, administrando o ELO Digital Office, plataforma que conecta 6 setores e 22 unidades, e foi lá que me interessei por tirar trabalho repetitivo das pessoas.</p>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                Com uma base sólida em React, TypeScript e Python, construo desde dashboards analíticos até agentes de IA autônomos, sempre com um olhar apurado para a Experiência do Usuário (UX) e Design de Produto.
-              </p>
+                Hoje uso React e TypeScript nas interfaces, Python para dados, e n8n com LLMs para montar agentes. Gosto de projetos que funcionam de ponta a ponta, do dado até o alerta ou o dashboard.</p>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                Minha vivência no setor de saúde, atuando na matriz de uma rede de laboratórios com 22 unidades, me deu a base para criar soluções de tecnologia focadas em HealthTech, entendendo a dor real de quem está na linha de frente.
-              </p>
+                Na saúde, aprendi na prática a não confiar cegamente no modelo: no InteraMed a IA lê a receita, mas a gravidade da interação é decidida por regras e pela base do OpenFDA. Estudo Tecnologia em Inteligência Artificial e sigo construindo, e o EspIAn, o monitor que roda neste próprio portfólio, é o mais recente.</p>
               <p className="text-sm sm:text-base text-foreground font-medium leading-relaxed">
-                Sou um desenvolvedor versátil que transforma ideias complexas em produtos digitais funcionais e inteligentes.
-              </p>
+                Prefiro mostrar funcionando: cada projeto aqui tem demonstração, e eu conto o que deu errado e o que mudei.</p>
             </motion.div>
           </div>
 

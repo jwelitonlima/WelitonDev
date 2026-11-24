@@ -1,61 +1,73 @@
-# 💼 Weliton Dev - Portfólio
-Bem-vindo ao meu portfólio profissional! Este projeto foi desenvolvido para apresentar minhas habilidades, projetos e experiências como desenvolvedor, com foco em **Inteligência Artificial, Análise de Dados e soluções HealthTech**.
+# Weliton Dev — Portfólio
 
-## 🚀 Tecnologias Utilizadas
+Portfólio de José Weliton de Lima, de Picos (PI). Construo automações e agentes com LLMs, n8n e Python, e as interfaces para usá-los no dia a dia.
 
-Este projeto foi construído com as seguintes tecnologias:
+Online: **https://weliton-dev.vercel.app**
 
-- **[React](https://reactjs.org/)** - Biblioteca JavaScript para construção de interfaces
-- **[TypeScript](https://www.typescriptlang.org/)** - Superset do JavaScript que adiciona tipagem estática
-- **[Vite](https://vitejs.dev/)** - Build tool e dev server extremamente rápido
-- **[Tailwind CSS](https://tailwindcss.com/)** - Framework CSS utilitário para design rápido
-- **[shadcn/ui](https://ui.shadcn.com/)** - Componentes de UI reutilizáveis e acessíveis
-- **[Framer Motion](https://www.framer.com/motion/)** - Biblioteca de animações para React
-- **[React Router](https://reactrouter.com/)** - Roteamento de páginas
-- **[Vercel](https://vercel.com/)** - Hospedagem e deploy contínuo
+## Projetos
 
-## 🛠️ Como rodar o projeto localmente
+| Projeto | O que é | Código |
+| --- | --- | --- |
+| **EspIAn** | Telemetria e alertas deste próprio portfólio: cada visita vira um relatório no Telegram e uma linha no banco, com painel privado e demo pública com dados fictícios. | este repositório |
+| **InteraMed** | App mobile-first que ajuda a enfermagem a checar interações entre medicamentos. A IA lê a receita, mas a gravidade vem de regras, da base do OpenFDA e de um dicionário próprio. | [interamed-v-2-0](https://github.com/jwelitonlima/interamed-v-2-0) |
+| **FreteAI** | Agente no n8n que analisa risco de atraso em fretes e avisa o gestor pelo Telegram, com dashboard em React. Projeto acadêmico com dados públicos do Kaggle. | [frete-ai-agent](https://github.com/jwelitonlima/frete-ai-agent) |
+| **Dashboard Insights** | Pipeline em Python e Pandas com dashboard em Streamlit, e um LLM que escreve o relatório executivo. Dados públicos do Kaggle. | [projeto-delivery-data](https://github.com/jwelitonlima/projeto-delivery-data) |
 
-Para rodar este projeto na sua máquina, siga os passos abaixo:
+## EspIAn, em resumo
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/jwelitonlima/WelitonDev.git
-Entre na pasta do projeto:
+1. Um rastreador leve no navegador envia os eventos da visita para `api/collect.ts` (função serverless na Vercel).
+2. A função grava no Supabase (PostgreSQL com segurança por linha) e avisa pelo Telegram.
+3. O reconhecimento de aparelhos que voltam usa cookie assinado e características do navegador. O IP é guardado apenas como hash.
+4. O painel privado (`/admin`) usa Supabase Auth, e só o e-mail do administrador enxerga os dados.
+5. Todo dia de manhã, `api/report.ts` roda por cron e envia o resumo do dia anterior.
+6. A demonstração pública, em `/projetos/espian`, roda o mesmo painel com dados 100% fictícios.
 
-bash
-cd WelitonDev
-Instale as dependências:
+Transparência: este site coleta dados de visita (aparelho, cidade aproximada, páginas e cliques) para o EspIAn.
 
-bash
-npm install
-# ou bun install, se você usa Bun
-Inicie o servidor de desenvolvimento:
+## Tecnologias
 
-bash
-npm run dev
-Abra o navegador no endereço indicado no terminal (geralmente http://localhost:8080).
+- **Front-end:** React, TypeScript, Vite, Tailwind CSS, shadcn/ui, Framer Motion, React Router
+- **Back-end:** Vercel Functions, Supabase (PostgreSQL, Auth e RLS), Telegram Bot API
+- **Hospedagem:** Vercel
 
-🌐 Deploy
-O projeto está configurado para deploy contínuo na Vercel. Toda vez que um push é feito na branch main, uma nova versão é publicada automaticamente.
+## Rodando localmente
 
-Você pode acessar o portfólio online em: weliton-dev.vercel.app
-
-📂 Projetos em Destaque
-InteraMed: Assistente clínico mobile-first para checagem de interações medicamentosas, desenvolvido em co-criação com um acadêmico de enfermagem da UFPI. Integra APIs da ANVISA, Open FDA e OCR com Llama 4 Scout (Groq).
-
-FreteAI: Sistema inteligente de monitoramento de fretes com agente de IA para logística.
-
-📄 Licença
-Este projeto é de uso pessoal. Sinta-se livre para se inspirar no código, mas por favor, não copie os textos ou projetos pessoais.
-
-Desenvolvido com 💙 por Weliton Lima
-
-text
-
-### 🚀 Para finalizar e subir o README:
-Salve o arquivo e rode no terminal:
 ```bash
-git add README.md
-git commit -m "docs: atualiza README com novos projetos e tecnologias"
-git push origin main 
+git clone https://github.com/jwelitonlima/WelitonDev.git
+cd WelitonDev
+npm install
+npm run dev
+```
+
+Abra o endereço mostrado no terminal (geralmente http://localhost:8080).
+
+### Variáveis de ambiente
+
+Crie um `.env.local` na raiz (nunca versione esse arquivo). Os valores não estão no repositório.
+
+| Onde | Variáveis |
+| --- | --- |
+| Front-end (build) | `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (chave publishable), `VITE_N8N_WEBHOOK_URL` (opcional, demo do FreteAI) |
+| Servidor (Vercel) | `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `ESPIAN_SALT`, `CRON_SECRET`, `ADMIN_URL` |
+
+As tabelas e as políticas de acesso do EspIAn estão em `supabase/phase2.sql`.
+
+## Estrutura
+
+```text
+api/                       funções serverless (collect.ts, report.ts)
+src/pages/                 páginas (Home, Projetos, Sobre, Contato, Admin, FreteAI)
+src/components/espian/     painel do EspIAn (usado no /admin e na demo)
+src/data/                  textos e catálogo dos projetos
+supabase/                  SQL do banco
+```
+
+## Deploy
+
+Hospedado na Vercel, com deploy pela CLI (`vercel --prod`).
+
+## Licença
+
+Uso pessoal. Fique à vontade para se inspirar no código, mas, por favor, não copie os textos nem os projetos.
+
+Desenvolvido por Weliton Lima.

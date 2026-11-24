@@ -97,8 +97,7 @@ const Home = () => {
             </div>
 
             <p className="text-base sm:text-lg text-muted-foreground max-w-md mb-8 lg:mb-10 leading-relaxed">
-              Construo produtos digitais inteligentes unindo interfaces modernas, arquitetura de software e o poder da Inteligência Artificial Generativa.
-            </p>
+              Construo automações e agentes com IA e as interfaces para usá-los no dia a dia. Os projetos abaixo funcionam de verdade, e em cada um eu conto o que aprendi.</p>
 
             <TransitionLink
               to="/sobre"
@@ -155,10 +154,7 @@ const Home = () => {
             className="max-w-3xl"
           >
             <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold tracking-[-0.025em] text-foreground leading-[1.25] text-balance mb-6">
-              A combinação da minha paixão por código, dados e inteligência artificial
-              me permite criar soluções digitais que unem tecnologia de ponta a
-              experiências intuitivas e impactantes.
-            </p>
+              Gosto de tirar trabalho repetitivo das pessoas: automações, agentes de IA e painéis que mostram o que importa. Aqui estão alguns projetos, do app clínico ao monitor que roda neste próprio site.</p>
             <TransitionLink to="/sobre" className="text-sm link-underline text-foreground font-medium inline-flex items-center gap-2">
               Sobre mim →
             </TransitionLink>

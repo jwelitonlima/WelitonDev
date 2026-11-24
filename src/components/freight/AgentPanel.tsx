@@ -33,8 +33,8 @@ const AgentPanel = ({ freights = mockFreights }: AgentPanelProps) => {
         });
       }
     } catch (error) {
-      toast.error("Falha na comunicação", {
-        description: "Não foi possível conectar ao n8n. Verifique os logs.",
+      toast.error("O agente está offline no momento", {
+        description: "O fluxo do n8n roda em um período de teste gratuito e pode estar desativado. O vídeo e o código do projeto mostram ele funcionando.",
         className: "bg-background border-destructive text-foreground",
       });
     } finally {

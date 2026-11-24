@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import TransitionLink from "@/components/TransitionLink";
 import WavyDivider from "@/components/WavyDivider";
 import Footer from "@/components/Footer";
@@ -100,6 +100,17 @@ const ProjectDetail = () => {
                     }}
                   />
                 </div>
+              )}
+
+              {project.repoUrl && (
+                <a
+                  href={project.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-fit items-center gap-1.5 text-sm font-medium text-foreground link-underline"
+                >
+                  Ver código no GitHub <ArrowUpRight className="h-4 w-4" />
+                </a>
               )}
             </motion.div>
           </div>

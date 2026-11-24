@@ -78,7 +78,7 @@ const ContactPage = () => {
     { label: "Qual é o seu nome?", key: "name", placeholder: "João Silva" },
     { label: "Qual é o seu e-mail?", key: "email", placeholder: "joao@email.com" },
     { label: "Qual é a sua empresa/organização?", key: "organization", placeholder: "Empresa & Cia" },
-    { label: "Quais serviços você procura?", key: "services", placeholder: "Web Design, Desenvolvimento Web..." },
+    { label: "Sobre o que quer conversar?", key: "services", placeholder: "Automação, agentes de IA, dashboards, uma vaga..." },
   ];
 
   return (
@@ -93,7 +93,7 @@ const ContactPage = () => {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.1] text-dark-fg mb-10 sm:mb-16"
             >
-              Vamos iniciar um projeto juntos
+              Vamos conversar
             </motion.h1>
 
             <form onSubmit={handleSubmit} className="space-y-8 sm:space-y-12">
